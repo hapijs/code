@@ -1,0 +1,29 @@
+{
+  "name": "code",
+  "description": "assertion library",
+  "version": "0.0.0",
+  "repository": "git://github.com/hapijs/code",
+  "main": "index",
+  "keywords": [
+    "test",
+    "expect",
+    "assertion"
+  ],
+  "engines": {
+    "node": ">=0.10.32"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "lab": "4.x.x"
+  },
+  "scripts": {
+    "test": "make test-cov"
+  },
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "http://github.com/hapijs/code/raw/master/LICENSE"
+    }
+  ]
+}
