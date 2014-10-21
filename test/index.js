@@ -701,6 +701,211 @@ describe('expect()', function () {
                 done();
             });
         });
+
+        describe('empty()', function () {
+
+            it('validates string', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect('').to.be.empty();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates buffer', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect(new Buffer('')).to.be.empty();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates array', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect([]).to.be.empty();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates object', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect({}).to.be.empty();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('invalidates incorrect type', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect('a').to.be.empty();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected \'a\' to be empty', exception);
+                done();
+            });
+        });
+
+        describe('length()', function () {
+
+            it('validates string', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect('a').to.have.length(1);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates buffer', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect(new Buffer('a')).to.have.length(1);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates array', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect([1]).to.have.length(1);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates object', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect({ a: 10 }).to.have.length(1);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('invalidates incorrect type', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect('a').to.have.length(10);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected \'a\' to have a length of 10 but got 1', exception);
+                done();
+            });
+        });
+
+        describe('equal()', function () {
+
+            it('validates assertion', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect('abc').to.equal('abc');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates assertion (alias)', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect('abc').equals('abc');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates assertion (deep)', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect(['abc']).to.deep.equal(['abc']);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('invalidates assertion', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect(['a']).to.equal(['a']);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected [ \'a\' ] to equal specified value', exception);
+                done();
+            });
+        });
     });
 });
 
