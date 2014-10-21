@@ -1,3 +1,4 @@
+copyright (c) 2011-2014 Jake Luer.
 Copyright (c) 2014, Walmart and other contributors.
 All rights reserved.
 
@@ -26,3 +27,5 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                   *   *   *
 
 The complete list of contributors can be found at: https://github.com/hapijs/code/graphs/contributors
+
+The initial version of this module was adapted from Chai, copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>, http://chaijs.com, MIT Licensed
