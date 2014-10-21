@@ -1618,3 +1618,12 @@ describe('incomplete()', function () {
         done();
     });
 });
+
+describe('count()', function () {
+
+    it('returns assertion count', function (done) {
+
+        Hoek.assert(Code.count() === 134);
+        done();
+    });
+});
