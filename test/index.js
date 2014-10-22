@@ -17,6 +17,17 @@ var describe = lab.describe;
 var it = lab.it;
 
 
+describe('count()', function () {
+
+    it('returns assertion count', function (done) {
+
+        Code.expect(10).to.be.above(5);
+        Code.expect('abc').to.be.a.string();
+        Hoek.assert(Code.count() === 2);
+        done();
+    });
+});
+
 describe('expect()', function () {
 
     it('validates assertion', function (done) {
@@ -1205,6 +1216,51 @@ describe('expect()', function () {
             });
         });
 
+        describe('between()', function () {
+
+            it('validates assertion', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect(5).to.be.between(0, 10);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('invalidates assertion (over)', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect(4).to.be.between(0, 4);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected 4 to be between 0..4', exception);
+                done();
+            });
+
+            it('invalidates assertion (under)', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect(0).to.be.between(0, 4);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected 0 to be between 0..4', exception);
+                done();
+            });
+        });
+
         describe('about()', function () {
 
             it('validates assertion', function (done) {
@@ -1615,15 +1671,6 @@ describe('incomplete()', function () {
         Hoek.assert(Code.incomplete().length === 1);
         a.equal(1);
         Hoek.assert(!Code.incomplete());
-        done();
-    });
-});
-
-describe('count()', function () {
-
-    it('returns assertion count', function (done) {
-
-        Hoek.assert(Code.count() === 134);
         done();
     });
 });
