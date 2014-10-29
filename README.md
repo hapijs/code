@@ -34,12 +34,12 @@ Lead Maintainer - [Eran Hammer](https://github.com/hueniverse)
         - [`exist()`](#exist)
         - [`empty()`](#empty)
         - [`length(size)`](#lengthsize)
-        - [`equal(value)`](#equal)
+        - [`equal(value)`](#equalvalue)
         - [`above(value)`](#abovevalue)
         - [`least(value)`](#leastvalue)
         - [`below(value)`](#belowvalue)
         - [`most(value)`](#mostvalue)
-        - [`within(from, to)`](#withinvalue)
+        - [`within(from, to)`](#withinfrom-to)
         - [`about(value, delta)`](#aboutvalue-delta)
         - [`instanceof(type)`](#instanceoftype)
         - [`match(regex)`](#matchregex)
@@ -84,7 +84,7 @@ functionality, we recommend looking at the many other excellent assertions libra
 
 ### Grammar
 
-**code* supports usage of connecting words to make assertions more readable. The inclusion of these
+**code** supports usage of connecting words to make assertions more readable. The inclusion of these
 grammar elements has no impact over the assertion outcome and are used for human readability only.
 Every method or property of the assertion object returned by `expect()` returns `this` which allows
 chaining addition assertions or grammar words.
