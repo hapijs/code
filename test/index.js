@@ -1555,6 +1555,23 @@ describe('expect()', function () {
                 done();
             });
 
+            it('validates assertion (empty message)', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect(function () {
+
+                        throw new Error('');
+                    }).to.throw('');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
             it('validates assertion (message regex)', function (done) {
 
                 var exception = false;
@@ -1596,6 +1613,20 @@ describe('expect()', function () {
                 }
 
                 Hoek.assert(exception.message === 'Expected [Function] to throw an error', exception);
+                done();
+            });
+
+            it('invalidates assertion (empty message)', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect(function () { throw new Error('kaboom'); }).to.throw('');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected [Function] to throw an error with specified message', exception);
                 done();
             });
 
