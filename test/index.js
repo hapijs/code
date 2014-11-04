@@ -711,6 +711,49 @@ describe('expect()', function () {
             });
         });
 
+        describe('endWith()', function () {
+
+            it('validates strings', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect('http://xyz.abc/def').to.endWith('abc/def');
+                    Code.expect('abcdefgh').not.to.endWith('abc');
+                    Code.expect('foobar').not.to.endWith('not-long-enough');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+        });
+
+        describe('startWith()', function () {
+
+            it('validates strings', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect('http://xyz.abc/def').to.startWith('http://');
+                    Code.expect('eeeaaaeee').to.startWith('eee');
+                    Code.expect('eeeaaaeee').not.to.startWith('aaa');
+                    Code.expect('http://xyz.abc/def').not.to.startWith('https://');
+                    Code.expect('abcdefgh').not.to.startWith('fgh');
+                    Code.expect('foobar').not.to.startWith('not-long-enough');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+        });
+
         describe('exist()', function () {
 
             it('validates assertion', function (done) {
