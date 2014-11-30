@@ -92,6 +92,14 @@ describe('expect()', function () {
         done();
     });
 
+    it('asserts on negative (not)', function(done) {
+
+        Code.expect('abc').to.not.contain('d').and.to.not.contain('e');
+        Code.expect('abc').to.contain('a').and.to.not.contain('d');
+        Code.expect('abc').to.not.contain('d').and.to.contain('a');
+        done();
+    });
+
     it('asserts on invalid condition (with actual)', function (done) {
 
         var exception = false;
