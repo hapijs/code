@@ -176,6 +176,27 @@ describe('expect()', function () {
         done();
     });
 
+    it('resets flags between chained assertions', function (done) {
+
+        var exception = false;
+        try {
+
+            Code.expect('abc').to.contain('a').and.to.not.contain('d');
+            Code.expect('abc').to.not.contain('d').and.to.contain('a');
+            Code.expect('abc').to.not.contain('d').and.to.not.contain('e');
+            Code.expect('abc').to.contain('a').and.to.not.contain('d').and.to.contain('c').to.not.contain('f');
+            Code.expect(function () {}).to.not.throw().and.to.be.a.function();
+            Code.expect(10).to.not.be.about(8, 1).and.to.be.about(9, 1);
+            Code.expect(10).to.be.about(9, 1).and.to.not.be.about(8, 1);
+        }
+        catch (err) {
+            exception = err;
+        }
+
+        Hoek.assert(!exception, exception);
+        done();
+    });
+
     describe('assertion', function () {
 
         describe('argument()', function () {
