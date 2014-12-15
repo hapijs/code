@@ -729,6 +729,34 @@ describe('expect()', function () {
                 done();
             });
 
+            it('does not validate arrays', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect(['a', 'b', 'c']).to.endWith('abcdef');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Can only assert endsWith on a string, with a string', exception);
+                done();
+            });
+
+            it('does not validate using arrays', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect('abcdef').to.endWith(['a', 'b', 'c']);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Can only assert endsWith on a string, with a string', exception);
+                done();
+            });
+
         });
 
         describe('startWith()', function () {
@@ -749,6 +777,34 @@ describe('expect()', function () {
                 }
 
                 Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('does not validate arrays', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect(['a', 'b', 'c']).to.startWith('abcdef');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Can only assert startsWith on a string, with a string', exception);
+                done();
+            });
+
+            it('does not validate using arrays', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect('abcdef').to.startWith(['a', 'b', 'c']);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Can only assert startsWith on a string, with a string', exception);
                 done();
             });
 
