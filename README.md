@@ -361,6 +361,8 @@ Aliases: `startsWith()`,
 Asserts that the reference value (a string) starts with the provided value where:
 - `value` - a string.
 
+Note that this assertion is case sensitive.
+
 ```js
 var Code = require('code');
 var expect = Code.expect;
@@ -374,6 +376,8 @@ Aliases: `endsWith()`,
 
 Asserts that the reference value (a string) ends with the provided value where:
 - `value` - a string.
+
+Note that this assertion is case sensitive.
 
 ```js
 var Code = require('code');
