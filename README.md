@@ -31,6 +31,8 @@ Lead Maintainer - [Eran Hammer](https://github.com/hueniverse)
             - [`null()`](#null)
             - [`undefined()`](#undefined)
         - [`include(values)`](#includevalues)
+        - [`startWith(value)`](#startwithvalue)
+        - [`endWith(value)`](#startwithvalue)
         - [`exist()`](#exist)
         - [`empty()`](#empty)
         - [`length(size)`](#lengthsize)
@@ -350,6 +352,38 @@ expect({ a: 1, b: 2, c: 3 }).to.include({ a: 1, c: 3 });
 expect({ a: 1, b: 2, c: 3 }).to.part.include({ a: 1, d: 4 });
 expect({ a: 1, b: 2, c: 3 }).to.only.include({ a: 1, b: 2, c: 3 });
 expect({ a: [1], b: [2], c: [3] }).to.deep.include({ a: [1], c: [3] });
+```
+
+#### `startWith(value)`
+
+Aliases: `startsWith()`,
+
+Asserts that the reference value (a string) starts with the provided value where:
+- `value` - a string.
+
+Note that this assertion is case sensitive.
+
+```js
+var Code = require('code');
+var expect = Code.expect;
+
+expect('https://example.org/secure').to.startWith('https://');
+```
+
+#### `endWith(value)`
+
+Aliases: `endsWith()`,
+
+Asserts that the reference value (a string) ends with the provided value where:
+- `value` - a string.
+
+Note that this assertion is case sensitive.
+
+```js
+var Code = require('code');
+var expect = Code.expect;
+
+expect('http://example.org/relative').to.endWith('/relative');
 ```
 
 #### `exist()`
