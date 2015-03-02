@@ -1071,6 +1071,9 @@ describe('expect()', function () {
                 var exception = false;
                 try {
                     Code.expect(['abc']).to.deep.equal(['abc']);
+                    Code.expect({a: 1}).to.deep.equal({a: 1});
+                    Code.expect({}).to.not.deep.equal({a: 1});
+                    Code.expect({a: 1}).to.not.deep.equal({});
                 }
                 catch (err) {
                     exception = err;
