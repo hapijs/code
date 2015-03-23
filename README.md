@@ -524,7 +524,7 @@ Asserts that the reference value is between but not equal (`from < value < to`) 
 var Code = require('code');
 var expect = Code.expect;
 
-expect(15).to.be.within(10, 20);
+expect(15).to.be.between(10, 20);
 ```
 
 #### `about(value, delta)`
