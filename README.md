@@ -426,13 +426,15 @@ var expect = Code.expect;
 expect('abcd').to.have.length(4);
 ```
 
-#### `equal(value)`
+#### `equal(value[, options])`
 
 Aliases: `equals()`
 
 Asserts that the reference value equals the provided value (`deep` is required to compare non-literal
 types) where:
 - `value` - the value to compare to.
+- `options` - optional object specifying comparison options. This is only used on
+deep comparisons, and is ignored otherwise.
 
 ```js
 var Code = require('code');
@@ -440,6 +442,18 @@ var expect = Code.expect;
 
 expect(5).to.equal(5);
 expect({ a: 1 }).to.deep.equal({ a: 1 });
+```
+
+Deep comparisons are performed using
+[`Hoek.deepEqual()`](https://github.com/hapijs/hoek#deepequalb-a-options). The
+optional `options` argument is passed directly to `Hoek.deepEqual()`. An example
+deep comparison which ignores object prototypes is shown below.
+
+```js
+var Code = require('code');
+var expect = Code.expect;
+
+expect(Object.create(null)).to.deep.equal({}, { prototype: false });
 ```
 
 #### `above(value)`
