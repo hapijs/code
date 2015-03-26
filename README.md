@@ -50,6 +50,8 @@ Lead Maintainer - [Colin Ihrig](https://github.com/cjihrig)
         - [`throw([type], [message])`](#throwtype-message)
     - [`count()`](#count)
     - [`incomplete()`](#incomplete)
+    - [Settings](#settings)
+        - [`truncateMessages`](#truncatemessages)
 
 ## Example
 
@@ -652,4 +654,24 @@ var expect = Code.expect;
 
 expect(5).to.not.be.a.string;
 console.log(Code.incomplete());		// -> [ 'readme.js:345:1' ]
+```
+
+### Settings
+
+**code** can be configured using the module's `settings` object. The following
+settings are supported:
+
+#### `truncateMessages`
+
+A Boolean value that, when `true`, causes long assertion error messages to be
+truncated for readability. Setting this to `false` causes the entire message
+to be displayed. Defaults to `true`.
+
+```js
+var Code = require('code');
+var expect = Code.expect;
+var foo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+Code.settings.truncateMessages = false;
+expect(foo).to.deep.equal([]);
 ```
