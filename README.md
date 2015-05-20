@@ -406,7 +406,7 @@ expect(null).to.not.exist();
 
 #### `empty()`
 
-Asserts that the reference value has a non-zero `length` property or an object with at least one key.
+Asserts that the reference value has a `length` property equal to zero or an object with no keys.
 
 ```js
 var Code = require('code');
