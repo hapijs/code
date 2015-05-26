@@ -3,7 +3,7 @@
   "description": "assertion library",
   "version": "1.4.0",
   "repository": "git://github.com/hapijs/code",
-  "main": "index",
+  "main": "lib/index",
   "keywords": [
     "test",
     "expect",
@@ -22,10 +22,5 @@
     "test": "lab -v -t 100 -L",
     "test-cov-html": "lab -L -r html -o coverage.html"
   },
-  "licenses": [
-    {
-      "type": "BSD",
-      "url": "http://github.com/hapijs/code/raw/master/LICENSE"
-    }
-  ]
+  "license": "BSD-3-Clause"
 }

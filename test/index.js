@@ -1561,7 +1561,7 @@ describe('expect()', function () {
 
             it('invalidates assertion (anonymous)', function (done) {
 
-                function Custom() { }           /* eslint func-style:0 */
+                function Custom () { }           /* eslint func-style:0 */
 
                 var exception = false;
                 try {
@@ -1785,7 +1785,10 @@ describe('expect()', function () {
 
                 var exception = false;
                 try {
-                    Code.expect(function () { throw new Custom(); }).to.throw('kaboom');
+                    Code.expect(function () {
+
+                        throw new Custom();
+                    }).to.throw('kaboom');
                 }
                 catch (err) {
                     exception = err;
@@ -1813,7 +1816,10 @@ describe('expect()', function () {
 
                 var exception = false;
                 try {
-                    Code.expect(function () { throw new Error('kaboom'); }).to.throw('');
+                    Code.expect(function () {
+
+                        throw new Error('kaboom');
+                    }).to.throw('');
                 }
                 catch (err) {
                     exception = err;
@@ -1843,7 +1849,10 @@ describe('expect()', function () {
 
                 var exception = false;
                 try {
-                    Code.expect(function () { throw new Custom(); }).to.throw(Error);
+                    Code.expect(function () {
+
+                        throw new Custom();
+                    }).to.throw(Error);
                 }
                 catch (err) {
                     exception = err;
