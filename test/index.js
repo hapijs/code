@@ -143,10 +143,10 @@ describe('expect()', function () {
             Code.expect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]).to.be.a.string();
         }
         catch (err) {
-            Code.settings.truncateMessages = origTruncate;
             exception = err;
         }
 
+        Code.settings.truncateMessages = origTruncate;
         Hoek.assert(exception.message === 'Expected [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 ] to be a string but got \'array\'', exception);
         done();
     });
@@ -174,11 +174,28 @@ describe('expect()', function () {
             Code.expect({ a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 10 }).to.be.a.string();
         }
         catch (err) {
-            Code.settings.truncateMessages = origTruncate;
             exception = err;
         }
 
+        Code.settings.truncateMessages = origTruncate;
         Hoek.assert(exception.message === 'Expected { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 10 } to be a string but got \'object\'', exception);
+        done();
+    });
+
+    it('handles multi-line error message', function (done) {
+
+        var exception = false;
+        var origTruncate = Code.settings.truncateMessages;
+        try {
+            Code.settings.truncateMessages = false;
+            Code.expect({ a: 1, b: '12345678901234567890123456789012345678901234567890' }).to.be.a.string();
+        }
+        catch (err) {
+            exception = err;
+        }
+
+        Code.settings.truncateMessages = origTruncate;
+        Hoek.assert(exception.message === 'Expected { a: 1,\n  b: \'12345678901234567890123456789012345678901234567890\' } to be a string but got \'object\'', exception);
         done();
     });
 
@@ -205,10 +222,10 @@ describe('expect()', function () {
             Code.expect({ a: 12345678901234567890, b: 12345678901234567890 }).to.be.a.string();
         }
         catch (err) {
-            Code.settings.truncateMessages = origTruncate;
             exception = err;
         }
 
+        Code.settings.truncateMessages = origTruncate;
         Hoek.assert(exception.message === 'Expected { a: 12345678901234567000, b: 12345678901234567000 } to be a string but got \'object\'', exception);
         done();
     });
@@ -236,10 +253,10 @@ describe('expect()', function () {
             Code.expect('{ a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 10 }').to.be.a.number();
         }
         catch (err) {
-            Code.settings.truncateMessages = origTruncate;
             exception = err;
         }
 
+        Code.settings.truncateMessages = origTruncate;
         Hoek.assert(exception.message === 'Expected \'{ a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 10 }\' to be a number but got \'string\'', exception);
         done();
     });
@@ -1139,9 +1156,9 @@ describe('expect()', function () {
                 var exception = false;
                 try {
                     Code.expect(['abc']).to.deep.equal(['abc']);
-                    Code.expect({a: 1}).to.deep.equal({a: 1});
-                    Code.expect({}).to.not.deep.equal({a: 1});
-                    Code.expect({a: 1}).to.not.deep.equal({});
+                    Code.expect({ a: 1 }).to.deep.equal({ a: 1 });
+                    Code.expect({}).to.not.deep.equal({ a: 1 });
+                    Code.expect({ a: 1 }).to.not.deep.equal({});
                     Code.expect(Object.create(null)).to.not.deep.equal({});
                     Code.expect(Object.create(null)).to.deep.equal({}, { prototype: false });
                 }
