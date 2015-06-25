@@ -675,3 +675,16 @@ var foo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 Code.settings.truncateMessages = false;
 expect(foo).to.deep.equal([]);
 ```
+
+#### `prototype`
+
+A boolean value that, when `false`, ignores objects prototypes when doing a deep comparison. Defaults to `true`.
+
+```js
+var Code = require('code');
+var expect = Code.expect;
+var foo = Object.create(null);
+
+Code.setting.prototype = false;
+expect(foo).to.deep.equal({});
+```
