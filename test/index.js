@@ -282,6 +282,30 @@ describe('expect()', function () {
         done();
     });
 
+    it('uses the global prototype setting when doing deep compares on objects', function (done) {
+
+        var origPrototype = Code.settings.comparePrototypes;
+        var exception = false;
+
+        Code.settings.comparePrototypes = false;
+
+        try {
+
+            var obj = Object.create(null);
+            Code.expect({}).to.deep.equal(obj);
+            obj.foo = 'bar';
+            Code.expect({ foo: 'bar' }).to.deep.equal(obj);
+            Code.expect({ foo: 'bar' }).to.deep.equal({ foo: 'bar' });
+        }
+        catch (err) {
+            exception = err;
+        }
+
+        Code.settings.comparePrototypes = origPrototype;
+        Hoek.assert(!exception, exception);
+        done();
+    });
+
     describe('assertion', function () {
 
         describe('argument()', function () {
