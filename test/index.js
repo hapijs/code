@@ -284,10 +284,10 @@ describe('expect()', function () {
 
     it('uses the global prototype setting when doing deep compares on objects', function (done) {
 
-        var origPrototype = Code.settings.prototype;
+        var origPrototype = Code.settings.comparePrototypes;
         var exception = false;
 
-        Code.settings.prototype = false;
+        Code.settings.comparePrototypes = false;
 
         try {
 
@@ -301,8 +301,8 @@ describe('expect()', function () {
             exception = err;
         }
 
+        Code.settings.comparePrototypes = origPrototype;
         Hoek.assert(!exception, exception);
-        Code.settings.prototype = origPrototype;
         done();
     });
 

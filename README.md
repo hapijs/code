@@ -52,6 +52,7 @@ Lead Maintainer - [Colin Ihrig](https://github.com/cjihrig)
     - [`incomplete()`](#incomplete)
     - [Settings](#settings)
         - [`truncateMessages`](#truncatemessages)
+        - [`comparePrototypes`](#compareprototypes)
 
 ## Example
 
@@ -676,15 +677,15 @@ Code.settings.truncateMessages = false;
 expect(foo).to.deep.equal([]);
 ```
 
-#### `prototype`
+#### `comparePrototypes`
 
-A boolean value that, when `false`, ignores objects prototypes when doing a deep comparison. Defaults to `true`.
+A boolean value that, when `false`, ignores object prototypes when doing a deep comparison. Defaults to `true`.
 
 ```js
 var Code = require('code');
 var expect = Code.expect;
 var foo = Object.create(null);
 
-Code.setting.prototype = false;
+Code.setting.comparePrototypes = false;
 expect(foo).to.deep.equal({});
 ```
