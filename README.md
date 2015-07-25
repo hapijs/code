@@ -646,7 +646,7 @@ console.log(Code.count());		// -> 1
 
 ### `incomplete()`
 
-Returns an array of the locations where incomplete assertions where declared or `null` if
+Returns an array of the locations where incomplete assertions were declared or `null` if
 no incomplete assertions found.
 
 ```js
