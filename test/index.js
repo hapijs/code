@@ -997,6 +997,20 @@ describe('expect()', function () {
                 Hoek.assert(!exception, exception);
                 done();
             });
+
+            it('validates assertion (not error)', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect(new Error('some message')).to.not.exist();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'some message', exception);
+                done();
+            });
         });
 
         describe('empty()', function () {
