@@ -1,5 +1,6 @@
 .idea
 *.iml
+*.swp
 npm-debug.log
 dump.rdb
 node_modules
