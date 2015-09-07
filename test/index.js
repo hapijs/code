@@ -344,6 +344,37 @@ describe('expect()', function () {
             });
         });
 
+        describe('file()', function () {
+
+            it('validates existing file', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect(__dirname + '/index.js').to.be.a.file();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('invalidates non-existent file', function (done) {
+
+                var exception = false;
+                try {
+                    Code.expect('derp').to.be.a.file();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected \'derp\' to be a file', exception);
+                done();
+            });
+        });
+
         describe('array()', function () {
 
             it('validates correct type', function (done) {
