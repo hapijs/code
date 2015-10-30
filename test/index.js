@@ -1,25 +1,27 @@
+'use strict';
+
 // Load modules
 
-var Code = require('..');
-var Hoek = require('hoek');
-var Lab = require('lab');
+const Code = require('..');
+const Hoek = require('hoek');
+const Lab = require('lab');
 
 
 // Declare internals
 
-var internals = {};
+const internals = {};
 
 
 // Test shortcuts
 
-var lab = exports.lab = Lab.script();
-var describe = lab.describe;
-var it = lab.it;
+const lab = exports.lab = Lab.script();
+const describe = lab.describe;
+const it = lab.it;
 
 
-describe('count()', function () {
+describe('count()', () => {
 
-    it('returns assertion count', function (done) {
+    it('returns assertion count', (done) => {
 
         Code.expect(10).to.be.above(5);
         Code.expect('abc').to.be.a.string();
@@ -28,11 +30,11 @@ describe('count()', function () {
     });
 });
 
-describe('expect()', function () {
+describe('expect()', () => {
 
-    it('validates assertion', function (done) {
+    it('validates assertion', (done) => {
 
-        var exception = false;
+        let exception = false;
         try {
             Code.expect('abcd').to.contain('a');
         }
@@ -44,9 +46,9 @@ describe('expect()', function () {
         done();
     });
 
-    it('uses grammar', function (done) {
+    it('uses grammar', (done) => {
 
-        var exception = false;
+        let exception = false;
         try {
             Code.expect(10).to.be.above(5);
             Code.expect('abc').to.be.a.string();
@@ -64,9 +66,9 @@ describe('expect()', function () {
         done();
     });
 
-    it('asserts on invalid condition', function (done) {
+    it('asserts on invalid condition', (done) => {
 
-        var exception = false;
+        let exception = false;
         try {
             Code.expect('abcd').to.contain('e');
         }
@@ -78,9 +80,9 @@ describe('expect()', function () {
         done();
     });
 
-    it('asserts on invalid condition (not)', function (done) {
+    it('asserts on invalid condition (not)', (done) => {
 
-        var exception = false;
+        let exception = false;
         try {
             Code.expect('abcd').to.not.contain('a');
         }
@@ -92,9 +94,9 @@ describe('expect()', function () {
         done();
     });
 
-    it('asserts on invalid condition (with actual)', function (done) {
+    it('asserts on invalid condition (with actual)', (done) => {
 
-        var exception = false;
+        let exception = false;
         try {
             Code.expect('abcd').to.have.length(3);
         }
@@ -106,9 +108,9 @@ describe('expect()', function () {
         done();
     });
 
-    it('asserts on invalid condition (prefix)', function (done) {
+    it('asserts on invalid condition (prefix)', (done) => {
 
-        var exception = false;
+        let exception = false;
         try {
             Code.expect('abcd', 'Oops').to.contain('e');
         }
@@ -120,9 +122,9 @@ describe('expect()', function () {
         done();
     });
 
-    it('asserts on invalid condition (large array, display truncated)', function (done) {
+    it('asserts on invalid condition (large array, display truncated)', (done) => {
 
-        var exception = false;
+        let exception = false;
         try {
             Code.expect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]).to.be.a.string();
         }
@@ -134,10 +136,10 @@ describe('expect()', function () {
         done();
     });
 
-    it('asserts on invalid condition (large array, display not truncated)', function (done) {
+    it('asserts on invalid condition (large array, display not truncated)', (done) => {
 
-        var exception = false;
-        var origTruncate = Code.settings.truncateMessages;
+        let exception = false;
+        const origTruncate = Code.settings.truncateMessages;
         try {
             Code.settings.truncateMessages = false;
             Code.expect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]).to.be.a.string();
@@ -151,9 +153,9 @@ describe('expect()', function () {
         done();
     });
 
-    it('asserts on invalid condition (large object, display truncated)', function (done) {
+    it('asserts on invalid condition (large object, display truncated)', (done) => {
 
-        var exception = false;
+        let exception = false;
         try {
             Code.expect({ a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 10 }).to.be.a.string();
         }
@@ -165,10 +167,10 @@ describe('expect()', function () {
         done();
     });
 
-    it('asserts on invalid condition (large object, display not truncated)', function (done) {
+    it('asserts on invalid condition (large object, display not truncated)', (done) => {
 
-        var exception = false;
-        var origTruncate = Code.settings.truncateMessages;
+        let exception = false;
+        const origTruncate = Code.settings.truncateMessages;
         try {
             Code.settings.truncateMessages = false;
             Code.expect({ a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 10 }).to.be.a.string();
@@ -182,10 +184,10 @@ describe('expect()', function () {
         done();
     });
 
-    it('handles multi-line error message', function (done) {
+    it('handles multi-line error message', (done) => {
 
-        var exception = false;
-        var origTruncate = Code.settings.truncateMessages;
+        let exception = false;
+        const origTruncate = Code.settings.truncateMessages;
         try {
             Code.settings.truncateMessages = false;
             Code.expect({ a: 1, b: '12345678901234567890123456789012345678901234567890' }).to.be.a.string();
@@ -199,9 +201,9 @@ describe('expect()', function () {
         done();
     });
 
-    it('asserts on invalid condition (long object values, display truncated)', function (done) {
+    it('asserts on invalid condition (long object values, display truncated)', (done) => {
 
-        var exception = false;
+        let exception = false;
         try {
             Code.expect({ a: 12345678901234567890, b: 12345678901234567890 }).to.be.a.string();
         }
@@ -213,10 +215,10 @@ describe('expect()', function () {
         done();
     });
 
-    it('asserts on invalid condition (long object values, display not truncated)', function (done) {
+    it('asserts on invalid condition (long object values, display not truncated)', (done) => {
 
-        var exception = false;
-        var origTruncate = Code.settings.truncateMessages;
+        let exception = false;
+        const origTruncate = Code.settings.truncateMessages;
         try {
             Code.settings.truncateMessages = false;
             Code.expect({ a: 12345678901234567890, b: 12345678901234567890 }).to.be.a.string();
@@ -230,9 +232,9 @@ describe('expect()', function () {
         done();
     });
 
-    it('asserts on invalid condition (long string, display truncated)', function (done) {
+    it('asserts on invalid condition (long string, display truncated)', (done) => {
 
-        var exception = false;
+        let exception = false;
         try {
             Code.expect('{ a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 10 }').to.be.a.number();
         }
@@ -244,10 +246,10 @@ describe('expect()', function () {
         done();
     });
 
-    it('asserts on invalid condition (long string, display not truncated)', function (done) {
+    it('asserts on invalid condition (long string, display not truncated)', (done) => {
 
-        var exception = false;
-        var origTruncate = Code.settings.truncateMessages;
+        let exception = false;
+        const origTruncate = Code.settings.truncateMessages;
         try {
             Code.settings.truncateMessages = false;
             Code.expect('{ a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 10 }').to.be.a.number();
@@ -261,16 +263,16 @@ describe('expect()', function () {
         done();
     });
 
-    it('resets flags between chained assertions', function (done) {
+    it('resets flags between chained assertions', (done) => {
 
-        var exception = false;
+        let exception = false;
         try {
 
             Code.expect('abc').to.contain('a').and.to.not.contain('d');
             Code.expect('abc').to.not.contain('d').and.to.contain('a');
             Code.expect('abc').to.not.contain('d').and.to.not.contain('e');
             Code.expect('abc').to.contain('a').and.to.not.contain('d').and.to.contain('c').to.not.contain('f');
-            Code.expect(function () {}).to.not.throw().and.to.be.a.function();
+            Code.expect(() => {}).to.not.throw().and.to.be.a.function();
             Code.expect(10).to.not.be.about(8, 1).and.to.be.about(9, 1);
             Code.expect(10).to.be.about(9, 1).and.to.not.be.about(8, 1);
         }
@@ -282,16 +284,16 @@ describe('expect()', function () {
         done();
     });
 
-    it('uses the global prototype setting when doing deep compares on objects', function (done) {
+    it('uses the global prototype setting when doing deep compares on objects', (done) => {
 
-        var origPrototype = Code.settings.comparePrototypes;
-        var exception = false;
+        const origPrototype = Code.settings.comparePrototypes;
+        let exception = false;
 
         Code.settings.comparePrototypes = false;
 
         try {
 
-            var obj = Object.create(null);
+            const obj = Object.create(null);
             Code.expect({}).to.deep.equal(obj);
             obj.foo = 'bar';
             Code.expect({ foo: 'bar' }).to.deep.equal(obj);
@@ -306,18 +308,18 @@ describe('expect()', function () {
         done();
     });
 
-    describe('assertion', function () {
+    describe('assertion', () => {
 
-        describe('argument()', function () {
+        describe('argument()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var grab = function () {
+                const grab = function () {
 
                     return arguments;
                 };
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(grab(1, 2, 3)).to.be.arguments();
                 }
@@ -329,9 +331,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect({ 1: 1, 2: 2, 3: 3, length: 3 }).to.be.arguments();
                 }
@@ -344,11 +346,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('array()', function () {
+        describe('array()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect([1]).to.be.an.array();
                 }
@@ -360,9 +362,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect({ 1: 1 }).to.be.an.array();
                 }
@@ -375,11 +377,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('boolean()', function () {
+        describe('boolean()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(true).to.be.a.boolean();
                 }
@@ -391,9 +393,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(undefined).to.be.a.boolean();
                 }
@@ -406,11 +408,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('buffer()', function () {
+        describe('buffer()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(new Buffer([1])).to.be.a.buffer();
                 }
@@ -422,9 +424,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(null).to.be.a.buffer();
                 }
@@ -437,11 +439,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('date()', function () {
+        describe('date()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(new Date()).to.be.a.date();
                 }
@@ -453,9 +455,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(true).to.be.a.date();
                 }
@@ -468,13 +470,13 @@ describe('expect()', function () {
             });
         });
 
-        describe('function()', function () {
+        describe('function()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
-                    Code.expect(function () { }).to.be.a.function();
+                    Code.expect(() => { }).to.be.a.function();
                 }
                 catch (err) {
                     exception = err;
@@ -484,9 +486,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(false).to.be.a.function();
                 }
@@ -499,11 +501,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('number()', function () {
+        describe('number()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(22).to.be.a.number();
                 }
@@ -515,11 +517,11 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
-                    Code.expect(function () { }).to.be.a.number();
+                    Code.expect(() => { }).to.be.a.number();
                 }
                 catch (err) {
                     exception = err;
@@ -530,11 +532,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('regexp()', function () {
+        describe('regexp()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(/a/).to.be.a.regexp();
                 }
@@ -546,9 +548,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(new Date()).to.be.a.regexp();
                 }
@@ -561,11 +563,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('string()', function () {
+        describe('string()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('asd').to.be.a.string();
                 }
@@ -577,9 +579,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(/a/).to.be.a.string();
                 }
@@ -592,11 +594,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('object()', function () {
+        describe('object()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect({}).to.be.a.object();
                 }
@@ -608,9 +610,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(new Buffer([20])).to.be.an.object();
                 }
@@ -623,11 +625,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('true()', function () {
+        describe('true()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(true).to.be.true();
                 }
@@ -639,9 +641,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('a').to.be.true();
                 }
@@ -654,11 +656,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('false()', function () {
+        describe('false()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(false).to.be.false();
                 }
@@ -670,9 +672,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('a').to.be.false();
                 }
@@ -685,11 +687,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('null()', function () {
+        describe('null()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(null).to.be.null();
                 }
@@ -701,9 +703,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('a').to.be.null();
                 }
@@ -716,11 +718,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('undefined()', function () {
+        describe('undefined()', () => {
 
-            it('validates correct type', function (done) {
+            it('validates correct type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(undefined).to.be.undefined();
                 }
@@ -732,9 +734,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates correct type (missing)', function (done) {
+            it('validates correct type (missing)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect().to.be.undefined();
                 }
@@ -746,9 +748,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('a').to.be.undefined();
                 }
@@ -761,11 +763,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('include()', function () {
+        describe('include()', () => {
 
-            it('validates strings', function (done) {
+            it('validates strings', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('abc').to.include('ab');
                     Code.expect('abc').to.only.include('abc');
@@ -782,9 +784,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates arrays', function (done) {
+            it('validates arrays', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect([1, 2, 3]).to.include(1);
                     Code.expect([{ a: 1 }]).to.deep.include({ a: 1 });
@@ -803,9 +805,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates objects', function (done) {
+            it('validates objects', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect({ a: 1, b: 2, c: 3 }).to.include('a');
                     Code.expect({ a: 1, b: 2, c: 3 }).to.include(['a', 'c']);
@@ -824,9 +826,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates aliases', function (done) {
+            it('validates aliases', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('abc').to.includes('ab');
                     Code.expect('abc').to.only.contain('abc');
@@ -841,11 +843,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('endWith()', function () {
+        describe('endWith()', () => {
 
-            it('validates strings', function (done) {
+            it('validates strings', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('http://xyz.abc/def').to.endWith('abc/def');
                     Code.expect('abcdefgh').not.to.endWith('abc');
@@ -859,9 +861,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('does not validate arrays', function (done) {
+            it('does not validate arrays', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(['a', 'b', 'c']).to.endWith('abcdef');
                 }
@@ -873,9 +875,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('does not validate using arrays', function (done) {
+            it('does not validate using arrays', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('abcdef').to.endWith(['a', 'b', 'c']);
                 }
@@ -889,11 +891,11 @@ describe('expect()', function () {
 
         });
 
-        describe('startWith()', function () {
+        describe('startWith()', () => {
 
-            it('validates strings', function (done) {
+            it('validates strings', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('http://xyz.abc/def').to.startWith('http://');
                     Code.expect('eeeaaaeee').to.startWith('eee');
@@ -910,9 +912,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('does not validate arrays', function (done) {
+            it('does not validate arrays', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(['a', 'b', 'c']).to.startWith('abcdef');
                 }
@@ -924,9 +926,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('does not validate using arrays', function (done) {
+            it('does not validate using arrays', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('abcdef').to.startWith(['a', 'b', 'c']);
                 }
@@ -940,11 +942,11 @@ describe('expect()', function () {
 
         });
 
-        describe('exist()', function () {
+        describe('exist()', () => {
 
-            it('validates assertion', function (done) {
+            it('validates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('a').to.exist();
                 }
@@ -956,9 +958,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion (null)', function (done) {
+            it('invalidates assertion (null)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(null).to.be.exist();
                 }
@@ -970,9 +972,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion (undefined)', function (done) {
+            it('invalidates assertion (undefined)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(undefined).to.be.exist();
                 }
@@ -984,9 +986,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (alias)', function (done) {
+            it('validates assertion (alias)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('a').exists();
                 }
@@ -998,9 +1000,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (not error)', function (done) {
+            it('validates assertion (not error)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(new Error('some message')).to.not.exist();
                 }
@@ -1013,11 +1015,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('empty()', function () {
+        describe('empty()', () => {
 
-            it('validates string', function (done) {
+            it('validates string', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('').to.be.empty();
                 }
@@ -1029,9 +1031,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates buffer', function (done) {
+            it('validates buffer', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(new Buffer('')).to.be.empty();
                 }
@@ -1043,9 +1045,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates array', function (done) {
+            it('validates array', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect([]).to.be.empty();
                 }
@@ -1057,9 +1059,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates object', function (done) {
+            it('validates object', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect({}).to.be.empty();
                 }
@@ -1071,9 +1073,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('a').to.be.empty();
                 }
@@ -1086,11 +1088,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('length()', function () {
+        describe('length()', () => {
 
-            it('validates string', function (done) {
+            it('validates string', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('a').to.have.length(1);
                 }
@@ -1102,9 +1104,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates buffer', function (done) {
+            it('validates buffer', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(new Buffer('a')).to.have.length(1);
                 }
@@ -1116,9 +1118,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates array', function (done) {
+            it('validates array', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect([1]).to.have.length(1);
                 }
@@ -1130,9 +1132,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates object', function (done) {
+            it('validates object', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect({ a: 10 }).to.have.length(1);
                 }
@@ -1144,9 +1146,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates incorrect type', function (done) {
+            it('invalidates incorrect type', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('a').to.have.length(10);
                 }
@@ -1159,11 +1161,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('equal()', function () {
+        describe('equal()', () => {
 
-            it('validates assertion', function (done) {
+            it('validates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('abc').to.equal('abc');
                 }
@@ -1175,9 +1177,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (alias)', function (done) {
+            it('validates assertion (alias)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('abc').equals('abc');
                 }
@@ -1189,9 +1191,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (deep)', function (done) {
+            it('validates assertion (deep)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(['abc']).to.deep.equal(['abc']);
                     Code.expect({ a: 1 }).to.deep.equal({ a: 1 });
@@ -1208,9 +1210,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion', function (done) {
+            it('invalidates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(['a']).to.equal(['a']);
                 }
@@ -1223,11 +1225,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('above()', function () {
+        describe('above()', () => {
 
-            it('validates assertion', function (done) {
+            it('validates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(10).to.be.above(5);
                 }
@@ -1239,9 +1241,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (alias)', function (done) {
+            it('validates assertion (alias)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(1).to.be.greaterThan(0);
                 }
@@ -1253,9 +1255,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion', function (done) {
+            it('invalidates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(10).to.be.above(50);
                 }
@@ -1268,11 +1270,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('least()', function () {
+        describe('least()', () => {
 
-            it('validates assertion', function (done) {
+            it('validates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(10).to.be.at.least(10);
                 }
@@ -1284,9 +1286,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (alias)', function (done) {
+            it('validates assertion (alias)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(10).to.be.min(10);
                 }
@@ -1298,9 +1300,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion', function (done) {
+            it('invalidates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(10).to.be.at.least(20);
                 }
@@ -1313,11 +1315,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('below()', function () {
+        describe('below()', () => {
 
-            it('validates assertion', function (done) {
+            it('validates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(1).to.be.below(10);
                 }
@@ -1329,9 +1331,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (alias)', function (done) {
+            it('validates assertion (alias)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(1).to.be.lessThan(10);
                 }
@@ -1343,9 +1345,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion', function (done) {
+            it('invalidates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(1).to.be.below(0);
                 }
@@ -1358,11 +1360,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('most()', function () {
+        describe('most()', () => {
 
-            it('validates assertion', function (done) {
+            it('validates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(10).to.be.at.most(10);
                 }
@@ -1374,9 +1376,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (alias)', function (done) {
+            it('validates assertion (alias)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(10).to.be.max(10);
                 }
@@ -1388,9 +1390,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion', function (done) {
+            it('invalidates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(100).to.be.at.most(20);
                 }
@@ -1403,11 +1405,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('within()', function () {
+        describe('within()', () => {
 
-            it('validates assertion', function (done) {
+            it('validates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(5).to.be.within(0, 10);
                     Code.expect(0).to.be.within(0, 10);
@@ -1421,9 +1423,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (alias)', function (done) {
+            it('validates assertion (alias)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(5).to.be.in.range(0, 10);
                 }
@@ -1435,9 +1437,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion (over)', function (done) {
+            it('invalidates assertion (over)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(5).to.be.within(0, 4);
                 }
@@ -1449,9 +1451,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion (under)', function (done) {
+            it('invalidates assertion (under)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(-1).to.be.within(0, 4);
                 }
@@ -1464,11 +1466,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('between()', function () {
+        describe('between()', () => {
 
-            it('validates assertion', function (done) {
+            it('validates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(5).to.be.between(0, 10);
                 }
@@ -1480,9 +1482,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion (over)', function (done) {
+            it('invalidates assertion (over)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(4).to.be.between(0, 4);
                 }
@@ -1494,9 +1496,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion (under)', function (done) {
+            it('invalidates assertion (under)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(0).to.be.between(0, 4);
                 }
@@ -1509,11 +1511,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('about()', function () {
+        describe('about()', () => {
 
-            it('validates assertion', function (done) {
+            it('validates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(10).to.be.about(8, 2);
                 }
@@ -1525,9 +1527,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion', function (done) {
+            it('invalidates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(10).to.be.about(8, 1);
                 }
@@ -1539,9 +1541,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion (invalid arguments)', function (done) {
+            it('invalidates assertion (invalid arguments)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(10).to.be.about('8', '1');
                 }
@@ -1554,11 +1556,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('instanceof()', function () {
+        describe('instanceof()', () => {
 
-            it('validates assertion', function (done) {
+            it('validates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(new Date()).to.be.instanceof(Date);
                 }
@@ -1570,9 +1572,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (alias)', function (done) {
+            it('validates assertion (alias)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(new Date()).to.be.instanceOf(Date);
                 }
@@ -1584,9 +1586,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion', function (done) {
+            it('invalidates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect([]).to.be.instanceof(RegExp);
                 }
@@ -1598,11 +1600,11 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion (anonymous)', function (done) {
+            it('invalidates assertion (anonymous)', (done) => {
 
-                var Custom = function () { };
+                const Custom = function () { };
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect([]).to.be.instanceof(Custom);
                 }
@@ -1614,11 +1616,11 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion (anonymous)', function (done) {
+            it('invalidates assertion (anonymous)', (done) => {
 
                 function Custom () { }           /* eslint func-style:0 */
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect([]).to.be.instanceof(Custom);
                 }
@@ -1631,11 +1633,11 @@ describe('expect()', function () {
             });
         });
 
-        describe('match()', function () {
+        describe('match()', () => {
 
-            it('validates assertion', function (done) {
+            it('validates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('a4x').to.match(/\w\dx/);
                 }
@@ -1647,9 +1649,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (alias)', function (done) {
+            it('validates assertion (alias)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('a4x').matches(/\w\dx/);
                 }
@@ -1661,9 +1663,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion', function (done) {
+            it('invalidates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('a4x').to.match(/\w\dy/);
                 }
@@ -1676,16 +1678,16 @@ describe('expect()', function () {
             });
         });
 
-        describe('satisfy()', function () {
+        describe('satisfy()', () => {
 
-            var validate = function (value) {
+            const validate = function (value) {
 
                 return value === 'some value';
             };
 
-            it('validates assertion', function (done) {
+            it('validates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('some value').to.satisfy(validate);
                 }
@@ -1697,9 +1699,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (alias)', function (done) {
+            it('validates assertion (alias)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('some value').satisfies(validate);
                 }
@@ -1711,9 +1713,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion', function (done) {
+            it('invalidates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect('wrong').to.satisfy(validate);
                 }
@@ -1726,16 +1728,16 @@ describe('expect()', function () {
             });
         });
 
-        describe('throw()', function () {
+        describe('throw()', () => {
 
-            var throws = function () {
+            const throws = function () {
 
                 throw new Error('kaboom');
             };
 
-            it('validates assertion', function (done) {
+            it('validates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(throws).to.throw();
                 }
@@ -1747,9 +1749,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (alias)', function (done) {
+            it('validates assertion (alias)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(throws).throws();
                 }
@@ -1761,11 +1763,11 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion', function (done) {
+            it('invalidates assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
-                    Code.expect(function () { }).to.throw();
+                    Code.expect(() => { }).to.throw();
                 }
                 catch (err) {
                     exception = err;
@@ -1775,11 +1777,11 @@ describe('expect()', function () {
                 done();
             });
 
-            it('forbids arguments on negative assertion', function (done) {
+            it('forbids arguments on negative assertion', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
-                    Code.expect(function () { }).to.not.throw('message');
+                    Code.expect(() => { }).to.not.throw('message');
                 }
                 catch (err) {
                     exception = err;
@@ -1789,9 +1791,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (message)', function (done) {
+            it('validates assertion (message)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(throws).to.throw('kaboom');
                 }
@@ -1803,11 +1805,11 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (empty message)', function (done) {
+            it('validates assertion (empty message)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
-                    Code.expect(function () {
+                    Code.expect(() => {
 
                         throw new Error('');
                     }).to.throw('');
@@ -1820,9 +1822,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (message regex)', function (done) {
+            it('validates assertion (message regex)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(throws).to.throw(/boom/);
                 }
@@ -1834,13 +1836,13 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (missing message)', function (done) {
+            it('validates assertion (missing message)', (done) => {
 
-                var Custom = function () { };
+                const Custom = function () { };
 
-                var exception = false;
+                let exception = false;
                 try {
-                    Code.expect(function () {
+                    Code.expect(() => {
 
                         throw new Custom();
                     }).to.throw('kaboom');
@@ -1853,11 +1855,11 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion (message)', function (done) {
+            it('invalidates assertion (message)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
-                    Code.expect(function () { }).to.throw('steve');
+                    Code.expect(() => { }).to.throw('steve');
                 }
                 catch (err) {
                     exception = err;
@@ -1867,11 +1869,11 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion (empty message)', function (done) {
+            it('invalidates assertion (empty message)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
-                    Code.expect(function () {
+                    Code.expect(() => {
 
                         throw new Error('kaboom');
                     }).to.throw('');
@@ -1884,9 +1886,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (type)', function (done) {
+            it('validates assertion (type)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(throws).to.throw(Error);
                 }
@@ -1898,13 +1900,13 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion (known type)', function (done) {
+            it('invalidates assertion (known type)', (done) => {
 
-                var Custom = function () { };
+                const Custom = function () { };
 
-                var exception = false;
+                let exception = false;
                 try {
-                    Code.expect(function () {
+                    Code.expect(() => {
 
                         throw new Custom();
                     }).to.throw(Error);
@@ -1917,11 +1919,11 @@ describe('expect()', function () {
                 done();
             });
 
-            it('invalidates assertion (anonymous type)', function (done) {
+            it('invalidates assertion (anonymous type)', (done) => {
 
-                var Custom = function () { };
+                const Custom = function () { };
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(throws).to.throw(Custom);
                 }
@@ -1933,9 +1935,9 @@ describe('expect()', function () {
                 done();
             });
 
-            it('validates assertion (type and message)', function (done) {
+            it('validates assertion (type and message)', (done) => {
 
-                var exception = false;
+                let exception = false;
                 try {
                     Code.expect(throws).to.throw(Error, 'kaboom');
                 }
@@ -1950,11 +1952,11 @@ describe('expect()', function () {
     });
 });
 
-describe('incomplete()', function () {
+describe('incomplete()', () => {
 
-    it('keeps track of incomplete assertions', function (done) {
+    it('keeps track of incomplete assertions', (done) => {
 
-        var a = Code.expect(1).to;
+        const a = Code.expect(1).to;
         Code.expect(2).to.equal(2);
         Hoek.assert(Code.incomplete().length === 1);
         a.equal(1);
