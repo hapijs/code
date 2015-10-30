@@ -1,7 +1,7 @@
 {
     "name": "code",
     "description": "assertion library",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "repository": "git://github.com/hapijs/code",
     "main": "lib/index.js",
     "keywords": [
@@ -13,7 +13,7 @@
         "node": ">=4.0.0"
     },
     "dependencies": {
-        "hoek": "2.x.x"
+        "hoek": "3.x.x"
     },
     "devDependencies": {
         "lab": "7.x.x"
