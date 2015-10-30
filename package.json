@@ -1,26 +1,26 @@
 {
-  "name": "code",
-  "description": "assertion library",
-  "version": "1.5.0",
-  "repository": "git://github.com/hapijs/code",
-  "main": "lib/index.js",
-  "keywords": [
-    "test",
-    "expect",
-    "assertion"
-  ],
-  "engines": {
-    "node": ">=0.10.40"
-  },
-  "dependencies": {
-    "hoek": "2.x.x"
-  },
-  "devDependencies": {
-    "lab": "5.x.x"
-  },
-  "scripts": {
-    "test": "lab -v -t 100 -L",
-    "test-cov-html": "lab -L -r html -o coverage.html"
-  },
-  "license": "BSD-3-Clause"
+    "name": "code",
+    "description": "assertion library",
+    "version": "2.0.0",
+    "repository": "git://github.com/hapijs/code",
+    "main": "lib/index.js",
+    "keywords": [
+        "test",
+        "expect",
+        "assertion"
+    ],
+    "engines": {
+        "node": ">=4.0.0"
+    },
+    "dependencies": {
+        "hoek": "2.x.x"
+    },
+    "devDependencies": {
+        "lab": "7.x.x"
+    },
+    "scripts": {
+        "test": "lab -v -t 100 -L",
+        "test-cov-html": "lab -L -r html -o coverage.html"
+    },
+    "license": "BSD-3-Clause"
 }
