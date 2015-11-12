@@ -1630,7 +1630,7 @@ describe('expect()', () => {
 
             it('invalidates assertion (anonymous)', (done) => {
 
-                function Custom () { }           /* eslint func-style:0 */
+                function Custom() { }           /* eslint func-style:0 */
 
                 let exception = false;
                 try {
