@@ -94,6 +94,20 @@ describe('expect()', () => {
         done();
     });
 
+    it('asserts on invalid condition (once)', (done) => {
+
+        let exception = false;
+        try {
+            Code.expect('abcad').to.once.contain('a');
+        }
+        catch (err) {
+            exception = err;
+        }
+
+        Hoek.assert(exception.message === 'Expected \'abcad\' to include \'a\' once', exception);
+        done();
+    });
+
     it('asserts on invalid condition (with actual)', (done) => {
 
         let exception = false;
