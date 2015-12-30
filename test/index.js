@@ -1976,6 +1976,67 @@ describe('expect()', () => {
             });
         });
     });
+
+    describe('calledWith', () => {
+
+        it('can be called', (done) => {
+
+            let exception;
+            try {
+                const noop = () => {};
+                Code.expect(noop).calledWith();
+            }
+            catch (err) {
+                exception = err;
+            }
+
+            Hoek.assert(!exception, exception);
+            done();
+        });
+
+        it('can be used to check result value', (done) => {
+
+            let exception;
+            try {
+                const echoReturn = (value) => value;
+                const sumReturn = (a, b) => a + b;
+                Code.expect(echoReturn).calledWith(2).to.equal(2);
+                Code.expect(echoReturn).calledWith('hello').to.equal('hello');
+                Code.expect(sumReturn).calledWith(1, 1).to.equal(2);
+                // FIXME: here
+            }
+            catch (err) {
+                exception = err;
+            }
+            Hoek.assert(!exception, exception);
+            done();
+        });
+
+        it('can be used to check throwing', (done) => {
+
+            let exception;
+            try {
+                const echoThrow = (value) => {
+
+                    throw new Error(value);
+                };
+                const sumThrow = (a, b) => {
+
+                    throw new Error(a + b);
+                };
+                Code.expect(echoThrow).calledWith(2).to.throw(Error, 2);
+                Code.expect(echoThrow).calledWith('hello').to.throw(Error, 'hello');
+                Code.expect(sumThrow).calledWith(1, 1).to.throw(Error,2);
+            }
+            catch (err) {
+                exception = err;
+            }
+            Hoek.assert(!exception, exception);
+            done();
+
+        });
+        // TODO: check invalid combo
+    });
 });
 
 describe('fail', () => {
