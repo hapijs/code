@@ -49,6 +49,7 @@ Lead Maintainer - [Colin Ihrig](https://github.com/cjihrig)
         - [`match(regex)`](#matchregex)
         - [`satisfy(validator)`](#satisfyvalidator)
         - [`throw([type], [message])`](#throwtype-message)
+    - [`fail(message)`](#failmessage)
     - [`count()`](#count)
     - [`incomplete()`](#incomplete)
     - [Settings](#settings)
@@ -633,6 +634,16 @@ var throws = function () {
 expect(throws).to.throw(CustomError, 'Oh no!');
 ```
 
+### `fail(message)`
+
+Make the test fail with `message`.
+
+```js
+var Code = require('code');
+
+Code.fail('This should not occur');
+```
+
 ### `count()`
 
 Returns the total number of assertions created using the `expect()` method.
@@ -655,7 +666,7 @@ var Code = require('code');
 var expect = Code.expect;
 
 expect(5).to.not.be.a.string;
-console.log(Code.incomplete());		// -> [ 'readme.js:345:1' ]
+console.log(Code.incomplete());		// -> [ 'readme.js:668:1' ]
 ```
 
 ### Settings
