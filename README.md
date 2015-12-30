@@ -59,8 +59,8 @@ Lead Maintainer - [Colin Ihrig](https://github.com/cjihrig)
 ## Example
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(true).to.be.a.boolean().and.to.not.equal(false);
 expect('this string').to.only.include(['this', 'string']);
@@ -108,8 +108,8 @@ The supported words are:
 - `to`
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(10).to.be.above(5);
 expect('abc').to.be.a.string();
@@ -131,8 +131,8 @@ The following words toggle a status flag for the current assertion:
 - `part` - allows a partial match when asserting inclusion. Used by `include()`.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(10).to.not.be.above(20);
 expect([{ a: 1 }]).to.deep.include({ a: 1 });
@@ -151,8 +151,8 @@ Generates an assertion object where:
 - `prefix` - an optional string used as an error message prefix.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(10, 'Age').to.be.above(5);
 ```
@@ -166,10 +166,9 @@ Asserts that the reference value is of a certain type.
 Asserts that the reference value is an `arguments` object.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
-
-var func = function () { return arguments; };
+const Code = require('code');
+const expect = Code.expect;
+const func = function () { return arguments; };
 expect(func()).to.be.arguments();
 ```
 
@@ -178,8 +177,8 @@ expect(func()).to.be.arguments();
 Asserts that the reference value is an `Array`.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect([1, 2]).to.be.an.array();
 ```
@@ -189,8 +188,8 @@ expect([1, 2]).to.be.an.array();
 Asserts that the reference value is a boolean.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(true).to.be.a.boolean();
 ```
@@ -200,8 +199,8 @@ expect(true).to.be.a.boolean();
 Asserts that the reference value is a `Buffer`.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(new Buffer('')).to.be.a.buffer();
 ```
@@ -211,8 +210,8 @@ expect(new Buffer('')).to.be.a.buffer();
 Asserts that the reference value is a `Date`.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(new Date()).to.be.a.date();
 ```
@@ -222,8 +221,8 @@ expect(new Date()).to.be.a.date();
 Asserts that the reference value is a `function`.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(function () {}).to.be.a.function();
 ```
@@ -233,8 +232,8 @@ expect(function () {}).to.be.a.function();
 Asserts that the reference value is a `number`.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(123).to.be.a.number();
 ```
@@ -244,8 +243,8 @@ expect(123).to.be.a.number();
 Asserts that the reference value is an `RegExp`.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(/abc/).to.be.a.regexp();
 ```
@@ -255,8 +254,8 @@ expect(/abc/).to.be.a.regexp();
 Asserts that the reference value is a string.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect('abc').to.be.a.string();
 ```
@@ -266,8 +265,8 @@ expect('abc').to.be.a.string();
 Asserts that the reference value is an object (excluding array, buffer, or other native objects).
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect({ a: '1' }).to.be.an.object();
 ```
@@ -281,8 +280,8 @@ Asserts that the reference value is equals to a predefined value.
 Asserts that the reference value is true.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(true).to.be.true();
 ```
@@ -292,8 +291,8 @@ expect(true).to.be.true();
 Asserts that the reference value is false.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(false).to.be.false();
 ```
@@ -303,8 +302,8 @@ expect(false).to.be.false();
 Asserts that the reference value is null.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(null).to.be.null();
 ```
@@ -314,8 +313,8 @@ expect(null).to.be.null();
 Asserts that the reference value is undefined.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(undefined).to.be.undefined();
 ```
@@ -331,8 +330,8 @@ Asserts that the reference value (a string, array, or object) includes the provi
   with key-value pairs to match.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect('abc').to.include('ab');
 expect('abc').to.only.include('abc');
@@ -370,8 +369,8 @@ Asserts that the reference value (a string) starts with the provided value where
 Note that this assertion is case sensitive.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect('https://example.org/secure').to.startWith('https://');
 ```
@@ -386,8 +385,8 @@ Asserts that the reference value (a string) ends with the provided value where:
 Note that this assertion is case sensitive.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect('http://example.org/relative').to.endWith('/relative');
 ```
@@ -399,8 +398,8 @@ Aliases: `exists`
 Asserts that the reference value exists (not `null` or `undefined`).
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(4).to.exist();
 expect(null).to.not.exist();
@@ -412,8 +411,8 @@ expect(null).to.not.exist();
 Asserts that the reference value has a `length` property equal to zero or an object with no keys.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect('abc').to.be.empty();
 ```
@@ -425,8 +424,8 @@ specified number of keys where:
 - `size` - the required size.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect('abcd').to.have.length(4);
 ```
@@ -442,8 +441,8 @@ types) where:
 deep comparisons, and is ignored otherwise.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(5).to.equal(5);
 expect({ a: 1 }).to.deep.equal({ a: 1 });
@@ -455,8 +454,8 @@ optional `options` argument is passed directly to `Hoek.deepEqual()`. An example
 deep comparison which ignores object prototypes is shown below.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(Object.create(null)).to.deep.equal({}, { prototype: false });
 ```
@@ -469,8 +468,8 @@ Asserts that the reference value is greater than (`>`) the provided value where:
 - `value` - the value to compare to.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(10).to.be.above(5);
 ```
@@ -483,8 +482,8 @@ Asserts that the reference value is at least (`>=`) the provided value where:
 - `value` - the value to compare to.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(10).to.be.at.least(10);
 ```
@@ -497,8 +496,8 @@ Asserts that the reference value is less than (`<`) the provided value where:
 - `value` - the value to compare to.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(10).to.be.below(20);
 ```
@@ -511,8 +510,8 @@ Asserts that the reference value is at most (`<=`) the provided value where:
 - `value` - the value to compare to.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(10).to.be.at.most(10);
 ```
@@ -526,8 +525,8 @@ Asserts that the reference value is within (`from <= value <= to`) the provided 
 - `to` - the end of the range (inclusive).
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(10).to.be.within(10, 20);
 expect(20).to.be.within(10, 20);
@@ -540,8 +539,8 @@ Asserts that the reference value is between but not equal (`from < value < to`) 
 - `to` - the end of the range (exclusive).
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(15).to.be.between(10, 20);
 ```
@@ -553,8 +552,8 @@ Asserts that the reference value is about the provided value within a delta marg
 - `delta` - the allowed margin of difference.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(10).to.be.about(9, 1);
 ```
@@ -567,8 +566,8 @@ Asserts that the reference value has the provided `instanceof` value where:
 - `type` - the type value to match.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(new Date()).to.be.an.instanceof(Date);
 ```
@@ -581,8 +580,8 @@ Asserts that the reference value is a string matching the provided regular expre
 - `regex` - the regular expression to match.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect('a5').to.match(/\w\d/);
 ```
@@ -597,8 +596,8 @@ Asserts that the reference value satisfies the provided validator function where
   the return value is `true`.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect('x').to.satisfy(function (value) { return value === 'x'; });
 ```
@@ -615,18 +614,18 @@ requirements where:
   must provide a full match.
 
 ```js
-var NodeUtil = require('util');
-var Code = require('code');
-var expect = Code.expect;
+const NodeUtil = require('util');
+const Code = require('code');
+const expect = Code.expect;
 
-var CustomError = function (message) {
+const CustomError = function (message) {
 
     Error.call(this, message);
 };
 
 NodeUtil.inherit(CustomError, Error)
 
-var throws = function () {
+const throws = function () {
 
     throw new CustomError('Oh no!');
 };
@@ -639,7 +638,7 @@ expect(throws).to.throw(CustomError, 'Oh no!');
 Make the test fail with `message`.
 
 ```js
-var Code = require('code');
+const Code = require('code');
 
 Code.fail('This should not occur');
 ```
@@ -649,8 +648,8 @@ Code.fail('This should not occur');
 Returns the total number of assertions created using the `expect()` method.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(5).to.not.be.a.string();
 console.log(Code.count());		// -> 1
@@ -662,11 +661,11 @@ Returns an array of the locations where incomplete assertions were declared or `
 no incomplete assertions found.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
+const Code = require('code');
+const expect = Code.expect;
 
 expect(5).to.not.be.a.string;
-console.log(Code.incomplete());		// -> [ 'readme.js:668:1' ]
+console.log(Code.incomplete());		// -> [ 'readme.js:667:1' ]
 ```
 
 ### Settings
@@ -681,9 +680,9 @@ truncated for readability. Setting this to `false` causes the entire message
 to be displayed. Defaults to `true`.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
-var foo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const Code = require('code');
+const expect = Code.expect;
+const foo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 Code.settings.truncateMessages = false;
 expect(foo).to.deep.equal([]);
@@ -694,9 +693,9 @@ expect(foo).to.deep.equal([]);
 A boolean value that, when `false`, ignores object prototypes when doing a deep comparison. Defaults to `true`.
 
 ```js
-var Code = require('code');
-var expect = Code.expect;
-var foo = Object.create(null);
+const Code = require('code');
+const expect = Code.expect;
+const foo = Object.create(null);
 
 Code.setting.comparePrototypes = false;
 expect(foo).to.deep.equal({});
