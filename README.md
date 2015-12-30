@@ -640,9 +640,8 @@ Make the test fail with `message`.
 
 ```js
 var Code = require('code');
-var fail = Code.fail;
 
-fail('This should not occur');
+Code.fail('This should not occur');
 ```
 
 ### `count()`
@@ -667,7 +666,7 @@ var Code = require('code');
 var expect = Code.expect;
 
 expect(5).to.not.be.a.string;
-console.log(Code.incomplete());		// -> [ 'readme.js:669:1' ]
+console.log(Code.incomplete());		// -> [ 'readme.js:668:1' ]
 ```
 
 ### Settings

@@ -1990,10 +1990,8 @@ describe('fail', () => {
             exception = err;
         }
 
-        Hoek.assert(exception, exception);
         Hoek.assert(exception.message === 'Something wrong happened!', exception);
         done();
-
     });
 
     it('trigger failure only once', (done) => {
@@ -2007,9 +2005,7 @@ describe('fail', () => {
             exception = err;
         }
 
-        Hoek.assert(exception, exception);
         Hoek.assert(exception.message === 'Final Failure', exception);
-        Hoek.assert(exception.message !== 'FAIL AGAIN', exception);
         done();
     });
 
