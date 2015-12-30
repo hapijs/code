@@ -1978,6 +1978,43 @@ describe('expect()', () => {
     });
 });
 
+describe('fail', () => {
+
+    it('trigger failure', (done) => {
+
+        let exception = false;
+        try {
+            Code.fail('Something wrong happened!');
+        }
+        catch (err) {
+            exception = err;
+        }
+
+        Hoek.assert(exception, exception);
+        Hoek.assert(exception.message === 'Something wrong happened!', exception);
+        done();
+
+    });
+
+    it('trigger failure only once', (done) => {
+
+        let exception = false;
+        try {
+            Code.fail('Final Failure');
+            Code.fail('FAIL AGAIN');
+        }
+        catch (err) {
+            exception = err;
+        }
+
+        Hoek.assert(exception, exception);
+        Hoek.assert(exception.message === 'Final Failure', exception);
+        Hoek.assert(exception.message !== 'FAIL AGAIN', exception);
+        done();
+    });
+
+});
+
 describe('incomplete()', () => {
 
     it('keeps track of incomplete assertions', (done) => {
