@@ -1977,14 +1977,14 @@ describe('expect()', () => {
         });
     });
 
-    describe('calledWith', () => {
+    describe('with', () => {
 
         it('can be called', (done) => {
 
             let exception;
             try {
                 const noop = () => {};
-                Code.expect(noop).calledWith().not.to.throw();
+                Code.expect(noop).with().not.to.throw();
             }
             catch (err) {
                 exception = err;
@@ -1994,18 +1994,18 @@ describe('expect()', () => {
             done();
         });
 
-        it('refuse to be on a non function', (done) => {
+        it('refuse to be called on a non function', (done) => {
 
             let exception;
             try {
                 const answer = 'universe';
-                Code.expect(answer).calledWith(42).not.to.throw();
+                Code.expect(answer).with(42).not.to.throw();
             }
             catch (err) {
                 exception = err;
             }
 
-            Hoek.assert(exception.message === 'Can only calledWith on a function', exception);
+            Hoek.assert(exception.message === 'Can only call with on a function', exception);
             done();
         });
 
@@ -2039,9 +2039,9 @@ describe('expect()', () => {
                 throw new Error(a + b);
             };
             try {
-                Code.expect(echoThrow).calledWith(2).to.throw(Error, 2);
-                Code.expect(echoThrow).calledWith('hello').to.throw(Error, 'hello');
-                Code.expect(sumThrow).calledWith(1, 1).to.throw(Error, 2);
+                Code.expect(echoThrow).with(2).to.throw(Error, 2);
+                Code.expect(echoThrow).with('hello').to.throw(Error, 'hello');
+                Code.expect(sumThrow).with(1, 1).to.throw(Error, 2);
             }
             catch (err) {
                 exception = err;
@@ -2051,6 +2051,75 @@ describe('expect()', () => {
 
         });
         // TODO: check invalid combo
+    });
+
+    describe('on', () => {
+
+        it('can be called', (done) => {
+
+            let exception;
+            try {
+                const noop = () => {};
+                Code.expect(noop).on(this).not.to.throw();
+            }
+            catch (err) {
+                exception = err;
+            }
+
+            Hoek.assert(!exception, exception);
+            done();
+        });
+
+        it('refuse to be called on a non function', (done) => {
+
+            let exception;
+            try {
+                const answer = 'universe';
+                Code.expect(answer).on(this).not.to.throw();
+            }
+            catch (err) {
+                exception = err;
+            }
+
+            Hoek.assert(exception.message === 'Can only call on on a function', exception);
+            done();
+        });
+
+        it('refuse to be called with a illegal this', (done) => {
+
+            let exception;
+            try {
+                const answer = () => 'universe';
+                Code.expect(answer).on(42).not.to.throw();
+            }
+            catch (err) {
+                exception = err;
+            }
+
+            Hoek.assert(exception.message === 'Can only call on with a function', exception);
+            done();
+        });
+
+        it('attach a new this', (done) => {
+
+            const thisThrow = function () {
+
+                throw new Error(this && this.secret);
+            };
+            const newThis = function (){};
+            newThis.secret = 'hapirocks';
+
+            let exception;
+            try {
+                Code.expect(thisThrow).on(newThis).to.throw(Error, 'hapirocks');
+            }
+            catch (err) {
+                exception = err;
+            }
+            Hoek.assert(!exception, exception);
+            done();
+
+        });
     });
 });
 
