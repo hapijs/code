@@ -1994,6 +1994,21 @@ describe('expect()', () => {
             done();
         });
 
+        it('refuse to be on a non function', (done) => {
+
+            let exception;
+            try {
+                const answer = 'universe';
+                Code.expect(answer).calledWith(42).not.to.throw();
+            }
+            catch (err) {
+                exception = err;
+            }
+
+            Hoek.assert(exception.message === 'Can only calledWith on a function', exception);
+            done();
+        });
+
         //it('can be used to check result value', (done) => {
         //
         //    let exception;
