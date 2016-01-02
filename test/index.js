@@ -2121,6 +2121,57 @@ describe('expect()', () => {
 
         });
     });
+
+    describe('result', () => {
+
+        it('can be called', (done) => {
+
+            let exception;
+            try {
+                const universe = () => 42;
+                Code.expect(universe).to.have.result().equal(42);
+            }
+            catch (err) {
+                exception = err;
+            }
+
+            Hoek.assert(!exception, exception);
+            done();
+        });
+
+        it('refuse to be called on a non function', (done) => {
+
+            let exception;
+            try {
+                const answer = 'universe';
+                Code.expect(answer).to.have.result().equal(42);
+            }
+            catch (err) {
+                exception = err;
+            }
+
+            Hoek.assert(exception.message === 'Can only call on on a function', exception);
+            done();
+        });
+
+        it('enable us to use other matcher', (done) => {
+
+            let exception;
+            try {
+                Code.expect(() => true).to.have.result().be.true();
+                Code.expect(() => false).to.have.result().be.false();
+                Code.expect(() => 'the answer!').to.have.result().be.match(/answer/);
+            }
+            catch (err) {
+                exception = err;
+            }
+            Hoek.assert(!exception, exception);
+            done();
+
+        });
+    });
+
+
 });
 
 describe('fail', () => {
