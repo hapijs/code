@@ -1,9 +1,9 @@
-#code
+# code
 
-BDD assertion library.
+> BDD assertion library.
 
 [![Current Version](https://img.shields.io/npm/v/code.svg)](https://www.npmjs.org/package/code)
-[![Build Status](https://secure.travis-ci.org/hapijs/code.png)](http://travis-ci.org/hapijs/code)
+[![Build Status](https://secure.travis-ci.org/hapijs/code.svg)](http://travis-ci.org/hapijs/code)
 
 Lead Maintainer - [Colin Ihrig](https://github.com/cjihrig)
 
