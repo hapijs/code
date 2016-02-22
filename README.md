@@ -27,7 +27,7 @@ the [**must**](https://github.com/moll/js-must) author.
 
 The second reason is that similar to [**lab**](https://github.com/hapijs/lab), our test runner, we wanted
 an assertion library that is small, simple, and intuitive - without plugins, extensions, or the overhead
-of having to support testing in the browser. **code** provides much of the same functionality is about
+of having to support testing in the browser. **code** provides much of the same functionality in about
 300 lines of code that are trivial to read in a few minutes.
 
 And last, we wanted to experiment with some new features that allow deeper integration between the test
