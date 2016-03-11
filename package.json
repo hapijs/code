@@ -16,7 +16,7 @@
         "hoek": "3.x.x"
     },
     "devDependencies": {
-        "lab": "9.x.x",
+        "lab": "10.x.x",
         "markdown-toc": "0.12.3"
     },
     "scripts": {
