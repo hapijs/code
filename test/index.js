@@ -1039,6 +1039,23 @@ describe('expect()', () => {
                 Hoek.assert(exception.message === 'some message', exception);
                 done();
             });
+
+            it('validates assertion (error with incomplete stack)', (done) => {
+
+                let exception = false;
+                try {
+                    const err = new Error('foo');
+                    err.stack = undefined;
+                    Code.expect(err).to.not.exist();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'foo', exception);
+                Hoek.assert(exception.at === undefined, exception);
+                done();
+            });
         });
 
         describe('empty()', () => {
