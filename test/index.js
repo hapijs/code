@@ -496,6 +496,195 @@ describe('expect()', () => {
             });
         });
 
+        describe('error()', () => {
+
+            const error = new Error('kaboom');
+
+            it('validates assertion', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(error).to.be.an.error();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates assertion (not error)', (done) => {
+
+                const Custom = function () { };
+                Hoek.inherits(Custom, Error);
+
+                let exception = false;
+                try {
+                    Code.expect(false).to.not.be.an.error();
+                    Code.expect(new Error('kaboom')).to.not.be.an.error('baboom');
+                    Code.expect(new Error('kaboom')).to.not.be.an.error(Error, 'baboom');
+                    Code.expect(new Error()).to.not.be.an.error(Custom);
+                    Code.expect(new Error('kaboom')).to.not.be.an.error(Custom, 'baboom');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('invalidates assertion', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(false).to.be.an.error();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected false to be an error with Error type', exception);
+                done();
+            });
+
+            it('validates assertion (message)', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(error).to.be.an.error('kaboom');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates assertion (empty message)', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(new Error('')).to.be.an.error('');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates assertion (message regex)', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(error).to.be.an.error(/boom/);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates assertion (missing message)', (done) => {
+
+                const Custom = function () { };
+                Hoek.inherits(Custom, Error);
+
+                let exception = false;
+                try {
+                    Code.expect(new Custom()).to.be.an.error('kaboom');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected [Error] to be an error with specified message', exception);
+                done();
+            });
+
+
+            it('invalidates assertion (empty message)', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(new Error('kaboom')).to.be.an.error('');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected [Error: kaboom] to be an error with specified message', exception);
+                done();
+            });
+
+            it('validates assertion (type)', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(error).to.be.an.error(Error);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('invalidates assertion (known type)', (done) => {
+
+                const Custom = function () { };
+
+                let exception = false;
+                try {
+                    Code.expect(new Custom()).to.be.an.error(Error);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected {} to be an error with Error type', exception);
+                done();
+            });
+
+            it('invalidates assertion (anonymous type)', (done) => {
+
+                const Custom = function () { };
+                Hoek.inherits(Custom, Error);
+
+                let exception = false;
+                try {
+                    Code.expect(error).to.be.an.error(Custom);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected [Error: kaboom] to be an error with provided type', exception);
+                done();
+            });
+
+            it('validates assertion (type and message)', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(error).to.be.an.error(Error, 'kaboom');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+        });
+
         describe('function()', () => {
 
             it('validates correct type', (done) => {
