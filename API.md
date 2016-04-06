@@ -179,6 +179,24 @@ const expect = Code.expect;
 expect(new Date()).to.be.a.date();
 ```
 
+##### `error([type], [message])`
+
+Asserts that the reference value is an error. You can provide optional requirements where:
+- `type` - the `instanceof` value of the error.
+- `message` a string or regular expression matching the error `message` property. Note that a string
+  must provide a full match.
+
+```js
+const Code = require('code');
+const expect = Code.expect;
+
+const err = new Error('Oops an error occured.');
+expect(err).to.be.an.error();
+expect(err).to.be.an.error(Error);
+expect(err).to.be.an.error('Oops an error occured.');
+expect(err).to.be.an.error(Error, /occured/);
+```
+
 ##### `function()`
 
 Asserts that the reference value is a `function`.
