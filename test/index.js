@@ -514,6 +514,27 @@ describe('expect()', () => {
                 done();
             });
 
+            it('validates assertion (not error)', (done) => {
+
+                const Custom = function () { };
+                Hoek.inherits(Custom, Error);
+
+                let exception = false;
+                try {
+                    Code.expect(false).to.not.be.an.error();
+                    Code.expect(new Error('kaboom')).to.not.be.an.error('baboom');
+                    Code.expect(new Error('kaboom')).to.not.be.an.error(Error, 'baboom');
+                    Code.expect(new Error()).to.not.be.an.error(Custom);
+                    Code.expect(new Error('kaboom')).to.not.be.an.error(Custom, 'baboom');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
             it('invalidates assertion', (done) => {
 
                 let exception = false;
