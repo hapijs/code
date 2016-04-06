@@ -1,5 +1,5 @@
 <!-- version -->
-# 2.1.0 API Reference
+# 2.2.0 API Reference
 <!-- versionstop -->
 
 <!-- toc -->
@@ -14,6 +14,7 @@
       - [`boolean()`](#boolean)
       - [`buffer()`](#buffer)
       - [`date()`](#date)
+      - [`error([type], [message])`](#errortype-message)
       - [`function()`](#function)
       - [`number()`](#number)
       - [`regexp()`](#regexp)
