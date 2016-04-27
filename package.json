@@ -13,11 +13,11 @@
         "node": ">=4.0.0"
     },
     "dependencies": {
-        "hoek": "3.x.x"
+        "hoek": "4.x.x"
     },
     "devDependencies": {
         "lab": "10.x.x",
-        "markdown-toc": "0.12.3"
+        "markdown-toc": "0.12.x"
     },
     "scripts": {
         "test": "lab -v -t 100 -L",
