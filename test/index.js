@@ -773,7 +773,7 @@ describe('expect()', () => {
                     exception = err;
                 }
 
-                Hoek.assert(exception.message.match(/Expected .* GMT.* to be a regexp but got 'date'/), exception);
+                Hoek.assert(exception.message.match(/Expected .* to be a regexp but got 'date'/), exception);
                 done();
             });
         });
