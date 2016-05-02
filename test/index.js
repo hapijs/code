@@ -1908,6 +1908,26 @@ describe('expect()', () => {
                 Hoek.assert(exception.message === 'Expected \'a4x\' to match /\\w\\dy/', exception);
                 done();
             });
+
+            it('validates arrays', (done) => {
+
+                const throws = function () {
+
+                    Code.expect(['zero', 'audience']).to.match(/roa/);
+                };
+
+                let exception = false;
+                try {
+                    Code.expect(['calm', 'down']).to.match(/^down/);
+                    Code.expect(throws).to.throw();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
         });
 
         describe('satisfy()', () => {
