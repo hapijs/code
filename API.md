@@ -558,8 +558,10 @@ expect(new Date()).to.be.an.instanceof(Date);
 
 Aliases: `matches()`
 
-Asserts that the reference value is a string matching the provided regular expression where:
+Asserts that the reference value matches the provided regular expression where:
 - `regex` - the regular expression to match.
+
+If the value is an array the regular expression will be applied to every item independently
 
 ```js
 const Code = require('code');

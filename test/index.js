@@ -1909,7 +1909,7 @@ describe('expect()', () => {
                 done();
             });
 
-            it('validates arrays', (done) => {
+            it('validates array assertion', (done) => {
 
                 const throws = function () {
 
@@ -1918,8 +1918,21 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    Code.expect(['calm', 'down']).to.match(/^down/);
                     Code.expect(throws).to.throw();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates array', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(['calm', 'down']).to.match(/^down/);
                 }
                 catch (err) {
                     exception = err;
