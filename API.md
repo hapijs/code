@@ -650,6 +650,18 @@ expect(5).to.not.be.a.string;
 console.log(Code.incomplete());		// -> [ 'readme.js:667:1' ]
 ```
 
+### `thrownAt([error])`
+
+Returns the filename, line number, and column number of where the `error` was created. If
+no error is provided, the current location returned.
+
+```js
+const Code = require('code');
+
+const error = new Error('oops');
+Code.thrownAt(error);
+```
+
 ### Settings
 
 **code** can be configured using the module's `settings` object. The following
