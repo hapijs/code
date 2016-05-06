@@ -1,5 +1,5 @@
 <!-- version -->
-# 2.2.0 API Reference
+# 2.3.0 API Reference
 <!-- versionstop -->
 
 <!-- toc -->
@@ -46,6 +46,7 @@
   - [`fail(message)`](#failmessage)
   - [`count()`](#count)
   - [`incomplete()`](#incomplete)
+  - [`thrownAt([error])`](#thrownaterror)
   - [Settings](#settings)
     - [`truncateMessages`](#truncatemessages)
     - [`comparePrototypes`](#compareprototypes)
