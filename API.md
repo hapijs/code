@@ -1,9 +1,7 @@
 <!-- version -->
 # 2.2.0 API Reference
 <!-- versionstop -->
-
 <!-- toc -->
-
 - [Code](#code)
   - [Grammar](#grammar)
   - [Flags](#flags)
@@ -51,7 +49,6 @@
     - [`comparePrototypes`](#compareprototypes)
 
 <!-- tocstop -->
-
 ## Code
 
 ### Grammar
@@ -474,21 +471,16 @@ expect(10).to.be.at.least(10);
 
 Aliases: `lessThan()`
 
-Asserts that the reference value is less than (`<`) the provided value where:
-- `value` - the value to compare to.
-
-```js
-const Code = require('code');
-const expect = Code.expect;
-
-expect(10).to.be.below(20);
-```
-
-#### `most(value)`
-
-Aliases: `max()`
-
-Asserts that the reference value is at most (`<=`) the provided value where:
+Asserts that the reference value is less than (`<`) the provided value where
+                                                    - `value` - the value to compare to.
+                                                    ``` js
+                                                    const Code = require('code');
+                                                    const expect = Code.expect;
+                                                    expect(10).to.be.below(20);
+                                                    ```
+                                                    #### `most(value)`
+                                                    Aliases `max()`
+                                                    Asserts that the reference value is at most (`<=`) the provided value where:
 - `value` - the value to compare to.
 
 ```js
@@ -648,6 +640,18 @@ const expect = Code.expect;
 
 expect(5).to.not.be.a.string;
 console.log(Code.incomplete());		// -> [ 'readme.js:667:1' ]
+```
+
+### `thrownAt([error])`
+
+Returns the filename, line number, and column number of where the `error` was created. If
+no error is provided, the current location returned.
+
+```js
+const Code = require('code');
+
+const error = new Error('oops');
+Code.thrownAt(error);
 ```
 
 ### Settings
