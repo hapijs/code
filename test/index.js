@@ -1217,32 +1217,18 @@ describe('expect()', () => {
 
             it('validates assertion (not error)', (done) => {
 
+                const failed = new Error('some message');           // Create error on a different line than where the assertion is
+
                 let exception = false;
                 try {
-                    Code.expect(new Error('some message')).to.not.exist();
+                    Code.expect(failed).to.not.exist();
                 }
                 catch (err) {
                     exception = err;
                 }
 
                 Hoek.assert(exception.message === 'some message', exception);
-                done();
-            });
-
-            it('validates assertion (error with incomplete stack)', (done) => {
-
-                let exception = false;
-                try {
-                    const err = new Error('foo');
-                    err.stack = undefined;
-                    Code.expect(err).to.not.exist();
-                }
-                catch (err) {
-                    exception = err;
-                }
-
-                Hoek.assert(exception.message === 'foo', exception);
-                Hoek.assert(exception.at === undefined, exception);
+                Hoek.assert(exception.at.line !== Code.thrownAt(failed).line, 'Reports the wrong line number');
                 done();
             });
         });
@@ -2226,6 +2212,19 @@ describe('incomplete()', () => {
         Hoek.assert(Code.incomplete().length === 1);
         a.equal(1);
         Hoek.assert(!Code.incomplete());
+        done();
+    });
+});
+
+describe('thrownAt()', () => {
+
+    it('handles error with missing stack', (done) => {
+
+        const failed = new Error('foo');
+        failed.stack = undefined;
+        const at = Code.thrownAt(failed);
+
+        Hoek.assert(at === undefined, 'Reports the wrong at information');
         done();
     });
 });
