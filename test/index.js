@@ -320,10 +320,10 @@ describe('expect()', () => {
         try {
 
             const obj = Object.create(null);
-            Code.expect({}).to.deep.equal(obj);
+            Code.expect({}).to.equal(obj);
             obj.foo = 'bar';
-            Code.expect({ foo: 'bar' }).to.deep.equal(obj);
-            Code.expect({ foo: 'bar' }).to.deep.equal({ foo: 'bar' });
+            Code.expect({ foo: 'bar' }).to.equal(obj);
+            Code.expect({ foo: 'bar' }).to.equal({ foo: 'bar' });
         }
         catch (err) {
             exception = err;
@@ -331,6 +331,19 @@ describe('expect()', () => {
 
         Code.settings.comparePrototypes = origPrototype;
         Hoek.assert(!exception, exception);
+        Code.settings.comparePrototypes = true;
+
+        try {
+
+            const obj = Object.create(null);
+            Code.expect({}).to.equal(obj);
+        }
+        catch (err) {
+            exception = err;
+        }
+
+        Code.settings.comparePrototypes = origPrototype;
+        Hoek.assert(exception.message === 'Expected {} to equal specified value', exception);
         done();
     });
 
@@ -985,11 +998,17 @@ describe('expect()', () => {
                 let exception = false;
                 try {
                     Code.expect('abc').to.include('ab');
+                    Code.expect('abc').to.shallow.include('ab');
                     Code.expect('abc').to.only.include('abc');
+                    Code.expect('abc').to.only.shallow.include('abc');
                     Code.expect('aaa').to.only.include('a');
+                    Code.expect('aaa').to.only.shallow.include('a');
                     Code.expect('abc').to.once.include('b');
+                    Code.expect('abc').to.once.shallow.include('b');
                     Code.expect('abc').to.include(['a', 'c']);
+                    Code.expect('abc').to.shallow.include(['a', 'c']);
                     Code.expect('abc').to.part.include(['a', 'd']);
+                    Code.expect('abc').to.part.shallow.include(['a', 'd']);
                 }
                 catch (err) {
                     exception = err;
@@ -1004,13 +1023,14 @@ describe('expect()', () => {
                 let exception = false;
                 try {
                     Code.expect([1, 2, 3]).to.include(1);
-                    Code.expect([{ a: 1 }]).to.deep.include({ a: 1 });
+                    Code.expect([1, 2, 3]).to.shallow.include(1);
+                    Code.expect([{ a: 1 }]).to.include({ a: 1 });
                     Code.expect([1, 2, 3]).to.include([1, 2]);
-                    Code.expect([{ a: 1 }]).to.deep.include([{ a: 1 }]);
+                    Code.expect([{ a: 1 }]).to.include([{ a: 1 }]);
                     Code.expect([1, 1, 2]).to.only.include([1, 2]);
                     Code.expect([1, 2]).to.once.include([1, 2]);
                     Code.expect([1, 2, 3]).to.part.include([1, 4]);
-                    Code.expect([[1], [2]]).to.deep.include([[1]]);
+                    Code.expect([[1], [2]]).to.include([[1]]);
                 }
                 catch (err) {
                     exception = err;
@@ -1020,24 +1040,53 @@ describe('expect()', () => {
                 done();
             });
 
+            it('invalidates arrays (shallow)', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect([{ a: 1 }]).to.shallow.include({ a: 1 });
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected [ { a: 1 } ] to include { a: 1 }', exception);
+                done();
+            });
+
             it('validates objects', (done) => {
 
                 let exception = false;
                 try {
                     Code.expect({ a: 1, b: 2, c: 3 }).to.include('a');
+                    Code.expect({ a: 1, b: 2, c: 3 }).to.shallow.include('a');
                     Code.expect({ a: 1, b: 2, c: 3 }).to.include(['a', 'c']);
                     Code.expect({ a: 1, b: 2, c: 3 }).to.only.include(['a', 'b', 'c']);
                     Code.expect({ a: 1, b: 2, c: 3 }).to.include({ a: 1 });
                     Code.expect({ a: 1, b: 2, c: 3 }).to.include({ a: 1, c: 3 });
                     Code.expect({ a: 1, b: 2, c: 3 }).to.part.include({ a: 1, d: 4 });
                     Code.expect({ a: 1, b: 2, c: 3 }).to.only.include({ a: 1, b: 2, c: 3 });
-                    Code.expect({ a: [1], b: [2], c: [3] }).to.deep.include({ a: [1], c: [3] });
+                    Code.expect({ a: [1], b: [2], c: [3] }).to.include({ a: [1], c: [3] });
                 }
                 catch (err) {
                     exception = err;
                 }
 
                 Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('invalidates objects (shallow)', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect({ a: [1] }).to.shallow.include({ a: [1] });
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected { a: [ 1 ] } to include { a: [ 1 ] }', exception);
                 done();
             });
 
@@ -1386,6 +1435,13 @@ describe('expect()', () => {
                 let exception = false;
                 try {
                     Code.expect('abc').to.equal('abc');
+                    Code.expect(['abc']).to.equal(['abc']);
+                    Code.expect({ a: 1 }).to.equal({ a: 1 });
+                    Code.expect({}).to.not.equal({ a: 1 });
+                    Code.expect({ a: 1 }).to.not.equal({});
+                    Code.expect(Object.create(null)).to.not.equal({}, { prototype: true });
+                    Code.expect(Object.create(null)).to.equal({}, { prototype: false });
+                    Code.expect(Object.create(null)).to.equal({});
                 }
                 catch (err) {
                     exception = err;
@@ -1409,16 +1465,29 @@ describe('expect()', () => {
                 done();
             });
 
-            it('validates assertion (deep)', (done) => {
+            it('invalidates assertion', (done) => {
 
                 let exception = false;
                 try {
-                    Code.expect(['abc']).to.deep.equal(['abc']);
-                    Code.expect({ a: 1 }).to.deep.equal({ a: 1 });
-                    Code.expect({}).to.not.deep.equal({ a: 1 });
-                    Code.expect({ a: 1 }).to.not.deep.equal({});
-                    Code.expect(Object.create(null)).to.not.deep.equal({});
-                    Code.expect(Object.create(null)).to.deep.equal({}, { prototype: false });
+                    Code.expect({ foo: 1 }).to.equal({ foo: 2 });
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected { foo: 1 } to equal specified value', exception);
+                done();
+            });
+
+            it('validates assertion (shallow)', (done) => {
+
+                let exception = false;
+                try {
+                    const foo = { bar: 'baz' };
+
+                    Code.expect('a').to.shallow.equal('a');
+                    Code.expect(1).to.shallow.equal(1);
+                    Code.expect(foo).to.shallow.equal(foo);
                 }
                 catch (err) {
                     exception = err;
@@ -1428,11 +1497,11 @@ describe('expect()', () => {
                 done();
             });
 
-            it('invalidates assertion', (done) => {
+            it('invalidates assertion (shallow)', (done) => {
 
                 let exception = false;
                 try {
-                    Code.expect(['a']).to.equal(['a']);
+                    Code.expect(['a']).to.shallow.equal(['a']);
                 }
                 catch (err) {
                     exception = err;
