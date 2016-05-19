@@ -432,7 +432,7 @@ expect({ a: 1 }).to.deep.equal({ a: 1 });
 ```
 
 Deep comparisons are performed using
-[`Hoek.deepEqual()`](https://github.com/hapijs/hoek#deepequalb-a-options). The
+[`Hoek.deepEqual()`](https://github.com/hapijs/hoek/blob/master/API.md#deepequalb-a-options). The
 optional `options` argument is passed directly to `Hoek.deepEqual()`. An example
 deep comparison which ignores object prototypes is shown below.
 
