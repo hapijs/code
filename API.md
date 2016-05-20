@@ -88,19 +88,18 @@ expect(6).to.be.in.range(5, 6);
 ### Flags
 
 The following words toggle a status flag for the current assertion:
-- `deep` - performs a deep comparison instead of simple equality (`===`). Required when trying to compare
-  objects to an identical copy that is not the same reference. Used by `equal()` and `include()`.
 - `not` - inverses the expected result of any assertion.
 - `once` - requires that inclusion matches appear only once in the provided value. Used by `include()`.
 - `only` - requires that only the provided elements appear in the provided value. Used by `include()`.
 - `part` - allows a partial match when asserting inclusion. Used by `include()`.
+- `shallow` - performs a comparison using strict equality (`===`). Code defaults to deep comparison. Used by `equal()` and `include()`.
 
 ```js
 const Code = require('code');
 const expect = Code.expect;
 
 expect(10).to.not.be.above(20);
-expect([{ a: 1 }]).to.deep.include({ a: 1 });
+expect([1, 2, 3]).to.shallow.include(3);
 expect([1, 1, 2]).to.only.include([1, 2]);
 expect([1, 2]).to.once.include([1, 2]);
 expect([1, 2, 3]).to.part.include([1, 4]);
@@ -256,7 +255,7 @@ expect({ a: '1' }).to.be.an.object();
 
 #### Values
 
-Asserts that the reference value is equals to a predefined value.
+Asserts that the reference value is equal to a predefined value.
 
 ##### `true()`
 
@@ -308,8 +307,7 @@ Aliases: `includes()`, `contain()`, `contains()`
 
 Asserts that the reference value (a string, array, or object) includes the provided values where:
 - `values` - a single or array of values. If the reference value is a string, the values must be strings.
-  If the reference value is an array, the values can be any array member (`deep` is required to compare
-  non-literal types). If the reference value is an object, the values can be key names, or a single object
+  If the reference value is an array, the values can be any array member. If the reference value is an object, the values can be key names, or a single object
   with key-value pairs to match.
 
 ```js
@@ -324,13 +322,13 @@ expect('abc').to.include(['a', 'c']);
 expect('abc').to.part.include(['a', 'd']);
 
 expect([1, 2, 3]).to.include(1);
-expect([{ a: 1 }]).to.deep.include({ a: 1 });
+expect([{ a: 1 }]).to.include({ a: 1 });
 expect([1, 2, 3]).to.include([1, 2]);
-expect([{ a: 1 }]).to.deep.include([{ a: 1 }]);
+expect([{ a: 1 }]).to.include([{ a: 1 }]);
 expect([1, 1, 2]).to.only.include([1, 2]);
 expect([1, 2]).to.once.include([1, 2]);
 expect([1, 2, 3]).to.part.include([1, 4]);
-expect([[1], [2]]).to.deep.include([[1]]);
+expect([[1], [2]]).to.include([[1]]);
 
 expect({ a: 1, b: 2, c: 3 }).to.include('a');
 expect({ a: 1, b: 2, c: 3 }).to.include(['a', 'c']);
@@ -339,7 +337,7 @@ expect({ a: 1, b: 2, c: 3 }).to.include({ a: 1 });
 expect({ a: 1, b: 2, c: 3 }).to.include({ a: 1, c: 3 });
 expect({ a: 1, b: 2, c: 3 }).to.part.include({ a: 1, d: 4 });
 expect({ a: 1, b: 2, c: 3 }).to.only.include({ a: 1, b: 2, c: 3 });
-expect({ a: [1], b: [2], c: [3] }).to.deep.include({ a: [1], c: [3] });
+expect({ a: [1], b: [2], c: [3] }).to.include({ a: [1], c: [3] });
 ```
 
 #### `startWith(value)`
@@ -417,21 +415,19 @@ expect('abcd').to.have.length(4);
 
 Aliases: `equals()`
 
-Asserts that the reference value equals the provided value (`deep` is required to compare non-literal
-types) where:
+Asserts that the reference value equals the provided value where:
 - `value` - the value to compare to.
-- `options` - optional object specifying comparison options. This is only used on
-deep comparisons, and is ignored otherwise.
+- `options` - optional object specifying comparison options. This is ignored on `shallow` comparisons.
 
 ```js
 const Code = require('code');
 const expect = Code.expect;
 
 expect(5).to.equal(5);
-expect({ a: 1 }).to.deep.equal({ a: 1 });
+expect({ a: 1 }).to.equal({ a: 1 });
 ```
 
-Deep comparisons are performed using
+Deep comparisons (the default) are performed using
 [`Hoek.deepEqual()`](https://github.com/hapijs/hoek/blob/master/API.md#deepequalb-a-options). The
 optional `options` argument is passed directly to `Hoek.deepEqual()`. An example
 deep comparison which ignores object prototypes is shown below.
@@ -440,7 +436,17 @@ deep comparison which ignores object prototypes is shown below.
 const Code = require('code');
 const expect = Code.expect;
 
-expect(Object.create(null)).to.deep.equal({}, { prototype: false });
+expect(Object.create(null)).to.equal({}, { prototype: false });
+```
+
+Strict equality can be checked using the `shallow` modifier. This yields the same output as a `===` check.
+
+```js
+const Code = require('code');
+const expect = Code.expect;
+
+expect(5).to.shallow.equal(5);
+expect({ a: 1 }).to.shallow.equal({ a: 1 }); // fails as they are not the same reference
 ```
 
 #### `above(value)`
@@ -680,18 +686,21 @@ const expect = Code.expect;
 const foo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 Code.settings.truncateMessages = false;
-expect(foo).to.deep.equal([]);
+expect(foo).to.equal([]);
 ```
 
 #### `comparePrototypes`
 
-A boolean value that, when `false`, ignores object prototypes when doing a deep comparison. Defaults to `true`.
+A Boolean value that, when `false`, ignores object prototypes when doing a deep comparison. Defaults to `false`.
 
 ```js
 const Code = require('code');
 const expect = Code.expect;
 const foo = Object.create(null);
 
-Code.setting.comparePrototypes = false;
-expect(foo).to.deep.equal({});
+Code.settings.comparePrototypes = false;
+expect(foo).to.equal({});
+
+Code.settings.comparePrototypes = true;
+expect(foo).to.equal({}); // fails
 ```
