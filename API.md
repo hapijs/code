@@ -91,7 +91,7 @@ The following words toggle a status flag for the current assertion:
 - `not` - inverses the expected result of any assertion.
 - `once` - requires that inclusion matches appear only once in the provided value. Used by `include()`.
 - `only` - requires that only the provided elements appear in the provided value. Used by `include()`.
-- `part` - allows a partial match when asserting inclusion. Used by `include()`.
+- `part` - allows a partial match when asserting inclusion. Used by `include()`. Defaults to `false`.
 - `shallow` - performs a comparison using strict equality (`===`). Code defaults to deep comparison. Used by `equal()` and `include()`.
 
 ```js
