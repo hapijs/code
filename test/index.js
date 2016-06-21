@@ -1040,6 +1040,20 @@ describe('expect()', () => {
                 done();
             });
 
+            it('invalidates array with only a partial object value', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect([{ a: 1, b: 1 }]).to.include({ a: 1 });
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected [ { a: 1, b: 1 } ] to include { a: 1 }', exception);
+                done();
+            });
+
             it('invalidates arrays (shallow)', (done) => {
 
                 let exception = false;
