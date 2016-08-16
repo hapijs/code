@@ -217,7 +217,12 @@ describe('expect()', () => {
         }
 
         Code.settings.truncateMessages = origTruncate;
-        Hoek.assert(exception.message === 'Expected { a: 1,\n  b: \'12345678901234567890123456789012345678901234567890\' } to be a string but got \'object\'', exception);
+
+        const lines = exception.message.split('\n');
+
+        Hoek.assert(lines.length === 2, exception);
+        Hoek.assert(lines[0].trim() === 'Expected { a: 1,', exception);
+        Hoek.assert(lines[1].trim() === 'b: \'12345678901234567890123456789012345678901234567890\' } to be a string but got \'object\'', exception);
         done();
     });
 
