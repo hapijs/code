@@ -1124,6 +1124,29 @@ describe('expect()', () => {
                 Hoek.assert(!exception, exception);
                 done();
             });
+
+            it('asserts called with only one argument', (done) => {
+
+                let exception0 = false;
+                try {
+                    Code.expect('abc').to.include();
+                }
+                catch (err) {
+                    exception0 = err;
+                }
+                let exception2 = false;
+                try {
+                    Code.expect('abc').to.include('a', 'b');
+                }
+                catch (err) {
+                    exception2 = err;
+                }
+
+                Hoek.assert(exception0.message === 'Can only assert include with a single parameter', exception0);
+                Hoek.assert(exception2.message === 'Can only assert include with a single parameter', exception2);
+                done();
+            });
+
         });
 
         describe('endWith()', () => {
@@ -2297,7 +2320,8 @@ describe('incomplete()', () => {
 
         const a = Code.expect(1).to;
         Code.expect(2).to.equal(2);
-        Hoek.assert(Code.incomplete().length === 1);
+        const actual = Code.incomplete();
+        Hoek.assert(actual.length === 1, actual);
         a.equal(1);
         Hoek.assert(!Code.incomplete());
         done();
