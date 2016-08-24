@@ -1125,25 +1125,48 @@ describe('expect()', () => {
                 done();
             });
 
+            const tests = [
+                { name: 'no', act: () => Code.expect('abc').to.include() },
+                { name: 'two', act: () => Code.expect('abc').to.include('a', 'b') },
+                { name: 'three', act: () => Code.expect('abc').to.include('a', 'b', 'c') }
+            ];
+            for (const test of tests) {
+
+                it(`assertion fails when called with ${test.name} arguments`, (done) => {
+
+                    let exception = false;
+                    try {
+                        test.act();
+                    }
+                    catch (err) {
+                        exception = err;
+                    }
+                    Hoek.assert(exception.message === 'Can only assert include with a single parameter', exception);
+                    done();
+                });
+
+            }
+
             it('asserts called with only one argument', (done) => {
 
-                let exception0 = false;
+                let exception = false;
                 try {
                     Code.expect('abc').to.include();
                 }
                 catch (err) {
-                    exception0 = err;
+                    exception = err;
                 }
-                let exception2 = false;
-                try {
-                    Code.expect('abc').to.include('a', 'b');
-                }
-                catch (err) {
-                    exception2 = err;
-                }
+                Hoek.assert(exception.message === 'Can only assert include with a single parameter', exception);
 
-                Hoek.assert(exception0.message === 'Can only assert include with a single parameter', exception0);
-                Hoek.assert(exception2.message === 'Can only assert include with a single parameter', exception2);
+                // let exception = false;
+                // try {
+                //     Code.expect('abc').to.include('a', 'b');
+                // }
+                // catch (err) {
+                //     exception = err;
+                // }
+
+                // Hoek.assert(exception.message === 'Can only assert include with a single parameter', exception);
                 done();
             });
 
@@ -2320,8 +2343,7 @@ describe('incomplete()', () => {
 
         const a = Code.expect(1).to;
         Code.expect(2).to.equal(2);
-        const actual = Code.incomplete();
-        Hoek.assert(actual.length === 1, actual);
+        Hoek.assert(Code.incomplete().length === 1);
         a.equal(1);
         Hoek.assert(!Code.incomplete());
         done();
