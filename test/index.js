@@ -1141,18 +1141,6 @@ describe('expect()', () => {
                 {
                     let exception = false;
                     try {
-                        Code.expect('abc').to.include('a');
-                    }
-                    catch (err) {
-                        exception = err;
-                    }
-
-                    Hoek.assert(exception === false, exception);
-                }
-
-                {
-                    let exception = false;
-                    try {
                         Code.expect('abc').to.include('a', 'b');
                     }
                     catch (err) {
