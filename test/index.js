@@ -1124,6 +1124,35 @@ describe('expect()', () => {
                 Hoek.assert(!exception, exception);
                 done();
             });
+
+            it('asserts called with only one argument', (done) => {
+
+                {
+                    let exception = false;
+                    try {
+                        Code.expect('abc').to.include();
+                    }
+                    catch (err) {
+                        exception = err;
+                    }
+                    Hoek.assert(exception.message === 'Can only assert include with a single parameter', exception);
+                }
+
+                {
+                    let exception = false;
+                    try {
+                        Code.expect('abc').to.include('a', 'b');
+                    }
+                    catch (err) {
+                        exception = err;
+                    }
+
+                    Hoek.assert(exception.message === 'Can only assert include with a single parameter', exception);
+                }
+
+                done();
+            });
+
         });
 
         describe('endWith()', () => {
