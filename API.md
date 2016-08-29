@@ -88,11 +88,14 @@ expect(6).to.be.in.range(5, 6);
 ### Flags
 
 The following words toggle a status flag for the current assertion:
+
 - `not` - inverses the expected result of any assertion.
 - `once` - requires that inclusion matches appear only once in the provided value. Used by `include()`.
 - `only` - requires that only the provided elements appear in the provided value. Used by `include()`.
 - `part` - allows a partial match when asserting inclusion. Used by `include()`. Defaults to `false`.
-- `shallow` - performs a comparison using strict equality (`===`). Code defaults to deep comparison. Used by `equal()` and `include()`.
+- `shallow` - code defaults to deep comparison
+    - used by `equal()` and `include()` to performs a comparison using strict equality (`===`).
+    - Used by `match()` to perform a regular expression match on the stringified version of an array.
 
 ```js
 const Code = require('code');
@@ -568,11 +571,15 @@ Aliases: `matches()`
 Asserts that the reference value is a string matching the provided regular expression where:
 - `regex` - the regular expression to match.
 
+If the assertion is deep and the reference value is an array then it will try and match on an item in the array otherwise it will stringify the array (`.toString()`).
+
 ```js
 const Code = require('code');
 const expect = Code.expect;
 
 expect('a5').to.match(/\w\d/);
+expect(['hello', 'hi']).to.match(/^hi$/);
+expect(['hello', 'hi']).to.shallow.match(/hello,hi/);
 ```
 
 #### `satisfy(validator)`
