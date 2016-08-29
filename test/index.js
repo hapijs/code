@@ -2011,6 +2011,77 @@ describe('expect()', () => {
                 Hoek.assert(exception.message === 'Expected \'a4x\' to match /\\w\\dy/', exception);
                 done();
             });
+
+            it('validates assertion deep inside an array', (done) => {
+
+                let exception = false;
+                const test = ['hello', 'hi'];
+                try {
+                    Code.expect(test).to.match(/hi/);
+                    Code.expect(test).to.match(/^hi/);
+                    Code.expect(test).to.match(/^hi$/);
+                    Code.expect(test).to.match(/^hello$/);
+                    Code.expect(test).to.match(/^Hello$/i);
+                    Code.expect(test).to.match(/ell/);
+                    Code.expect(test).to.match(/h/);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('invalidates assertion deep inside an array', (done) => {
+
+                let exception = false;
+                const test = ['hello', 'hi'];
+                try {
+                    Code.expect(test).to.not.match(/^Hello$/);
+                    Code.expect(test).to.not.match(/loh/);
+                    Code.expect(test).to.not.match(/lo,h/);
+                    Code.expect(test).to.not.match(new RegExp(test.toString()));
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('validates shallow assertion inside an array', (done) => {
+
+                let exception = false;
+                const test = ['hello', 'hi'];
+                try {
+                    Code.expect(test).to.shallow.match(/hi/);
+                    Code.expect(test).to.shallow.match(new RegExp(test.toString()));
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('invalidates shallow assertion inside an array', (done) => {
+
+                let exception = false;
+                const test = ['hello', 'hi'];
+                try {
+                    Code.expect(test).to.not.shallow.match(/^hi$/);
+                    Code.expect(test).to.not.shallow.match(/^hi/);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
         });
 
         describe('satisfy()', () => {
