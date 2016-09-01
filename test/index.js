@@ -667,7 +667,7 @@ describe('expect()', () => {
                     exception = err;
                 }
 
-                Hoek.assert(exception.message === 'Expected {} to be an error with Error type', exception);
+                Hoek.assert(/Expected (Custom )?{} to be an error with Error type/.test(exception.message), exception);
                 done();
             });
 
@@ -675,6 +675,7 @@ describe('expect()', () => {
 
                 const Custom = function () { };
                 Hoek.inherits(Custom, Error);
+                delete Custom.name; // Ensure that the type is anonymous
 
                 let exception = false;
                 try {
@@ -1938,6 +1939,7 @@ describe('expect()', () => {
             it('invalidates assertion (anonymous)', (done) => {
 
                 const Custom = function () { };
+                delete Custom.name; // Ensure that the type is anonymous
 
                 let exception = false;
                 try {
@@ -2257,6 +2259,7 @@ describe('expect()', () => {
             it('invalidates assertion (anonymous type)', (done) => {
 
                 const Custom = function () { };
+                delete Custom.name; // Ensure that the type is anonymous
 
                 let exception = false;
                 try {
@@ -2266,7 +2269,7 @@ describe('expect()', () => {
                     exception = err;
                 }
 
-                Hoek.assert(exception.message === 'Expected [Function] to throw provided type', exception);
+                Hoek.assert(/Expected \[Function(: throws)?\] to throw provided type/.test(exception.message), exception);
                 done();
             });
 
