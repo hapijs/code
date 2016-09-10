@@ -565,7 +565,8 @@ expect(new Date()).to.be.an.instanceof(Date);
 
 Aliases: `matches()`
 
-Asserts that the reference value is a string matching the provided regular expression where:
+Asserts that the reference value's `toString()` representation matches the provided regular
+expression where:
 - `regex` - the regular expression to match.
 
 ```js
@@ -573,6 +574,8 @@ const Code = require('code');
 const expect = Code.expect;
 
 expect('a5').to.match(/\w\d/);
+expect(["abc", "def"]).to.match(/^[\w\d,]*$/);
+expect(1).to.match(/^\d$/);
 ```
 
 #### `satisfy(validator)`
