@@ -25,6 +25,7 @@
       - [`false()`](#false)
       - [`null()`](#null)
       - [`undefined()`](#undefined)
+      - [`NaN()`](#NaN)
     - [`include(values)`](#includevalues)
     - [`startWith(value)`](#startwithvalue)
     - [`endWith(value)`](#endwithvalue)
@@ -299,6 +300,17 @@ const Code = require('code');
 const expect = Code.expect;
 
 expect(undefined).to.be.undefined();
+```
+
+##### `NaN()`
+
+Asserts that the reference value is `NaN`.
+
+```js
+const Code = require('code');
+const expect = Code.expect;
+
+expect(NaN).to.be.NaN();
 ```
 
 #### `include(values)`

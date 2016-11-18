@@ -2,9 +2,10 @@
 
 // Load modules
 
-const Code = require('..');
+const Util = require('util');
 const Hoek = require('hoek');
 const Lab = require('lab');
+const Code = require('..');
 
 
 // Declare internals
@@ -993,6 +994,54 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected \'a\' to be undefined', exception);
+                done();
+            });
+        });
+
+        describe('NaN()', () => {
+
+            it('validates correct type', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(NaN).to.be.NaN();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('invalidates incorrect type', (done) => {
+
+                const fail = (value) => {
+
+                    let exception = false;
+
+                    try {
+
+                        Code.expect(value).to.be.NaN();
+                    }
+                    catch (err) {
+                        exception = err;
+                    }
+
+                    Hoek.assert(exception.message === `Expected ${Util.inspect(value)} to be NaN`, exception);
+                };
+
+                fail(1);
+                fail(0);
+                fail(Infinity);
+                fail(undefined);
+                fail(null);
+                fail(true);
+                fail(false);
+                fail('');
+                fail('foo');
+                fail({});
+                fail([]);
                 done();
             });
         });
