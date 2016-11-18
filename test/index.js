@@ -1026,6 +1026,15 @@ describe('expect()', () => {
                 Hoek.assert(exception.message === 'Expected 1 to be NaN', exception);
                 done();
             });
+
+            it('invalidates incorrect types', (done) => {
+
+                Code.expect(1).not.to.be.NaN();
+                Code.expect('foo').not.to.be.NaN();
+                Code.expect({}).not.to.be.NaN();
+                Code.expect([]).not.to.be.NaN();
+                done();
+            });
         });
 
         describe('include()', () => {

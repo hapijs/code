@@ -304,7 +304,7 @@ expect(undefined).to.be.undefined();
 
 ##### `NaN()`
 
-Asserts that the reference value is NaN.
+Asserts that the reference value is `NaN`.
 
 ```js
 const Code = require('code');
