@@ -17,7 +17,7 @@
     },
     "devDependencies": {
         "lab": "11.x.x",
-        "markdown-toc": "0.12.x"
+        "markdown-toc": "0.13.x"
     },
     "scripts": {
         "test": "lab -v -t 100 -L",
