@@ -997,6 +997,46 @@ describe('expect()', () => {
             });
         });
 
+        describe('NaN()', () => {
+
+            it('validates correct type', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(NaN).to.be.NaN();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
+
+            it('invalidates incorrect type', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(1).to.be.NaN();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected 1 to be NaN', exception);
+                done();
+            });
+
+            it('invalidates incorrect types', (done) => {
+
+                Code.expect(1).not.to.be.NaN();
+                Code.expect('foo').not.to.be.NaN();
+                Code.expect({}).not.to.be.NaN();
+                Code.expect([]).not.to.be.NaN();
+                done();
+            });
+        });
+
         describe('include()', () => {
 
             it('validates strings', (done) => {
