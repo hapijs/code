@@ -317,6 +317,8 @@ expect(NaN).to.be.NaN();
 
 Aliases: `includes()`, `contain()`, `contains()`
 
+See also: [`Hoek.contain()`](https://github.com/hapijs/hoek/blob/master/API.md#containref-values-options)
+
 Asserts that the reference value (a string, array, or object) includes the provided values where:
 - `values` - a single or array of values. If the reference value is a string, the values must be strings.
   If the reference value is an array, the values can be any array member. If the reference value is an object, the values can be key names, or a single object
