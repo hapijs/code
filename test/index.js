@@ -2397,3 +2397,103 @@ describe('thrownAt()', () => {
         done();
     });
 });
+
+describe('addCustomMatcher()', () => {
+
+    it('can be called', (done) => {
+
+        let threwAnError = false;
+        try {
+            Code.addCustomMatcher('anything', (assertion) => assertion.assert(true));
+        }
+        catch (err) {
+            threwAnError = true;
+        }
+        Hoek.assert(threwAnError === false, 'addCustomMatcher() should not throw an error');
+        done();
+    });
+
+    it('actually adds a method to the Code Assertion object', (done) => {
+
+        Code.addCustomMatcher('anything', (assertion) => assertion.assert(true));
+        let threwAnError = false;
+        try {
+            Code.expect('something').to.be.anything();
+        }
+        catch (err) {
+            threwAnError = true;
+        }
+        Hoek.assert(threwAnError === false, 'the custom method anything() should not throw an error');
+        done();
+    });
+
+    it('can be used to generate simple predicate matchers', (done) => {
+
+        Code.addCustomMatcher('odd', (assertion, value) => assertion.assert(value % 2 === 1, 'be odd'));
+        Code.expect(1).to.be.odd();
+        let message = '';
+        try {
+            Code.expect(2).to.be.odd();
+        }
+        catch (err) {
+            message = err.message;
+        }
+        Hoek.assert(message === 'Expected 2 to be odd');
+
+        Code.expect(2).to.not.be.odd();
+        try {
+            Code.expect(1).to.not.be.odd();
+        }
+        catch (err) {
+            message = err.message;
+        }
+        Hoek.assert(message === 'Expected 1 to not be odd');
+        done();
+    });
+
+    it('can be used to generate arbitrarily complicated matchers', (done) => {
+
+        Code.addCustomMatcher('oneMoreThan', (assertion, value, target) => {
+
+            assertion.assert(value === target + 1, 'be one more than ' + target + ', which is actually ' + (target + 1));
+        });
+        Code.expect(8).to.be.oneMoreThan(7);
+        let message = '';
+        try {
+            Code.expect(6).to.be.oneMoreThan(7);
+        }
+        catch (err) {
+            message = err.message;
+        }
+        Hoek.assert(message === 'Expected 6 to be one more than 7, which is actually 8');
+
+        Code.addCustomMatcher('modulo', (assertion, value, base, modulus) => {
+
+            const actualModulus = value % base;
+            if (assertion._flags.not) {
+                assertion.assert(actualModulus === modulus, 'be ' + modulus + ' mod ' + base);
+            }
+            else {
+                assertion.assert(actualModulus === modulus, 'be ' + modulus + ' mod ' + base, actualModulus);
+            }
+        });
+
+        Code.expect(5).to.be.modulo(3, 2);
+        try {
+            Code.expect(4).to.be.modulo(3, 2);
+        }
+        catch (err) {
+            message = err.message;
+        }
+        Hoek.assert(message === 'Expected 4 to be 2 mod 3 but got 1');
+
+        try {
+            Code.expect(5).to.not.be.modulo(3, 2);
+        }
+        catch (err) {
+            message = err.message;
+        }
+        Hoek.assert(message === 'Expected 5 to not be 2 mod 3');
+        done();
+    });
+});
