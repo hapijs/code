@@ -25,5 +25,6 @@
         "toc": "node generate-api-toc.js",
         "version": "npm run toc && git add API.md"
     },
-    "license": "BSD-3-Clause"
+    "license": "BSD-3-Clause",
+    "typings": "./index.d.ts"
 }
