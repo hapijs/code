@@ -1573,7 +1573,7 @@ describe('expect()', () => {
                     exception = err;
                 }
 
-                Hoek.assert(exception.message === 'Expected { foo: 1 } to equal specified value: {"foo":2}', exception);
+                Hoek.assert(exception.message === 'Expected { foo: 1 } to equal specified value: { foo: 2 }', exception);
                 done();
             });
 
@@ -1605,7 +1605,7 @@ describe('expect()', () => {
                     exception = err;
                 }
 
-                Hoek.assert(exception.message === 'Expected [ \'a\' ] to equal specified value: ["a"]', exception);
+                Hoek.assert(exception.message === 'Expected [ \'a\' ] to equal specified value: [ \'a\' ]', exception);
                 done();
             });
 
@@ -1619,7 +1619,7 @@ describe('expect()', () => {
                     exception = err;
                 }
 
-                Hoek.assert(exception.message === 'Expected \'test\' to equal specified value: "junk"', exception);
+                Hoek.assert(exception.message === 'Expected \'test\' to equal specified value: \'junk\'', exception);
                 done();
             });
         });
