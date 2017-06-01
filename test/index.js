@@ -349,7 +349,7 @@ describe('expect()', () => {
         }
 
         Code.settings.comparePrototypes = origPrototype;
-        Hoek.assert(exception.message === 'Expected {} to equal specified value', exception);
+        Hoek.assert(exception.message === 'Expected {} to equal specified value: {}', exception);
         done();
     });
 
@@ -1573,7 +1573,7 @@ describe('expect()', () => {
                     exception = err;
                 }
 
-                Hoek.assert(exception.message === 'Expected { foo: 1 } to equal specified value', exception);
+                Hoek.assert(exception.message === 'Expected { foo: 1 } to equal specified value: { foo: 2 }', exception);
                 done();
             });
 
@@ -1605,7 +1605,21 @@ describe('expect()', () => {
                     exception = err;
                 }
 
-                Hoek.assert(exception.message === 'Expected [ \'a\' ] to equal specified value', exception);
+                Hoek.assert(exception.message === 'Expected [ \'a\' ] to equal specified value: [ \'a\' ]', exception);
+                done();
+            });
+
+            it('prints the specified value', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect('test').to.equal('junk');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected \'test\' to equal specified value: \'junk\'', exception);
                 done();
             });
         });
