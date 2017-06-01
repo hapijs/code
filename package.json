@@ -16,8 +16,8 @@
         "hoek": "4.x.x"
     },
     "devDependencies": {
-        "lab": "11.x.x",
-        "markdown-toc": "0.13.x"
+        "lab": "13.x.x",
+        "markdown-toc": "1.1.x"
     },
     "scripts": {
         "test": "lab -v -t 100 -L",
