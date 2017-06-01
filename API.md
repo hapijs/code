@@ -48,6 +48,7 @@
   - [`count()`](#count)
   - [`incomplete()`](#incomplete)
   - [`thrownAt([error])`](#thrownaterror)
+  - [`addCustomMatcher(names, assertFn)`](#addcustommatchernames-assertfn)
   - [Settings](#settings)
     - [`truncateMessages`](#truncatemessages)
     - [`comparePrototypes`](#compareprototypes)
@@ -684,6 +685,44 @@ const Code = require('code');
 
 const error = new Error('oops');
 Code.thrownAt(error);
+```
+
+### `addCustomMatcher(names, assertionFn)`
+
+Allows you to add custom matchers to the assertion lexicon.
+
+* `names` is either a string or an array of strings that will become new matcher functions
+* `assertionFn` is a function of the form `function (assertion, value[, ...extras])`
+  * `assertion` is the assertion object containing `assertion.assert(result, verb, actual)`
+    * `result` is a boolean. If it is false, or if it is true and the expectation contains a `not`, then the assertion fails
+    * `verb` is a description that will come after "Expected (value) to..."; for example, if `verb` is "be odd", then the error message will say "Expected 4 to be odd" or (if negated) "Expected 5 to not be odd"
+    * `actual` is the value that was received. If it is included as an additional argument, then the error message will conclude with "got (actual)"; for example, `assertion.assert(value == 8, "be 8", value)` will result in an error message of "Expected 7 to be 8, got 7" for `value = 7`
+  * `value` is the value passed to `expect`
+  * `extras` are any arguments that will be passed to the matcher.
+
+Examples:
+
+```js
+const Code = require('code');
+
+Code.addCustomMatcher('odd' (assertion, value) => assertion.assert(value % 2 === 1, 'be odd'));
+Code.expect(5).to.be.odd(); // odd has been added as a new matcher
+
+Code.addCustomMatcher(['oneMoreThan', 'oneBiggerThan'], (assertion, value, target) => {
+
+  assertion.assert(value === target + 1, 'be one more than ' + target + ', which is actually' + (target + 1))
+});
+Code.expect(8).to.be.oneMoreThan(7); // value = 8, target = 7
+Code.expect(9).to.not.be.oneBiggerThan(7); // oneBiggerThan is an alias for oneMoreThan
+
+Code.addCustomMatcher('modulo', (assertion, value, base, expectedModulus) => {
+
+  const actualModulus = value % base;
+  assertion.assert(actualModulus === expectedModulus, 'be ' + expectedModulus + ' mod ' + base, actualModulus);
+});
+
+Code.expect(5).to.be.modulo(3, 2); // value = 5, base = 3, expectedModulus = 2
+Code.expect(4).to.not.be.modulo(3, 2);
 ```
 
 ### Settings
