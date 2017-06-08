@@ -25,7 +25,7 @@
       - [`false()`](#false)
       - [`null()`](#null)
       - [`undefined()`](#undefined)
-      - [`NaN()`](#NaN)
+      - [`NaN()`](#nan)
     - [`include(values)`](#includevalues)
     - [`startWith(value)`](#startwithvalue)
     - [`endWith(value)`](#endwithvalue)

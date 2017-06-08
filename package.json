@@ -1,7 +1,7 @@
 {
     "name": "code",
     "description": "assertion library",
-    "version": "4.0.0",
+    "version": "4.1.0",
     "repository": "git://github.com/hapijs/code",
     "main": "lib/index.js",
     "keywords": [
