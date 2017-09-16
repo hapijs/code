@@ -734,6 +734,20 @@ describe('expect()', () => {
                 Hoek.assert(exception.message === 'Expected false to be a function but got \'boolean\'', exception);
                 done();
             });
+
+            it('identifies async functions', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(async () => {}).to.be.a.function();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+                done();
+            });
         });
 
         describe('number()', () => {
