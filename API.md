@@ -1,5 +1,5 @@
 <!-- version -->
-# 4.0.0 API Reference
+# 5.0.0 API Reference
 <!-- versionstop -->
 
 <!-- toc -->
@@ -44,6 +44,7 @@
     - [`match(regex)`](#matchregex)
     - [`satisfy(validator)`](#satisfyvalidator)
     - [`throw([type], [message])`](#throwtype-message)
+    - [`await reject([type], [message])`](#away-rejecttype-message)
   - [`fail(message)`](#failmessage)
   - [`count()`](#count)
   - [`incomplete()`](#incomplete)
@@ -637,6 +638,37 @@ const throws = function () {
 };
 
 expect(throws).to.throw(CustomError, 'Oh no!');
+```
+
+#### `await reject([type], [message])`
+
+Aliases: `throws`
+
+Asserts that the `Promise` reference value rejects with an exception when called. The provided reference
+promise is resolved using an `await` statement within a `try`-`catch` block and any error throws is caught
+and compared to the provided optional requirements where:
+- `type` - the `instanceof` value of the rejected object.
+- `message` a string or regular expression matching the rejected error `message` property. Note that a string
+  must provide a full match.
+
+```js
+const NodeUtil = require('util');
+const Code = require('code');
+const expect = Code.expect;
+
+const CustomError = function (message) {
+
+    Error.call(this, message);
+};
+
+NodeUtil.inherit(CustomError, Error)
+
+const rejects = function () {
+
+    new Promise((resolve, reject) => reject(new CustomError('Oh no!')));
+};
+
+await expect(rejects()).to.reject(CustomError, 'Oh no!');
 ```
 
 ### `fail(message)`
