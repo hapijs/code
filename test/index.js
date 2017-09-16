@@ -304,7 +304,7 @@ describe('expect()', () => {
             Code.expect('abc').to.not.contain('d').and.to.contain('a');
             Code.expect('abc').to.not.contain('d').and.to.not.contain('e');
             Code.expect('abc').to.contain('a').and.to.not.contain('d').and.to.contain('c').to.not.contain('f');
-            Code.expect(() => {}).to.not.throw().and.to.be.a.function();
+            Code.expect(() => { }).to.not.throw().and.to.be.a.function();
             Code.expect(10).to.not.be.about(8, 1).and.to.be.about(9, 1);
             Code.expect(10).to.be.about(9, 1).and.to.not.be.about(8, 1);
         }
@@ -2348,6 +2348,232 @@ describe('expect()', () => {
 
                 Hoek.assert(!exception, exception);
                 done();
+            });
+        });
+
+        describe('reject()', () => {
+
+            const rejects = function () {
+
+                return new Promise((resolve, reject) => {
+
+                    reject(new Error('kaboom'));
+                });
+            };
+
+            it('validates rejection', async () => {
+
+                let exception = false;
+                try {
+                    await Code.expect(rejects()).to.reject();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+            });
+
+            it('validates resolution', async () => {
+
+                let exception = false;
+                try {
+                    await Code.expect(new Promise((resolve, reject) => resolve(3))).to.not.reject();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+            });
+
+            it('invalidates rejection', async () => {
+
+                let exception = false;
+                try {
+                    await Code.expect(new Promise((resolve, reject) => resolve(3))).to.reject();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected [Promise] to reject with an error', exception);
+            });
+
+            it('validates rejection (alias)', async () => {
+
+                let exception = false;
+                try {
+                    await Code.expect(rejects()).rejects();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+            });
+
+            it('invalidates rejection (not a promise)', async () => {
+
+                let exception = false;
+                try {
+                    await Code.expect(() => { }).to.reject();
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Can only assert reject on promises', exception);
+            });
+
+            it('forbids arguments on negative rejection', async () => {
+
+                let exception = false;
+                try {
+                    await Code.expect(rejects()).to.not.reject('message');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Cannot specify arguments when expecting not to reject', exception);
+            });
+
+            it('validates rejection (message)', async () => {
+
+                let exception = false;
+                try {
+                    await Code.expect(rejects()).to.reject('kaboom');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+            });
+
+            it('validates rejection (empty message)', async () => {
+
+                let exception = false;
+                try {
+                    await Code.expect(new Promise((resolve, reject) => reject(new Error('')))).to.reject('');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+            });
+
+            it('validates rejection (message regex)', async () => {
+
+                let exception = false;
+                try {
+                    await Code.expect(rejects()).to.reject(/boom/);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+            });
+
+            it('validates rejection (missing message)', async () => {
+
+                const Custom = function () { };
+
+                let exception = false;
+                try {
+                    await Code.expect(new Promise((resolve, reject) => reject(new Custom()))).to.reject('kaboom');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected [Promise] to reject with an error with specified message', exception);
+            });
+
+            it('invalidates rejection (message)', async () => {
+
+                let exception = false;
+                try {
+                    await Code.expect(rejects()).to.reject('steve');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected [Promise] to reject with an error with specified message', exception);
+            });
+
+            it('invalidates rejection (empty message)', async () => {
+
+                let exception = false;
+                try {
+                    await Code.expect(rejects()).to.rejects('');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected [Promise] to reject with an error with specified message', exception);
+            });
+
+            it('validates rejection (type)', async () => {
+
+                let exception = false;
+                try {
+                    await Code.expect(rejects()).to.reject(Error);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+            });
+
+            it('invalidates rejection (known type)', async () => {
+
+                const Custom = function () { };
+
+                let exception = false;
+                try {
+                    await Code.expect(new Promise((resolve, reject) => reject(new Custom()))).to.reject(Error);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected [Promise] to reject with Error', exception);
+            });
+
+            it('invalidates rejection (anonymous type)', async () => {
+
+                const Custom = function () { };
+                delete Custom.name; // Ensure that the type is anonymous
+
+                let exception = false;
+                try {
+                    await Code.expect(rejects()).to.reject(Custom);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(/Expected \[Promise\] to reject with provided type/.test(exception.message), exception);
+            });
+
+            it('validates rejection (type and message)', async () => {
+
+                let exception = false;
+                try {
+                    await Code.expect(rejects()).to.reject(Error, 'kaboom');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
             });
         });
     });
