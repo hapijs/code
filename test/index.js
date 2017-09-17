@@ -2367,19 +2367,11 @@ describe('expect()', () => {
 
         describe('reject()', () => {
 
-            const rejects = function () {
-
-                return new Promise((resolve, reject) => {
-
-                    reject(new Error('kaboom'));
-                });
-            };
-
             it('validates rejection', async () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(rejects()).to.reject();
+                    await Code.expect(Promise.reject(new Error('kaboom'))).to.reject();
                 }
                 catch (err) {
                     exception = err;
@@ -2392,7 +2384,7 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(new Promise((resolve, reject) => resolve(3))).to.not.reject();
+                    await Code.expect(Promise.resolve(3)).to.not.reject();
                 }
                 catch (err) {
                     exception = err;
@@ -2405,7 +2397,7 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(new Promise((resolve, reject) => resolve(3))).to.reject();
+                    await Code.expect(Promise.resolve(3)).to.reject();
                 }
                 catch (err) {
                     exception = err;
@@ -2418,7 +2410,7 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(rejects()).rejects();
+                    await Code.expect(Promise.reject(new Error('kaboom'))).rejects();
                 }
                 catch (err) {
                     exception = err;
@@ -2444,7 +2436,7 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(rejects()).to.not.reject('message');
+                    await Code.expect(Promise.reject(new Error('kaboom'))).to.not.reject('message');
                 }
                 catch (err) {
                     exception = err;
@@ -2457,7 +2449,7 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(rejects()).to.reject('kaboom');
+                    await Code.expect(Promise.reject(new Error('kaboom'))).to.reject('kaboom');
                 }
                 catch (err) {
                     exception = err;
@@ -2470,7 +2462,7 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(new Promise((resolve, reject) => reject(new Error('')))).to.reject('');
+                    await Code.expect(Promise.reject(new Error(''))).to.reject('');
                 }
                 catch (err) {
                     exception = err;
@@ -2483,7 +2475,7 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(rejects()).to.reject(/boom/);
+                    await Code.expect(Promise.reject(new Error('kaboom'))).to.reject(/boom/);
                 }
                 catch (err) {
                     exception = err;
@@ -2498,7 +2490,7 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(new Promise((resolve, reject) => reject(new Custom()))).to.reject('kaboom');
+                    await Code.expect(Promise.reject(new Custom())).to.reject('kaboom');
                 }
                 catch (err) {
                     exception = err;
@@ -2511,7 +2503,7 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(rejects()).to.reject('steve');
+                    await Code.expect(Promise.reject(new Error('kaboom'))).to.reject('steve');
                 }
                 catch (err) {
                     exception = err;
@@ -2524,7 +2516,7 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(rejects()).to.rejects('');
+                    await Code.expect(Promise.reject(new Error('kaboom'))).to.rejects('');
                 }
                 catch (err) {
                     exception = err;
@@ -2537,7 +2529,7 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(rejects()).to.reject(Error);
+                    await Code.expect(Promise.reject(new Error('kaboom'))).to.reject(Error);
                 }
                 catch (err) {
                     exception = err;
@@ -2552,7 +2544,7 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(new Promise((resolve, reject) => reject(new Custom()))).to.reject(Error);
+                    await Code.expect(Promise.reject(new Custom())).to.reject(Error);
                 }
                 catch (err) {
                     exception = err;
@@ -2568,7 +2560,7 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(rejects()).to.reject(Custom);
+                    await Code.expect(Promise.reject(new Error('kaboom'))).to.reject(Custom);
                 }
                 catch (err) {
                     exception = err;
@@ -2581,7 +2573,24 @@ describe('expect()', () => {
 
                 let exception = false;
                 try {
-                    await Code.expect(rejects()).to.reject(Error, 'kaboom');
+                    await Code.expect(Promise.reject(new Error('kaboom'))).to.reject(Error, 'kaboom');
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(!exception, exception);
+            });
+
+            it('returns rejection error', async () => {
+
+                const Custom = function () { };
+                delete Custom.name; // Ensure that the type is anonymous
+
+                let exception = false;
+                try {
+                    const err = await Code.expect(Promise.reject(new Error('kaboom'))).to.reject();
+                    Code.expect(err).to.be.an.error('kaboom');
                 }
                 catch (err) {
                     exception = err;
