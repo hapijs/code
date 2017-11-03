@@ -1,5 +1,5 @@
 <!-- version -->
-# 5.0.0 API Reference
+# 5.1.1 API Reference
 <!-- versionstop -->
 
 <!-- toc -->
@@ -44,7 +44,7 @@
     - [`match(regex)`](#matchregex)
     - [`satisfy(validator)`](#satisfyvalidator)
     - [`throw([type], [message])`](#throwtype-message)
-    - [`await reject([type], [message])`](#away-rejecttype-message)
+    - [`await reject([type], [message])`](#await-rejecttype-message)
   - [`fail(message)`](#failmessage)
   - [`count()`](#count)
   - [`incomplete()`](#incomplete)
