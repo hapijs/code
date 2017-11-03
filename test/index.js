@@ -3,6 +3,7 @@
 // Load modules
 
 const Util = require('util');
+
 const Hoek = require('hoek');
 const Lab = require('lab');
 const Code = require('..');
@@ -15,25 +16,22 @@ const internals = {};
 
 // Test shortcuts
 
-const lab = exports.lab = Lab.script();
-const describe = lab.describe;
-const it = lab.it;
+const { describe, it } = exports.lab = Lab.script();
 
 
 describe('count()', () => {
 
-    it('returns assertion count', (done) => {
+    it('returns assertion count', () => {
 
         Code.expect(10).to.be.above(5);
         Code.expect('abc').to.be.a.string();
         Hoek.assert(Code.count() === 2);
-        done();
     });
 });
 
 describe('expect()', () => {
 
-    it('validates assertion', (done) => {
+    it('validates assertion', () => {
 
         let exception = false;
         try {
@@ -44,10 +42,9 @@ describe('expect()', () => {
         }
 
         Hoek.assert(!exception, exception);
-        done();
     });
 
-    it('uses grammar', (done) => {
+    it('uses grammar', () => {
 
         let exception = false;
         try {
@@ -64,10 +61,9 @@ describe('expect()', () => {
         }
 
         Hoek.assert(!exception, exception);
-        done();
     });
 
-    it('asserts on invalid condition', (done) => {
+    it('asserts on invalid condition', () => {
 
         let exception = false;
         try {
@@ -78,10 +74,9 @@ describe('expect()', () => {
         }
 
         Hoek.assert(exception.message === 'Expected \'abcd\' to include \'e\'', exception);
-        done();
     });
 
-    it('asserts on invalid condition (not)', (done) => {
+    it('asserts on invalid condition (not)', () => {
 
         let exception = false;
         try {
@@ -92,10 +87,9 @@ describe('expect()', () => {
         }
 
         Hoek.assert(exception.message === 'Expected \'abcd\' to not include \'a\'', exception);
-        done();
     });
 
-    it('asserts on invalid condition (once)', (done) => {
+    it('asserts on invalid condition (once)', () => {
 
         let exception = false;
         try {
@@ -106,10 +100,9 @@ describe('expect()', () => {
         }
 
         Hoek.assert(exception.message === 'Expected \'abcad\' to include \'a\' once', exception);
-        done();
     });
 
-    it('asserts on invalid condition (with actual)', (done) => {
+    it('asserts on invalid condition (with actual)', () => {
 
         let exception = false;
         try {
@@ -120,10 +113,9 @@ describe('expect()', () => {
         }
 
         Hoek.assert(exception.message === 'Expected \'abcd\' to have a length of 3 but got 4', exception);
-        done();
     });
 
-    it('asserts on invalid condition (prefix)', (done) => {
+    it('asserts on invalid condition (prefix)', () => {
 
         let exception = false;
         try {
@@ -134,10 +126,9 @@ describe('expect()', () => {
         }
 
         Hoek.assert(exception.message === 'Oops: Expected \'abcd\' to include \'e\'', exception);
-        done();
     });
 
-    it('asserts on invalid condition (large array, display truncated)', (done) => {
+    it('asserts on invalid condition (large array, display truncated)', () => {
 
         let exception = false;
         const origTruncate = Code.settings.truncateMessages;
@@ -151,10 +142,9 @@ describe('expect()', () => {
 
         Code.settings.truncateMessages = origTruncate;
         Hoek.assert(exception.message === 'Expected [Array(18)] to be a string but got \'array\'', exception);
-        done();
     });
 
-    it('asserts on invalid condition (large array, display not truncated)', (done) => {
+    it('asserts on invalid condition (large array, display not truncated)', () => {
 
         let exception = false;
         const origTruncate = Code.settings.truncateMessages;
@@ -168,10 +158,9 @@ describe('expect()', () => {
 
         Code.settings.truncateMessages = origTruncate;
         Hoek.assert(exception.message === 'Expected [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 ] to be a string but got \'array\'', exception);
-        done();
     });
 
-    it('asserts on invalid condition (large object, display truncated)', (done) => {
+    it('asserts on invalid condition (large object, display truncated)', () => {
 
         let exception = false;
         const origTruncate = Code.settings.truncateMessages;
@@ -185,10 +174,9 @@ describe('expect()', () => {
 
         Code.settings.truncateMessages = origTruncate;
         Hoek.assert(exception.message === 'Expected { Object (a, b, ...) } to be a string but got \'object\'', exception);
-        done();
     });
 
-    it('asserts on invalid condition (large object, display not truncated)', (done) => {
+    it('asserts on invalid condition (large object, display not truncated)', () => {
 
         let exception = false;
         const origTruncate = Code.settings.truncateMessages;
@@ -202,10 +190,9 @@ describe('expect()', () => {
 
         Code.settings.truncateMessages = origTruncate;
         Hoek.assert(exception.message === 'Expected { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 10 } to be a string but got \'object\'', exception);
-        done();
     });
 
-    it('handles multi-line error message', (done) => {
+    it('handles multi-line error message', () => {
 
         let exception = false;
         const origTruncate = Code.settings.truncateMessages;
@@ -224,10 +211,9 @@ describe('expect()', () => {
         Hoek.assert(lines.length === 2, exception);
         Hoek.assert(lines[0].trim() === 'Expected { a: 1,', exception);
         Hoek.assert(lines[1].trim() === 'b: \'12345678901234567890123456789012345678901234567890\' } to be a string but got \'object\'', exception);
-        done();
     });
 
-    it('asserts on invalid condition (long object values, display truncated)', (done) => {
+    it('asserts on invalid condition (long object values, display truncated)', () => {
 
         let exception = false;
         const origTruncate = Code.settings.truncateMessages;
@@ -241,10 +227,9 @@ describe('expect()', () => {
 
         Code.settings.truncateMessages = origTruncate;
         Hoek.assert(exception.message === 'Expected { Object (a, b) } to be a string but got \'object\'', exception);
-        done();
     });
 
-    it('asserts on invalid condition (long object values, display not truncated)', (done) => {
+    it('asserts on invalid condition (long object values, display not truncated)', () => {
 
         let exception = false;
         const origTruncate = Code.settings.truncateMessages;
@@ -258,10 +243,9 @@ describe('expect()', () => {
 
         Code.settings.truncateMessages = origTruncate;
         Hoek.assert(exception.message === 'Expected { a: 12345678901234567000, b: 12345678901234567000 } to be a string but got \'object\'', exception);
-        done();
     });
 
-    it('asserts on invalid condition (long string, display truncated)', (done) => {
+    it('asserts on invalid condition (long string, display truncated)', () => {
 
         let exception = false;
         const origTruncate = Code.settings.truncateMessages;
@@ -275,10 +259,9 @@ describe('expect()', () => {
 
         Code.settings.truncateMessages = origTruncate;
         Hoek.assert(exception.message === 'Expected \'{ a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g...\' to be a number but got \'string\'', exception);
-        done();
     });
 
-    it('asserts on invalid condition (long string, display not truncated)', (done) => {
+    it('asserts on invalid condition (long string, display not truncated)', () => {
 
         let exception = false;
         const origTruncate = Code.settings.truncateMessages;
@@ -292,10 +275,9 @@ describe('expect()', () => {
 
         Code.settings.truncateMessages = origTruncate;
         Hoek.assert(exception.message === 'Expected \'{ a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 10 }\' to be a number but got \'string\'', exception);
-        done();
     });
 
-    it('resets flags between chained assertions', (done) => {
+    it('resets flags between chained assertions', () => {
 
         let exception = false;
         try {
@@ -313,10 +295,9 @@ describe('expect()', () => {
         }
 
         Hoek.assert(!exception, exception);
-        done();
     });
 
-    it('uses the global prototype setting when doing deep compares on objects', (done) => {
+    it('uses the global prototype setting when doing deep compares on objects', () => {
 
         const origPrototype = Code.settings.comparePrototypes;
         let exception = false;
@@ -350,14 +331,13 @@ describe('expect()', () => {
 
         Code.settings.comparePrototypes = origPrototype;
         Hoek.assert(exception.message === 'Expected {} to equal specified value: {}', exception);
-        done();
     });
 
     describe('assertion', () => {
 
         describe('argument()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 const grab = function () {
 
@@ -373,10 +353,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -387,13 +366,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected { \'1\': 1, \'2\': 2, \'3\': 3, length: 3 } to be an arguments but got \'object\'', exception);
-                done();
             });
         });
 
         describe('array()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -404,10 +382,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -418,13 +395,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected { \'1\': 1 } to be an array but got \'object\'', exception);
-                done();
             });
         });
 
         describe('boolean()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -435,10 +411,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -449,13 +424,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected undefined to be a boolean but got \'undefined\'', exception);
-                done();
             });
         });
 
         describe('buffer()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -466,10 +440,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -480,13 +453,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected null to be a buffer but got \'null\'', exception);
-                done();
             });
         });
 
         describe('date()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -497,10 +469,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -511,7 +482,6 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected true to be a date but got \'boolean\'', exception);
-                done();
             });
         });
 
@@ -519,7 +489,7 @@ describe('expect()', () => {
 
             const error = new Error('kaboom');
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -530,10 +500,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (not error)', (done) => {
+            it('validates assertion (not error)', () => {
 
                 const Custom = function () { };
                 Hoek.inherits(Custom, Error);
@@ -551,10 +520,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion', (done) => {
+            it('invalidates assertion', () => {
 
                 let exception = false;
                 try {
@@ -565,10 +533,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected false to be an error with Error type', exception);
-                done();
             });
 
-            it('validates assertion (message)', (done) => {
+            it('validates assertion (message)', () => {
 
                 let exception = false;
                 try {
@@ -579,10 +546,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (empty message)', (done) => {
+            it('validates assertion (empty message)', () => {
 
                 let exception = false;
                 try {
@@ -593,10 +559,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (message regex)', (done) => {
+            it('validates assertion (message regex)', () => {
 
                 let exception = false;
                 try {
@@ -607,10 +572,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (missing message)', (done) => {
+            it('validates assertion (missing message)', () => {
 
                 const Custom = function () { };
                 Hoek.inherits(Custom, Error);
@@ -624,11 +588,10 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [Error] to be an error with specified message', exception);
-                done();
             });
 
 
-            it('invalidates assertion (empty message)', (done) => {
+            it('invalidates assertion (empty message)', () => {
 
                 let exception = false;
                 try {
@@ -639,10 +602,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [Error: kaboom] to be an error with specified message', exception);
-                done();
             });
 
-            it('validates assertion (type)', (done) => {
+            it('validates assertion (type)', () => {
 
                 let exception = false;
                 try {
@@ -653,10 +615,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion (known type)', (done) => {
+            it('invalidates assertion (known type)', () => {
 
                 const Custom = function () { };
 
@@ -669,10 +630,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(/Expected (Custom )?{} to be an error with Error type/.test(exception.message), exception);
-                done();
             });
 
-            it('invalidates assertion (anonymous type)', (done) => {
+            it('invalidates assertion (anonymous type)', () => {
 
                 const Custom = function () { };
                 Hoek.inherits(Custom, Error);
@@ -687,10 +647,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [Error: kaboom] to be an error with provided type', exception);
-                done();
             });
 
-            it('validates assertion (type and message)', (done) => {
+            it('validates assertion (type and message)', () => {
 
                 let exception = false;
                 try {
@@ -701,13 +660,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
         });
 
         describe('function()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -718,10 +676,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -732,27 +689,25 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected false to be a function but got \'boolean\'', exception);
-                done();
             });
 
-            it('identifies async functions', (done) => {
+            it('identifies async functions', () => {
 
                 let exception = false;
                 try {
-                    Code.expect(async () => {}).to.be.a.function();
+                    Code.expect(async () => { }).to.be.a.function();
                 }
                 catch (err) {
                     exception = err;
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
         });
 
         describe('number()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -763,10 +718,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -777,13 +731,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [Function] to be a number but got \'function\'', exception);
-                done();
             });
         });
 
         describe('regexp()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -794,10 +747,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -808,13 +760,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message.match(/Expected .* to be a regexp but got 'date'/), exception);
-                done();
             });
         });
 
         describe('string()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -825,10 +776,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -839,13 +789,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected /a/ to be a string but got \'regexp\'', exception);
-                done();
             });
         });
 
         describe('object()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -856,10 +805,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -870,13 +818,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected <Buffer 14> to be an object but got \'buffer\'', exception);
-                done();
             });
         });
 
         describe('true()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -887,10 +834,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -901,13 +847,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected \'a\' to be true', exception);
-                done();
             });
         });
 
         describe('false()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -918,10 +863,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -932,13 +876,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected \'a\' to be false', exception);
-                done();
             });
         });
 
         describe('null()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -949,10 +892,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -963,13 +905,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected \'a\' to be null', exception);
-                done();
             });
         });
 
         describe('undefined()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -980,10 +921,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates correct type (missing)', (done) => {
+            it('validates correct type (missing)', () => {
 
                 let exception = false;
                 try {
@@ -994,10 +934,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -1008,13 +947,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected \'a\' to be undefined', exception);
-                done();
             });
         });
 
         describe('NaN()', () => {
 
-            it('validates correct type', (done) => {
+            it('validates correct type', () => {
 
                 let exception = false;
                 try {
@@ -1025,10 +963,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 const fail = (value) => {
 
@@ -1056,13 +993,12 @@ describe('expect()', () => {
                 fail('foo');
                 fail({});
                 fail([]);
-                done();
             });
         });
 
         describe('include()', () => {
 
-            it('validates strings', (done) => {
+            it('validates strings', () => {
 
                 let exception = false;
                 try {
@@ -1084,10 +1020,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates arrays', (done) => {
+            it('validates arrays', () => {
 
                 let exception = false;
                 try {
@@ -1106,10 +1041,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates array with only a partial object value', (done) => {
+            it('invalidates array with only a partial object value', () => {
 
                 let exception = false;
                 try {
@@ -1120,10 +1054,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [ { a: 1, b: 1 } ] to include { a: 1 }', exception);
-                done();
             });
 
-            it('invalidates arrays (shallow)', (done) => {
+            it('invalidates arrays (shallow)', () => {
 
                 let exception = false;
                 try {
@@ -1134,10 +1067,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [ { a: 1 } ] to include { a: 1 }', exception);
-                done();
             });
 
-            it('validates objects', (done) => {
+            it('validates objects', () => {
 
                 let exception = false;
                 try {
@@ -1156,10 +1088,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates objects (shallow)', (done) => {
+            it('invalidates objects (shallow)', () => {
 
                 let exception = false;
                 try {
@@ -1170,10 +1101,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected { a: [ 1 ] } to include { a: [ 1 ] }', exception);
-                done();
             });
 
-            it('validates aliases', (done) => {
+            it('validates aliases', () => {
 
                 let exception = false;
                 try {
@@ -1186,10 +1116,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('asserts called with only one argument', (done) => {
+            it('asserts called with only one argument', () => {
 
                 {
                     let exception = false;
@@ -1214,14 +1143,13 @@ describe('expect()', () => {
                     Hoek.assert(exception.message === 'Can only assert include with a single parameter', exception);
                 }
 
-                done();
             });
 
         });
 
         describe('endWith()', () => {
 
-            it('validates strings', (done) => {
+            it('validates strings', () => {
 
                 let exception = false;
                 try {
@@ -1234,10 +1162,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('does not validate arrays', (done) => {
+            it('does not validate arrays', () => {
 
                 let exception = false;
                 try {
@@ -1248,10 +1175,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Can only assert endsWith on a string, with a string', exception);
-                done();
             });
 
-            it('does not validate using arrays', (done) => {
+            it('does not validate using arrays', () => {
 
                 let exception = false;
                 try {
@@ -1262,14 +1188,13 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Can only assert endsWith on a string, with a string', exception);
-                done();
             });
 
         });
 
         describe('startWith()', () => {
 
-            it('validates strings', (done) => {
+            it('validates strings', () => {
 
                 let exception = false;
                 try {
@@ -1285,10 +1210,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('does not validate arrays', (done) => {
+            it('does not validate arrays', () => {
 
                 let exception = false;
                 try {
@@ -1299,10 +1223,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Can only assert startsWith on a string, with a string', exception);
-                done();
             });
 
-            it('does not validate using arrays', (done) => {
+            it('does not validate using arrays', () => {
 
                 let exception = false;
                 try {
@@ -1313,14 +1236,13 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Can only assert startsWith on a string, with a string', exception);
-                done();
             });
 
         });
 
         describe('exist()', () => {
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1331,10 +1253,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion (null)', (done) => {
+            it('invalidates assertion (null)', () => {
 
                 let exception = false;
                 try {
@@ -1345,10 +1266,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected null to exist', exception);
-                done();
             });
 
-            it('invalidates assertion (undefined)', (done) => {
+            it('invalidates assertion (undefined)', () => {
 
                 let exception = false;
                 try {
@@ -1359,10 +1279,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected undefined to exist', exception);
-                done();
             });
 
-            it('validates assertion (alias)', (done) => {
+            it('validates assertion (alias)', () => {
 
                 let exception = false;
                 try {
@@ -1373,10 +1292,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (not error)', (done) => {
+            it('validates assertion (not error)', () => {
 
                 const failed = new Error('some message');           // Create error on a different line than where the assertion is
 
@@ -1390,13 +1308,12 @@ describe('expect()', () => {
 
                 Hoek.assert(exception.message === 'some message', exception);
                 Hoek.assert(exception.at.line !== Code.thrownAt(failed).line, 'Reports the wrong line number');
-                done();
             });
         });
 
         describe('empty()', () => {
 
-            it('validates string', (done) => {
+            it('validates string', () => {
 
                 let exception = false;
                 try {
@@ -1407,10 +1324,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates buffer', (done) => {
+            it('validates buffer', () => {
 
                 let exception = false;
                 try {
@@ -1421,10 +1337,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates array', (done) => {
+            it('validates array', () => {
 
                 let exception = false;
                 try {
@@ -1435,10 +1350,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates object', (done) => {
+            it('validates object', () => {
 
                 let exception = false;
                 try {
@@ -1449,10 +1363,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -1463,13 +1376,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected \'a\' to be empty', exception);
-                done();
             });
         });
 
         describe('length()', () => {
 
-            it('validates string', (done) => {
+            it('validates string', () => {
 
                 let exception = false;
                 try {
@@ -1480,10 +1392,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates buffer', (done) => {
+            it('validates buffer', () => {
 
                 let exception = false;
                 try {
@@ -1494,10 +1405,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates array', (done) => {
+            it('validates array', () => {
 
                 let exception = false;
                 try {
@@ -1508,10 +1418,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates object', (done) => {
+            it('validates object', () => {
 
                 let exception = false;
                 try {
@@ -1522,10 +1431,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates incorrect type', (done) => {
+            it('invalidates incorrect type', () => {
 
                 let exception = false;
                 try {
@@ -1536,13 +1444,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected \'a\' to have a length of 10 but got 1', exception);
-                done();
             });
         });
 
         describe('equal()', () => {
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1560,10 +1467,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (alias)', (done) => {
+            it('validates assertion (alias)', () => {
 
                 let exception = false;
                 try {
@@ -1574,10 +1480,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion', (done) => {
+            it('invalidates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1588,10 +1493,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected { foo: 1 } to equal specified value: { foo: 2 }', exception);
-                done();
             });
 
-            it('validates assertion (shallow)', (done) => {
+            it('validates assertion (shallow)', () => {
 
                 let exception = false;
                 try {
@@ -1606,10 +1510,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion (shallow)', (done) => {
+            it('invalidates assertion (shallow)', () => {
 
                 let exception = false;
                 try {
@@ -1620,10 +1523,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [ \'a\' ] to equal specified value: [ \'a\' ]', exception);
-                done();
             });
 
-            it('prints the specified value', (done) => {
+            it('prints the specified value', () => {
 
                 let exception = false;
                 try {
@@ -1634,13 +1536,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected \'test\' to equal specified value: \'junk\'', exception);
-                done();
             });
         });
 
         describe('above()', () => {
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1651,10 +1552,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (alias)', (done) => {
+            it('validates assertion (alias)', () => {
 
                 let exception = false;
                 try {
@@ -1665,10 +1565,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion', (done) => {
+            it('invalidates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1679,13 +1578,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected 10 to be above 50', exception);
-                done();
             });
         });
 
         describe('least()', () => {
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1696,10 +1594,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (alias)', (done) => {
+            it('validates assertion (alias)', () => {
 
                 let exception = false;
                 try {
@@ -1710,10 +1607,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion', (done) => {
+            it('invalidates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1724,13 +1620,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected 10 to be at least 20', exception);
-                done();
             });
         });
 
         describe('below()', () => {
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1741,10 +1636,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (alias)', (done) => {
+            it('validates assertion (alias)', () => {
 
                 let exception = false;
                 try {
@@ -1755,10 +1649,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion', (done) => {
+            it('invalidates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1769,13 +1662,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected 1 to be below 0', exception);
-                done();
             });
         });
 
         describe('most()', () => {
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1786,10 +1678,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (alias)', (done) => {
+            it('validates assertion (alias)', () => {
 
                 let exception = false;
                 try {
@@ -1800,10 +1691,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion', (done) => {
+            it('invalidates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1814,13 +1704,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected 100 to be at most 20', exception);
-                done();
             });
         });
 
         describe('within()', () => {
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1833,10 +1722,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (alias)', (done) => {
+            it('validates assertion (alias)', () => {
 
                 let exception = false;
                 try {
@@ -1847,10 +1735,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion (over)', (done) => {
+            it('invalidates assertion (over)', () => {
 
                 let exception = false;
                 try {
@@ -1861,10 +1748,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected 5 to be within 0..4', exception);
-                done();
             });
 
-            it('invalidates assertion (under)', (done) => {
+            it('invalidates assertion (under)', () => {
 
                 let exception = false;
                 try {
@@ -1875,13 +1761,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected -1 to be within 0..4', exception);
-                done();
             });
         });
 
         describe('between()', () => {
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1892,10 +1777,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion (over)', (done) => {
+            it('invalidates assertion (over)', () => {
 
                 let exception = false;
                 try {
@@ -1906,10 +1790,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected 4 to be between 0..4', exception);
-                done();
             });
 
-            it('invalidates assertion (under)', (done) => {
+            it('invalidates assertion (under)', () => {
 
                 let exception = false;
                 try {
@@ -1920,13 +1803,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected 0 to be between 0..4', exception);
-                done();
             });
         });
 
         describe('about()', () => {
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1937,10 +1819,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion', (done) => {
+            it('invalidates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1951,10 +1832,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected 10 to be about 8 \u00b11', exception);
-                done();
             });
 
-            it('invalidates assertion (invalid arguments)', (done) => {
+            it('invalidates assertion (invalid arguments)', () => {
 
                 let exception = false;
                 try {
@@ -1965,13 +1845,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'About assertion requires two number arguments', exception);
-                done();
             });
         });
 
         describe('instanceof()', () => {
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -1982,10 +1861,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (alias)', (done) => {
+            it('validates assertion (alias)', () => {
 
                 let exception = false;
                 try {
@@ -1996,10 +1874,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion', (done) => {
+            it('invalidates assertion', () => {
 
                 let exception = false;
                 try {
@@ -2010,10 +1887,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [] to be an instance of RegExp', exception);
-                done();
             });
 
-            it('invalidates assertion (anonymous)', (done) => {
+            it('invalidates assertion (anonymous)', () => {
 
                 const Custom = function () { };
                 delete Custom.name; // Ensure that the type is anonymous
@@ -2027,10 +1903,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [] to be an instance of provided type', exception);
-                done();
             });
 
-            it('invalidates assertion (anonymous)', (done) => {
+            it('invalidates assertion (anonymous)', () => {
 
                 function Custom() { }           /* eslint func-style:0 */
 
@@ -2043,13 +1918,12 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [] to be an instance of Custom', exception);
-                done();
             });
         });
 
         describe('match()', () => {
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -2060,10 +1934,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (alias)', (done) => {
+            it('validates assertion (alias)', () => {
 
                 let exception = false;
                 try {
@@ -2074,10 +1947,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion', (done) => {
+            it('invalidates assertion', () => {
 
                 let exception = false;
                 try {
@@ -2088,7 +1960,6 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected \'a4x\' to match /\\w\\dy/', exception);
-                done();
             });
         });
 
@@ -2099,7 +1970,7 @@ describe('expect()', () => {
                 return value === 'some value';
             };
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -2110,10 +1981,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (alias)', (done) => {
+            it('validates assertion (alias)', () => {
 
                 let exception = false;
                 try {
@@ -2124,10 +1994,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion', (done) => {
+            it('invalidates assertion', () => {
 
                 let exception = false;
                 try {
@@ -2138,7 +2007,6 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected \'wrong\' to satisfy rule', exception);
-                done();
             });
         });
 
@@ -2149,7 +2017,7 @@ describe('expect()', () => {
                 throw new Error('kaboom');
             };
 
-            it('validates assertion', (done) => {
+            it('validates assertion', () => {
 
                 let exception = false;
                 try {
@@ -2160,10 +2028,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (alias)', (done) => {
+            it('validates assertion (alias)', () => {
 
                 let exception = false;
                 try {
@@ -2174,10 +2041,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion', (done) => {
+            it('invalidates assertion', () => {
 
                 let exception = false;
                 try {
@@ -2188,10 +2054,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [Function] to throw an error', exception);
-                done();
             });
 
-            it('forbids arguments on negative assertion', (done) => {
+            it('forbids arguments on negative assertion', () => {
 
                 let exception = false;
                 try {
@@ -2202,10 +2067,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Cannot specify arguments when expecting not to throw', exception);
-                done();
             });
 
-            it('validates assertion (message)', (done) => {
+            it('validates assertion (message)', () => {
 
                 let exception = false;
                 try {
@@ -2216,10 +2080,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (empty message)', (done) => {
+            it('validates assertion (empty message)', () => {
 
                 let exception = false;
                 try {
@@ -2233,10 +2096,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (message regex)', (done) => {
+            it('validates assertion (message regex)', () => {
 
                 let exception = false;
                 try {
@@ -2247,10 +2109,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('validates assertion (missing message)', (done) => {
+            it('validates assertion (missing message)', () => {
 
                 const Custom = function () { };
 
@@ -2266,10 +2127,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [Function] to throw an error with specified message', exception);
-                done();
             });
 
-            it('invalidates assertion (message)', (done) => {
+            it('invalidates assertion (message)', () => {
 
                 let exception = false;
                 try {
@@ -2280,10 +2140,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [Function] to throw an error', exception);
-                done();
             });
 
-            it('invalidates assertion (empty message)', (done) => {
+            it('invalidates assertion (empty message)', () => {
 
                 let exception = false;
                 try {
@@ -2297,10 +2156,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [Function] to throw an error with specified message', exception);
-                done();
             });
 
-            it('validates assertion (type)', (done) => {
+            it('validates assertion (type)', () => {
 
                 let exception = false;
                 try {
@@ -2311,10 +2169,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
 
-            it('invalidates assertion (known type)', (done) => {
+            it('invalidates assertion (known type)', () => {
 
                 const Custom = function () { };
 
@@ -2330,10 +2187,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [Function] to throw Error', exception);
-                done();
             });
 
-            it('invalidates assertion (anonymous type)', (done) => {
+            it('invalidates assertion (anonymous type)', () => {
 
                 const Custom = function () { };
                 delete Custom.name; // Ensure that the type is anonymous
@@ -2347,10 +2203,9 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(/Expected \[Function(: throws)?\] to throw provided type/.test(exception.message), exception);
-                done();
             });
 
-            it('validates assertion (type and message)', (done) => {
+            it('validates assertion (type and message)', () => {
 
                 let exception = false;
                 try {
@@ -2361,7 +2216,6 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(!exception, exception);
-                done();
             });
         });
 
@@ -2604,7 +2458,7 @@ describe('expect()', () => {
 
 describe('fail', () => {
 
-    it('trigger failure', (done) => {
+    it('trigger failure', () => {
 
         let exception = false;
         try {
@@ -2615,10 +2469,9 @@ describe('fail', () => {
         }
 
         Hoek.assert(exception.message === 'Something wrong happened!', exception);
-        done();
     });
 
-    it('trigger failure only once', (done) => {
+    it('trigger failure only once', () => {
 
         let exception = false;
         try {
@@ -2630,33 +2483,30 @@ describe('fail', () => {
         }
 
         Hoek.assert(exception.message === 'Final Failure', exception);
-        done();
     });
 
 });
 
 describe('incomplete()', () => {
 
-    it('keeps track of incomplete assertions', (done) => {
+    it('keeps track of incomplete assertions', () => {
 
         const a = Code.expect(1).to;
         Code.expect(2).to.equal(2);
         Hoek.assert(Code.incomplete().length === 1);
         a.equal(1);
         Hoek.assert(!Code.incomplete());
-        done();
     });
 });
 
 describe('thrownAt()', () => {
 
-    it('handles error with missing stack', (done) => {
+    it('handles error with missing stack', () => {
 
         const failed = new Error('foo');
         failed.stack = undefined;
         const at = Code.thrownAt(failed);
 
         Hoek.assert(at === undefined, 'Reports the wrong at information');
-        done();
     });
 });
