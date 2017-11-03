@@ -1446,7 +1446,7 @@ describe('expect()', () => {
                 Hoek.assert(exception.message === 'Expected \'a\' to have a length of 10 but got 1', exception);
             });
 
-            it('throws on length check on objects with no length property', (done) => {
+            it('throws on length check on objects with no length property', () => {
 
                 let exception = false;
                 try {
@@ -1457,7 +1457,6 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Can only assert length on object, array or string', exception);
-                done();
             });
         });
 
