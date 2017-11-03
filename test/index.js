@@ -1445,6 +1445,20 @@ describe('expect()', () => {
 
                 Hoek.assert(exception.message === 'Expected \'a\' to have a length of 10 but got 1', exception);
             });
+
+            it('throws on length check on objects with no length property', (done) => {
+
+                let exception = false;
+                try {
+                    Code.expect(null).to.have.length(2);
+                }
+                catch (err) {
+                    exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Can only assert length on object, array or string', exception);
+                done();
+            });
         });
 
         describe('equal()', () => {
