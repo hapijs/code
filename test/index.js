@@ -2436,6 +2436,37 @@ describe('expect()', () => {
                 Hoek.assert(/Expected \[Promise\] to reject with provided type/.test(exception.message), exception);
             });
 
+            it('invalidates rejection (wrong message type)', () => {
+
+                const promise = Promise.reject(new Error('kaboom'));
+
+                const fail = async (value) => {
+
+                    let exception = false;
+
+                    try {
+
+                        await Code.expect(promise).to.reject(Error, value);
+                    }
+                    catch (err) {
+                        exception = err;
+                    }
+
+                    Hoek.assert(exception.message === 'Can not assert with invalid message argument type', exception);
+                };
+
+                fail(1);
+                fail(0);
+                fail(Infinity);
+                fail(undefined);
+                fail(null);
+                fail(true);
+                fail(false);
+                fail({});
+                fail([]);
+                fail(NaN);
+            });
+
             it('validates rejection (type and message)', async () => {
 
                 let exception = false;
