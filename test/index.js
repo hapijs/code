@@ -2436,7 +2436,37 @@ describe('expect()', () => {
                 Hoek.assert(/Expected \[Promise\] to reject with provided type/.test(exception.message), exception);
             });
 
-            it('invalidates rejection (wrong message type)', () => {
+            it('invalidates rejection (invalid type)', async () => {
+
+                const promise = Promise.reject(new Error('kaboom'));
+
+                const fail = async (value) => {
+
+                    let exception = false;
+
+                    try {
+                        await Code.expect(promise).to.reject(value);
+                    }
+                    catch (err) {
+                        exception = err;
+                    }
+
+                    Hoek.assert(exception.message === 'Can not assert with invalid type argument', exception);
+                };
+
+                await fail(0);
+                await fail(1);
+                await fail(Infinity);
+                await fail(undefined);
+                await fail(null);
+                await fail(true);
+                await fail(false);
+                await fail({});
+                await fail([]);
+                await fail(NaN);
+            });
+
+            it('invalidates rejection (invalid message type)', async () => {
 
                 const promise = Promise.reject(new Error('kaboom'));
 
@@ -2455,16 +2485,16 @@ describe('expect()', () => {
                     Hoek.assert(exception.message === 'Can not assert with invalid message argument type', exception);
                 };
 
-                fail(1);
-                fail(0);
-                fail(Infinity);
-                fail(undefined);
-                fail(null);
-                fail(true);
-                fail(false);
-                fail({});
-                fail([]);
-                fail(NaN);
+                await fail(1);
+                await fail(0);
+                await fail(Infinity);
+                await fail(undefined);
+                await fail(null);
+                await fail(true);
+                await fail(false);
+                await fail({});
+                await fail([]);
+                await fail(NaN);
             });
 
             it('validates rejection (type and message)', async () => {
