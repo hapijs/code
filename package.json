@@ -17,13 +17,15 @@
     },
     "devDependencies": {
         "lab": "15.x.x",
-        "markdown-toc": "1.1.x"
+        "markdown-toc": "1.1.x",
+        "jsdoc": "3.x.x"
     },
     "scripts": {
         "test": "lab -v -t 100 -L",
         "test-cov-html": "lab -L -r html -o coverage.html",
         "toc": "node generate-api-toc.js",
-        "version": "npm run toc && git add API.md"
+        "version": "npm run toc && git add API.md",
+        "doc": "jsdoc ./lib/index.js --destination ./doc"
     },
     "license": "BSD-3-Clause"
 }
