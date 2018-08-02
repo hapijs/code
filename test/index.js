@@ -1218,6 +1218,7 @@ describe('expect()', () => {
 
                 Hoek.assert(exception.message === 'some message', exception);
                 Hoek.assert(exception.at.line !== Code.thrownAt(failed).line, 'Reports the wrong line number');
+                Hoek.assert(exception.at.filename === __filename, `expected ${exception.at.filename} to equal ${__filename}`);
             });
         });
 
@@ -2194,6 +2195,7 @@ describe('expect()', () => {
                 const Custom = function () { };
 
                 try {
+                    var expectedLineNumber = Number(new Error().stack.match(/:(\d+)/)[1]) + 1;
                     await Code.expect(Promise.reject(new Custom())).to.reject('kaboom');
                 }
                 catch (err) {
@@ -2201,6 +2203,8 @@ describe('expect()', () => {
                 }
 
                 Hoek.assert(exception.message === 'Expected [Promise] to reject with an error with specified message', exception);
+                Hoek.assert(Number(exception.at.line) === expectedLineNumber, `expected ${expectedLineNumber}, got ${exception.at.line}`);
+                Hoek.assert(exception.at.filename === __filename, `expected ${exception.at.filename} to equal ${__filename}`);
             });
 
             it('invalidates rejection (message)', async () => {
