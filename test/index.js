@@ -311,7 +311,7 @@ describe('expect()', () => {
         }
 
         Code.settings.comparePrototypes = origPrototype;
-        Hoek.assert(exception2.message === 'Expected {} to equal specified value: {}', exception2);
+        Hoek.assert(exception2.message === `Expected {} to equal specified value: ${Util.format(Object.create(null))}`, exception2);
     });
 
     describe('assertion', () => {
@@ -322,7 +322,7 @@ describe('expect()', () => {
 
                 const grab = function () {
 
-                    return arguments;
+                    return arguments;   // eslint-disable-line prefer-rest-params
                 };
 
                 try {
@@ -407,7 +407,7 @@ describe('expect()', () => {
             it('validates correct type', () => {
 
                 try {
-                    Code.expect(new Buffer([1])).to.be.a.buffer();
+                    Code.expect(Buffer.from([1])).to.be.a.buffer();
                 }
                 catch (err) {
                     var exception = err;
@@ -759,7 +759,7 @@ describe('expect()', () => {
             it('invalidates incorrect type', () => {
 
                 try {
-                    Code.expect(new Buffer([20])).to.be.an.object();
+                    Code.expect(Buffer.from([20])).to.be.an.object();
                 }
                 catch (err) {
                     var exception = err;
@@ -1054,6 +1054,7 @@ describe('expect()', () => {
                 catch (err) {
                     var exception1 = err;
                 }
+
                 Hoek.assert(exception1.message === 'Can only assert include with a single parameter', exception1);
 
                 try {
@@ -1239,7 +1240,7 @@ describe('expect()', () => {
             it('validates buffer', () => {
 
                 try {
-                    Code.expect(new Buffer('')).to.be.empty();
+                    Code.expect(Buffer.from('')).to.be.empty();
                 }
                 catch (err) {
                     var exception = err;
@@ -1302,7 +1303,7 @@ describe('expect()', () => {
             it('validates buffer', () => {
 
                 try {
-                    Code.expect(new Buffer('a')).to.have.length(1);
+                    Code.expect(Buffer.from('a')).to.have.length(1);
                 }
                 catch (err) {
                     var exception = err;
