@@ -474,8 +474,7 @@ describe('expect()', () => {
 
             it('validates assertion (not error)', () => {
 
-                const Custom = function () { };
-                Hoek.inherits(Custom, Error);
+                const Custom = class extends Error { };
 
                 try {
                     Code.expect(false).to.not.be.an.error();
@@ -541,8 +540,7 @@ describe('expect()', () => {
 
             it('validates assertion (missing message)', () => {
 
-                const Custom = function () { };
-                Hoek.inherits(Custom, Error);
+                const Custom = class extends Error { };
 
                 try {
                     Code.expect(new Custom()).to.be.an.error('kaboom');
@@ -596,7 +594,7 @@ describe('expect()', () => {
             it('invalidates assertion (anonymous type)', () => {
 
                 const Custom = function () { };
-                Hoek.inherits(Custom, Error);
+                Util.inherits(Custom, Error);
                 delete Custom.name; // Ensure that the type is anonymous
 
                 try {

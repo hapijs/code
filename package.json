@@ -13,7 +13,7 @@
         "node": ">=8.9.0"
     },
     "dependencies": {
-        "hoek": "5.x.x"
+        "hoek": "6.x.x"
     },
     "devDependencies": {
         "lab": "17.x.x",

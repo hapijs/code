@@ -1,4 +1,4 @@
-Copyright (c) 2014-2017, Project contributors
+Copyright (c) 2014-2018, Project contributors
 Copyright (c) 2014, Walmart
 Copyright (c) 2011-2014 Jake Luer
 All rights reserved.
@@ -26,7 +26,5 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
                                   *   *   *
-
-The complete list of contributors can be found at: https://github.com/hapijs/code/graphs/contributors
 
 The initial version of this module was adapted from Chai, copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>, http://chaijs.com, MIT Licensed
