@@ -9,9 +9,6 @@
         "expect",
         "assertion"
     ],
-    "engines": {
-        "node": ">=8.9.0"
-    },
     "dependencies": {
         "hoek": "6.x.x"
     },
