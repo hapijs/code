@@ -1219,6 +1219,21 @@ describe('expect()', () => {
                 Hoek.assert(exception.at.line !== Code.thrownAt(failed).line, 'Reports the wrong line number');
                 Hoek.assert(exception.at.filename === __filename, `expected ${exception.at.filename} to equal ${__filename}`);
             });
+
+            it('validates assertion (error)', () => {
+
+                try {
+                    Code.expect({}).to.not.exist();
+                }
+                catch (err) {
+                    var exception = err;
+                }
+
+                Hoek.assert(exception.message === 'Expected {} to not exist', exception);
+                Hoek.assert(exception.actual === undefined, exception);
+                Hoek.assert(exception.expected === undefined, exception);
+                Hoek.assert(exception.at.filename === __filename, `expected ${exception.at.filename} to equal ${__filename}`);
+            });
         });
 
         describe('empty()', () => {
