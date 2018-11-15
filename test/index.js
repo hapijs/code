@@ -2424,4 +2424,25 @@ describe('thrownAt()', () => {
 
         Hoek.assert(at === undefined, 'Reports the wrong at information');
     });
+
+    it('handles error with unnamed functions', () => {
+
+        const test = (f) => f();
+
+        try {
+
+            // eslint-disable-next-line prefer-arrow-callback
+            test(function () {
+
+                Code.expect(true).to.be.false();
+            });
+
+            Code.fail('an error should have been thrown');
+        }
+        catch (ex) {
+
+            const at = Code.thrownAt(ex);
+            Hoek.assert(at.filename === __filename);
+        }
+    });
 });
