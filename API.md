@@ -651,24 +651,28 @@ and compared to the provided optional requirements where:
 - `message` a string or regular expression matching the rejected error `message` property. Note that a string
   must provide a full match.
 
+Returns the rejected error object.
+
 ```js
 const NodeUtil = require('util');
 const Code = require('code');
 const expect = Code.expect;
 
-const CustomError = function (message) {
+const CustomError = function (message, code) {
 
-    Error.call(this, message);
+    this.message = message;
+    this.code = code;
 };
 
-NodeUtil.inherit(CustomError, Error)
+NodeUtil.inherits(CustomError, Error);
 
 const rejects = function () {
 
-    new Promise((resolve, reject) => reject(new CustomError('Oh no!')));
+    return new Promise((resolve, reject) => reject(new CustomError('Oh no!', 123)));
 };
 
-await expect(rejects()).to.reject(CustomError, 'Oh no!');
+const err = await expect(rejects()).to.reject(CustomError, 'Oh no!');
+expect(err.code).to.equal(123);
 ```
 
 ### `fail(message)`
