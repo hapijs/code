@@ -1,10 +1,14 @@
 {
   "name": "@hapi/code",
   "description": "assertion library",
-  "version": "5.2.4",
+  "version": "5.3.0",
   "repository": "git://github.com/hapijs/code",
   "main": "lib/index.js",
-  "keywords": ["test", "expect", "assertion"],
+  "keywords": [
+    "test",
+    "expect",
+    "assertion"
+  ],
   "dependencies": {
     "@hapi/hoek": "6.x.x"
   },
