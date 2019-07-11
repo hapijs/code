@@ -9,7 +9,7 @@ BDD assertion library.
 ## Example
 
 ```js
-const Code = require('code');
+const Code = require('@hapi/code');
 const expect = Code.expect;
 
 expect(true).to.be.a.boolean().and.to.not.equal(false);
