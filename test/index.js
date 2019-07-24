@@ -1380,6 +1380,11 @@ describe('expect()', () => {
                     Code.expect(Object.create(null)).to.not.equal({}, { prototype: true });
                     Code.expect(Object.create(null)).to.equal({}, { prototype: false });
                     Code.expect(Object.create(null)).to.equal({});
+                    Code.expect({ a: 1, b: 2 }).to.equal({ a: 1, b: 3 }, { skip: ['b'] });
+
+                    const f1 = () => { };
+                    const f1a = () => { };
+                    Code.expect({ f1 }).to.equal({ f1: f1a });
                 }
                 catch (err) {
                     var exception = err;
