@@ -143,7 +143,7 @@ describe('expect()', () => {
         }
 
         Code.settings.truncateMessages = origTruncate;
-        const message = exception.message.replace(/\n/g, '').replace(/ {2,}/g, ' ').replace(']', ' ]');
+        const message = exception.message.replace(/\n/g, '').replace(/ {2,}/g, ' ').replace(/8]/, '8 ]');
         Hoek.assert(message === 'Expected [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 ] to be a string but got \'array\'', exception);
     });
 
