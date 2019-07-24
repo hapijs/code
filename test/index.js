@@ -143,7 +143,8 @@ describe('expect()', () => {
         }
 
         Code.settings.truncateMessages = origTruncate;
-        Hoek.assert(exception.message === 'Expected [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 ] to be a string but got \'array\'', exception);
+        const message = exception.message.replace(/\n/g, '').replace(/ {2,}/g, ' ').replace(']', ' ]');
+        Hoek.assert(message === 'Expected [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 ] to be a string but got \'array\'', exception);
     });
 
     it('asserts on invalid condition (large object, display truncated)', () => {
@@ -189,11 +190,8 @@ describe('expect()', () => {
 
         Code.settings.truncateMessages = origTruncate;
 
-        const lines = exception.message.split('\n');
-
-        Hoek.assert(lines.length === 2, exception);
-        Hoek.assert(lines[0].trim() === 'Expected { a: 1,', exception);
-        Hoek.assert(lines[1].trim() === 'b: \'12345678901234567890123456789012345678901234567890\' } to be a string but got \'object\'', exception);
+        const message = exception.message.replace(/\n/g, '').replace(/ {2,}/g, ' ');
+        Hoek.assert(message === `Expected { a: 1, b: '12345678901234567890123456789012345678901234567890' } to be a string but got 'object'`, exception);
     });
 
     it('asserts on invalid condition (long object values, display truncated)', () => {
