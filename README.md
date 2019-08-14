@@ -4,7 +4,7 @@
 
 BDD assertion library.
 
-[![Build Status](https://secure.travis-ci.org/hapijs/code.svg)](http://travis-ci.org/hapijs/code)
+[![Build Status](https://secure.travis-ci.org/hapijs/code.svg)](http://travis-ci.org/hapijs/code) [![Greenkeeper badge](https://badges.greenkeeper.io/hapijs/code.svg)](https://greenkeeper.io/)
 
 ## Example
 
