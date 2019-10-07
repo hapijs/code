@@ -1,5 +1,5 @@
 
-## Introduction
+### Introduction
 
 **code** was created as a direct rewrite of the powerful [**chai**](http://chaijs.com) assertions
 library. This virtual fork was created for a few reasons. First, **chai** mixed usage of methods and
@@ -21,7 +21,7 @@ assertion created (e.g. every `expect()` call) is also executed. This will alert
 Like **lab**, the goal is to keep this module small and simple. If you need extensibility or other
 functionality, we recommend looking at the many other excellent assertions libraries available.
 
-## Example
+### Example
 
 ```js
 const Code = require('@hapi/code');
