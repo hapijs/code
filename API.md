@@ -4,7 +4,7 @@
 **code** was created as a direct rewrite of the powerful [**chai**](http://chaijs.com) assertions
 library. This virtual fork was created for a few reasons. First, **chai** mixed usage of methods and
 properties creates a problematic environment in which it is too easy to forget a method `()` and result
-in an assertion that is never executed (and therefor passes incorrectly). This observation was noted by
+in an assertion that is never executed (and therefore passes incorrectly). This observation was noted by
 the [**must**](https://github.com/moll/js-must) author.
 
 The second reason is that similar to [**lab**](https://github.com/hapijs/lab), our test runner, we wanted
