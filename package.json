@@ -1,23 +1,27 @@
 {
-  "name": "@hapi/code",
-  "description": "assertion library",
-  "version": "6.0.0",
-  "repository": "git://github.com/hapijs/code",
-  "main": "lib/index.js",
-  "keywords": [
-    "test",
-    "expect",
-    "assertion"
-  ],
-  "dependencies": {
-    "@hapi/hoek": "8.x.x"
-  },
-  "devDependencies": {
-    "@hapi/lab": "20.x.x"
-  },
-  "scripts": {
-    "test": "lab -t 100 -L",
-    "test-cov-html": "lab -L -r html -o coverage.html"
-  },
-  "license": "BSD-3-Clause"
+    "name": "@hapi/code",
+    "description": "assertion library",
+    "version": "6.0.0",
+    "repository": "git://github.com/hapijs/code",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "keywords": [
+        "test",
+        "expect",
+        "assertion"
+    ],
+    "files": [
+        "lib"
+    ],
+    "dependencies": {
+        "@hapi/hoek": "8.x.x"
+    },
+    "devDependencies": {
+        "@hapi/lab": "20.x.x"
+    },
+    "scripts": {
+        "test": "lab -t 100 -L -Y",
+        "test-cov-html": "lab -L -r html -o coverage.html"
+    },
+    "license": "BSD-3-Clause"
 }

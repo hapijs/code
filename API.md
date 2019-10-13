@@ -651,7 +651,7 @@ expect(err.code).to.equal(123);
 
 ### `fail(message)`
 
-Make the test fail with `message`.
+Makes the test fail with `message`.
 
 ```js
 const Code = require('code');
@@ -673,8 +673,7 @@ console.log(Code.count());		// -> 1
 
 ### `incomplete()`
 
-Returns an array of the locations where incomplete assertions were declared or `null` if
-no incomplete assertions found.
+Returns an array of the locations where incomplete assertions were declared or `null` if no incomplete assertions found.
 
 ```js
 const Code = require('code');
@@ -686,8 +685,7 @@ console.log(Code.incomplete());		// -> [ 'readme.js:667:1' ]
 
 ### `thrownAt([error])`
 
-Returns the filename, line number, and column number of where the `error` was created. If
-no error is provided, the current location returned.
+Returns the filename, line number, and column number of where the `error` was created. If no error is provided, the current location returned.
 
 ```js
 const Code = require('code');
