@@ -14,7 +14,7 @@
         "lib"
     ],
     "dependencies": {
-        "@hapi/hoek": "8.x.x"
+        "@hapi/hoek": "9.x.x"
     },
     "devDependencies": {
         "@hapi/lab": "22.x.x"
