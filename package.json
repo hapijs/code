@@ -17,7 +17,7 @@
         "@hapi/hoek": "8.x.x"
     },
     "devDependencies": {
-        "@hapi/lab": "21.x.x"
+        "@hapi/lab": "22.x.x"
     },
     "scripts": {
         "test": "lab -t 100 -L -Y",
