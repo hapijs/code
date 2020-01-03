@@ -1,4 +1,4 @@
-Copyright (c) 2014-2019, Sideway Inc, and project contributors  
+Copyright (c) 2014-2012, Sideway Inc, and project contributors  
 Copyright (c) 2014, Walmart  
 Copyright (c) 2011-2014 Jake Luer  
 All rights reserved.
