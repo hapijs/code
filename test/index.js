@@ -2369,6 +2369,31 @@ describe('expect()', () => {
             });
         });
     });
+
+    it('handles cases where thrownAt() cannot parse the error', () => {
+
+        const captureStackTrace = Error.captureStackTrace;
+
+        Error.captureStackTrace = (error) => {
+
+            error.stack = 5;
+        };
+
+        try {
+            Code.expect(1).to.equal(2);
+        }
+        catch (err) {
+            var exception = err;
+        }
+        finally {
+            Error.captureStackTrace = captureStackTrace;
+        }
+
+        Hoek.assert(exception);
+        Hoek.assert(exception.message === 'Expected 1 to equal specified value: 2', exception.message);
+        Hoek.assert(exception.at.filename === __filename);
+        Hoek.assert(exception.at.column === '18');
+    });
 });
 
 describe('fail', () => {
