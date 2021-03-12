@@ -514,7 +514,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        reject<E extends {}>(type: Function & { new(): E }, message?: string | RegExp): Promise<E >;
+        reject<E extends {}>(type: Function & { new(): E }, message?: string | RegExp): Promise<E>;
         reject<E = unknown>(message: string | RegExp): Promise<E>;
         reject(): Promise<null>;
 
