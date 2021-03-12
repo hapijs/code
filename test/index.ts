@@ -178,8 +178,9 @@ Code.expect(1).to.match(/^\d$/);
 Code.expect('x').to.satisfy(value => value === 'x');
 
 const rejection = Promise.reject(new Error('Oh no!'));
-await Code.expect(rejection).to.reject('Oh no!');
-await Code.expect(rejection).rejects('Oh no!');
+
+await expect.type<Promise<any>>(Code.expect(rejection).to.reject('Oh no!'));
+await expect.type<Promise<any>>(Code.expect(rejection).rejects('Oh no!'));
 
 class CustomError extends Error { }
 
@@ -191,5 +192,7 @@ const throws = () => {
 Code.expect(throws).to.throw(CustomError, 'Oh no!');
 
 const typedRejection = Promise.reject(new CustomError('Oh no!'));
-await Code.expect(typedRejection).to.reject(CustomError, 'Oh no!');
-await Code.expect(typedRejection).rejects(CustomError, 'Oh no!');
+await expect.type<Promise<CustomError>>(Code.expect(typedRejection).to.reject(CustomError, 'Oh no!'));
+await expect.type<Promise<CustomError>>(Code.expect(typedRejection).rejects(CustomError, 'Oh no!'));
+
+await expect.type<Promise<null>>(Code.expect(Promise.resolve(true)).to.not.reject());
