@@ -514,8 +514,9 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        reject(type: Function, message?: string | RegExp): Assertion<T>;
-        reject(message?: string | RegExp): Assertion<T>;
+        reject<E extends {}>(type: Function & { new(): E }, message?: string | RegExp): Promise<E>;
+        reject<E = unknown>(message: string | RegExp): Promise<E>;
+        reject(): Promise<null>;
 
         /**
          * Asserts that the Promise reference value rejects with an exception when called.
@@ -525,8 +526,9 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        rejects(type: Function, message?: string | RegExp): Assertion<T>;
-        rejects(message?: string | RegExp): Assertion<T>;
+        rejects<E extends {}>(type: Function & { new(): E }, message?: string | RegExp): Promise<E>;
+        rejects<E = unknown>(message: string | RegExp): Promise<E>;
+        rejects(): Promise<null>;
 
         /**
          * Asserts that the reference value satisfies the provided validator function.
