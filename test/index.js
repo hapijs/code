@@ -1003,6 +1003,7 @@ describe('expect()', () => {
                     Code.expect({ a: 1, b: 2, c: 3 }).to.part.include({ a: 1, d: 4 });
                     Code.expect({ a: 1, b: 2, c: 3 }).to.only.include({ a: 1, b: 2, c: 3 });
                     Code.expect({ a: [1], b: [2], c: [3] }).to.include({ a: [1], c: [3] });
+                    Code.expect({ a: 1, b: { c: 3, d: 4 } }).to.part.include({ b: { c: 3 } });
                 }
                 catch (err) {
                     var exception = err;
