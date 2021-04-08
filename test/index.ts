@@ -107,6 +107,8 @@ Code.expect(true).to.be.true();
 Code.expect(false).to.be.false();
 Code.expect(null).to.be.null();
 Code.expect(undefined).to.be.undefined();
+Code.expect(Number.NaN).to.be.NaN();
+
 
 Code.expect('abc').to.include('ab');
 Code.expect('abc').to.only.include('abc');

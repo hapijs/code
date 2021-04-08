@@ -250,6 +250,12 @@ declare namespace expect {
          */
         undefined(): Assertion<T>;
 
+        /**
+         * Asserts that the reference value is `NaN`.
+         *
+         * @returns assertion chain object.
+         */
+        NaN(): Assertion<T>;
 
         // Tests
 
