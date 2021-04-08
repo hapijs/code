@@ -5,6 +5,8 @@ import * as Hoek from '@hapi/hoek';
 
 // Internal helpers
 
+type Class<T = any> = new (...args: any[]) => T;
+
 type UnpackArray<T> = T extends (infer U)[] ? U : T;
 
 type RecursivePartial<T> = {
@@ -181,7 +183,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        error(type: Function, message?: string | RegExp): Assertion<T>;
+        error(type: Class, message?: string | RegExp): Assertion<T>;
         error(message?: string | RegExp): Assertion<T>;
 
         /**
@@ -502,14 +504,14 @@ declare namespace expect {
          * 
          * @param type - the constructor function to be an instance of.
          */
-        instanceof(type: Function): Assertion<T>;
+        instanceof(type: Class): Assertion<T>;
 
         /**
          * Asserts that the reference value has the provided instanceof value.
          *
          * @param type - the constructor function to be an instance of.
          */
-        instanceOf(type: Function): Assertion<T>;
+        instanceOf(type: Class): Assertion<T>;
 
         /**
          * Asserts that the reference value's toString() representation matches the provided regular expression.
@@ -537,7 +539,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        reject<E extends {}>(type: Function & { new(): E }, message?: string | RegExp): Promise<E>;
+        reject<E extends {}>(type: Class<E>, message?: string | RegExp): Promise<E>;
         reject<E = unknown>(message: string | RegExp): Promise<E>;
         reject(): Promise<null>;
 
@@ -549,7 +551,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        rejects<E extends {}>(type: Function & { new(): E }, message?: string | RegExp): Promise<E>;
+        rejects<E extends {}>(type: Class<E>, message?: string | RegExp): Promise<E>;
         rejects<E = unknown>(message: string | RegExp): Promise<E>;
         rejects(): Promise<null>;
 
@@ -579,7 +581,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        throw(type: Function, message?: string | RegExp): Assertion<T>;
+        throw(type: Class, message?: string | RegExp): Assertion<T>;
         throw(message?: string | RegExp): Assertion<T>;
 
         /**
@@ -590,7 +592,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        throws(type: Function, message?: string | RegExp): Assertion<T>;
+        throws(type: Class, message?: string | RegExp): Assertion<T>;
         throws(message?: string | RegExp): Assertion<T>;
     }
 }
