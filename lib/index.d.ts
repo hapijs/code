@@ -3,6 +3,19 @@
 import * as Hoek from '@hapi/hoek';
 
 
+// Internal helpers
+
+type UnpackArray<T> = T extends (infer U)[] ? U : T;
+
+type RecursivePartial<T> = {
+    [P in keyof T]?:
+    T[P] extends (infer U)[] ? RecursivePartial<U>[] :
+    T[P] extends object ? RecursivePartial<T[P]> :
+    T[P];
+};
+
+type Loosely<T> = T extends object ? RecursivePartial<T> & { [key: string]: any } : T;
+
 /**
  * Configure code behavior
  */
@@ -77,7 +90,7 @@ export namespace thrownAt {
  * 
  * @returns Assertion object.
  */
-export function expect<T>(value: T | T[], prefix?: string): expect.Assertion<T>;
+export function expect<T>(value: T, prefix?: string): expect.Assertion<T>;
 
 declare namespace expect {
 
@@ -247,7 +260,8 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        include(values: string | string[] | T | T[]): Assertion<T>;
+        include(values: UnpackArray<Loosely<T> | Loosely<T>[]>): Assertion<T>;
+        include(values: string | string[]): Assertion<T>;
 
         /**
          * Asserts that the reference value (a string, array, or object) includes the provided values.
@@ -256,7 +270,8 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        includes(values: string | string[] | T | T[]): Assertion<T>;
+        includes(values: UnpackArray<Loosely<T> | Loosely<T>[]>): Assertion<T>;
+        includes(values: string | string[]): Assertion<T>;
 
         /**
          * Asserts that the reference value (a string, array, or object) includes the provided values.
@@ -265,7 +280,8 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        contain(values: string | string[] | T | T[]): Assertion<T>;
+        contain(values: UnpackArray<Loosely<T> | Loosely<T>[]>): Assertion<T>;
+        contain(values: string | string[]): Assertion<T>;
 
         /**
          * Asserts that the reference value (a string, array, or object) includes the provided values.
@@ -274,7 +290,8 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        contains(values: string | string[] | T | T[]): Assertion<T>;
+        contains(values: UnpackArray<Loosely<T> | Loosely<T>[]>): Assertion<T>;
+        contains(values: string | string[]): Assertion<T>;
 
         /**
          * Asserts that the reference value (a string) starts with the provided value.
