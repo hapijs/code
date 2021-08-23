@@ -1,28 +1,34 @@
 {
-    "name": "@hapi/code",
-    "description": "assertion library",
-    "version": "8.0.3",
-    "repository": "git://github.com/hapijs/code",
-    "main": "lib/index.js",
-    "types": "lib/index.d.ts",
-    "keywords": [
-        "test",
-        "expect",
-        "assertion"
-    ],
-    "files": [
-        "lib"
-    ],
-    "dependencies": {
-        "@hapi/hoek": "9.x.x"
-    },
-    "devDependencies": {
-        "@hapi/lab": "24.x.x",
-        "typescript": "~4.0.2"
-    },
-    "scripts": {
-        "test": "lab -t 100 -L -Y",
-        "test-cov-html": "lab -L -r html -o coverage.html"
-    },
-    "license": "BSD-3-Clause"
+  "name": "@hapi/code",
+  "description": "assertion library",
+  "version": "8.0.3",
+  "repository": "git://github.com/hapijs/code",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "keywords": [
+    "test",
+    "expect",
+    "assertion"
+  ],
+  "files": [
+    "lib"
+  ],
+  "eslintConfig": {
+    "extends": [
+      "plugin:@hapi/module"
+    ]
+  },
+  "dependencies": {
+    "@hapi/hoek": "9.x.x"
+  },
+  "devDependencies": {
+    "@hapi/eslint-plugin": "*",
+    "@hapi/lab": "24.x.x",
+    "typescript": "~4.0.2"
+  },
+  "scripts": {
+    "test": "lab -t 100 -L -Y",
+    "test-cov-html": "lab -L -r html -o coverage.html"
+  },
+  "license": "BSD-3-Clause"
 }
