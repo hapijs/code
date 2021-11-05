@@ -107,6 +107,8 @@ Code.expect(true).to.be.true();
 Code.expect(false).to.be.false();
 Code.expect(null).to.be.null();
 Code.expect(undefined).to.be.undefined();
+Code.expect(Number.NaN).to.be.NaN();
+
 
 Code.expect('abc').to.include('ab');
 Code.expect('abc').to.only.include('abc');
@@ -129,9 +131,10 @@ Code.expect({ a: 1, b: 2, c: 3 }).to.include(['a', 'c']);
 Code.expect({ a: 1, b: 2, c: 3 }).to.only.include(['a', 'b', 'c']);
 Code.expect({ a: 1, b: 2, c: 3 }).to.only.include({ a: 1, b: 2, c: 3 });
 
-Code.expect<any>({ a: 1, b: 2, c: 3 }).to.include({ a: 1 });
-Code.expect<any>({ a: 1, b: 2, c: 3 }).to.part.include({ a: 1, d: 4 });
-Code.expect<any>({ a: [1], b: [2], c: [3] }).to.include({ a: [1], c: [3] });
+Code.expect({ a: 1, b: 2, c: 3 }).to.include({ a: 1 });
+Code.expect({ a: 1, b: 2, c: 3 }).to.part.include({ a: 1, d: 4 });
+Code.expect({ a: [1], b: [2], c: [3] }).to.include({ a: [1], c: [3] });
+Code.expect({ a: 1, b: { c: 3, d: 4 } }).to.part.include({ b: { c: 3 } });
 
 interface TestType {
     a: number;
@@ -147,6 +150,7 @@ interface TestType2 {
 }
 
 Code.expect<TestType>({ a: 1, b: 2, c: 3 }).to.include({ a: 1 });
+Code.expect<TestType>({ a: 1, b: 2, c: 3 }).to.include({ c: 3 });
 Code.expect<TestType>({ a: 1, b: 2, c: 3 }).to.include({ a: 1, c: 3 });
 Code.expect<TestType>({ a: 1, b: 2, c: 3 }).to.part.include({ a: 1, d: 4 });
 Code.expect<TestType2>({ a: [1], b: [2], c: [3] }).to.include({ a: [1], c: [3] });

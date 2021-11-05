@@ -3,6 +3,21 @@
 import * as Hoek from '@hapi/hoek';
 
 
+// Internal helpers
+
+type Class<T = any> = new (...args: any[]) => T;
+
+type UnpackArray<T> = T extends (infer U)[] ? U : T;
+
+type RecursivePartial<T> = {
+    [P in keyof T]?:
+    T[P] extends (infer U)[] ? RecursivePartial<U>[] :
+    T[P] extends object ? RecursivePartial<T[P]> :
+    T[P];
+};
+
+type Loosely<T> = T extends object ? RecursivePartial<T> & { [key: string]: any } : T;
+
 /**
  * Configure code behavior
  */
@@ -77,7 +92,11 @@ export namespace thrownAt {
  * 
  * @returns Assertion object.
  */
-export function expect<T>(value: T | T[], prefix?: string): expect.Assertion<T>;
+export function expect<T>(value: T, prefix?: string):
+    T extends string ? expect.StringAssertion<T> :
+    T extends number | bigint ? expect.NumberAssertion<T> :
+    T extends Promise<any> ? expect.PromiseAssertion<T> :
+    expect.Assertion<T>;
 
 declare namespace expect {
 
@@ -85,14 +104,14 @@ declare namespace expect {
 
         // Grammar
 
-        a: Assertion<T>;
-        an: Assertion<T>;
-        and: Assertion<T>;
-        at: Assertion<T>;
-        be: Assertion<T>;
-        have: Assertion<T>;
-        in: Assertion<T>;
-        to: Assertion<T>;
+        a: this;
+        an: this;
+        and: this;
+        at: this;
+        be: this;
+        have: this;
+        in: this;
+        to: this;
 
 
         // Flags
@@ -100,27 +119,27 @@ declare namespace expect {
         /**
          * Inverses the expected result of the assertion chain.
          */
-        not: Assertion<T>;
+        not: this;
 
         /**
          * Requires that inclusion matches appear only once in the provided value.
          */
-        once: Assertion<T>;
+        once: this;
 
         /**
          * Requires that only the provided elements appear in the provided value.
          */
-        only: Assertion<T>;
+        only: this;
 
         /**
          * Allows a partial match when asserting inclusion instead of a full comparison.
          */
-        part: Assertion<T>;
+        part: this;
 
         /**
          * Performs a comparison using strict equality (===) instead of a deep comparison.
          */
-        shallow: Assertion<T>;
+        shallow: this;
 
 
         // Types
@@ -130,35 +149,35 @@ declare namespace expect {
          * 
          * @returns assertion chain object.
          */
-        arguments(): Assertion<T>;
+        arguments(): this;
 
         /**
          * Asserts that the reference value is an Array.
          *
          * @returns assertion chain object.
          */
-        array(): Assertion<T>;
+        array(): this;
 
         /**
          * Asserts that the reference value is a boolean.
          *
          * @returns assertion chain object.
          */
-        boolean(): Assertion<T>;
+        boolean(): this;
 
         /**
          * Asserts that the reference value is a Buffer.
          *
          * @returns assertion chain object.
          */
-        buffer(): Assertion<T>;
+        buffer(): this;
 
         /**
          * Asserts that the reference value is a Date
          *
          * @returns assertion chain object.
          */
-        date(): Assertion<T>;
+        date(): this;
 
         /**
          * Asserts that the reference value is an error.
@@ -168,43 +187,43 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        error(type: Function, message?: string | RegExp): Assertion<T>;
-        error(message?: string | RegExp): Assertion<T>;
+        error(type: Class, message?: string | RegExp): this;
+        error(message?: string | RegExp): this;
 
         /**
          * Asserts that the reference value is a function.
          *
          * @returns assertion chain object.
          */
-        function(): Assertion<T>;
+        function(): this;
 
         /**
          * Asserts that the reference value is a number.
          *
          * @returns assertion chain object.
          */
-        number(): Assertion<T>;
+        number(): this;
 
         /**
          * Asserts that the reference value is a RegExp.
          *
          * @returns assertion chain object.
          */
-        regexp(): Assertion<T>;
+        regexp(): this;
 
         /**
          * Asserts that the reference value is a string.
          *
          * @returns assertion chain object.
          */
-        string(): Assertion<T>;
+        string(): this;
 
         /**
          * Asserts that the reference value is an object (excluding array, buffer, or other native objects).
          *
          * @returns assertion chain object.
          */
-        object(): Assertion<T>;
+        object(): this;
 
 
         // Values
@@ -214,29 +233,35 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        true(): Assertion<T>;
+        true(): this;
 
         /**
          * Asserts that the reference value is false.
          *
          * @returns assertion chain object.
          */
-        false(): Assertion<T>;
+        false(): this;
 
         /**
          * Asserts that the reference value is null.
          *
          * @returns assertion chain object.
          */
-        null(): Assertion<T>;
+        null(): this;
 
         /**
          * Asserts that the reference value is undefined.
          *
          * @returns assertion chain object.
          */
-        undefined(): Assertion<T>;
+        undefined(): this;
 
+        /**
+         * Asserts that the reference value is `NaN`.
+         *
+         * @returns assertion chain object.
+         */
+        NaN(): this;
 
         // Tests
 
@@ -247,7 +272,8 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        include(values: string | string[] | T | T[]): Assertion<T>;
+        include(values: UnpackArray<Loosely<T> | Loosely<T>[]>): this;
+        include(values: string | string[]): this;
 
         /**
          * Asserts that the reference value (a string, array, or object) includes the provided values.
@@ -256,7 +282,8 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        includes(values: string | string[] | T | T[]): Assertion<T>;
+        includes(values: UnpackArray<Loosely<T> | Loosely<T>[]>): this;
+        includes(values: string | string[]): this;
 
         /**
          * Asserts that the reference value (a string, array, or object) includes the provided values.
@@ -265,7 +292,8 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        contain(values: string | string[] | T | T[]): Assertion<T>;
+        contain(values: UnpackArray<Loosely<T> | Loosely<T>[]>): this;
+        contain(values: string | string[]): this;
 
         /**
          * Asserts that the reference value (a string, array, or object) includes the provided values.
@@ -274,64 +302,29 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        contains(values: string | string[] | T | T[]): Assertion<T>;
-
-        /**
-         * Asserts that the reference value (a string) starts with the provided value.
-         * 
-         * @param value - the value to start with.
-         *
-         * @returns assertion chain object.
-         */
-        startWith(value: string): Assertion<T>;
-
-        /**
-         * Asserts that the reference value (a string) starts with the provided value.
-         *
-         * @param value - the value to start with.
-         *
-         * @returns assertion chain object.
-         */
-        startsWith(value: string): Assertion<T>;
-
-        /**
-         * Asserts that the reference value (a string) ends with the provided value.
-         *
-         * @param value - the value to end with.
-         *
-         * @returns assertion chain object.
-         */
-        endWith(value: string): Assertion<T>;
-
-        /**
-         * Asserts that the reference value (a string) ends with the provided value.
-         *
-         * @param value - the value to end with.
-         *
-         * @returns assertion chain object.
-         */
-        endsWith(value: string): Assertion<T>;
+        contains(values: UnpackArray<Loosely<T> | Loosely<T>[]>): this;
+        contains(values: string | string[]): this;
 
         /**
          * Asserts that the reference value exists (not null or undefined).
          *
          * @returns assertion chain object.
          */
-        exist(): Assertion<T>;
+        exist(): this;
 
         /**
          * Asserts that the reference value exists (not null or undefined).
          *
          * @returns assertion chain object.
          */
-        exists(): Assertion<T>;
+        exists(): this;
 
         /**
          * Asserts that the reference value has a length property equal to zero or is an object with no keys.
          *
          * @returns assertion chain object.
          */
-        empty(): Assertion<T>;
+        empty(): this;
 
         /**
          * Asserts that the reference value has a length property matching the provided size or an object with the specified number of keys.
@@ -340,7 +333,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        length(size: number): Assertion<T>;
+        length(size: T extends string | Buffer | object | any[] ? number : never): this;
 
         /**
          * Asserts that the reference value equals the provided value.
@@ -350,7 +343,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        equal(value: T | T[], options?: Hoek.deepEqual.Options): Assertion<T>;
+        equal(value: T, options?: Hoek.deepEqual.Options): this;
 
         /**
          * Asserts that the reference value equals the provided value.
@@ -360,7 +353,120 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        equals(value: T | T[], options?: Hoek.deepEqual.Options): Assertion<T>;
+        equals(value: T, options?: Hoek.deepEqual.Options): this;
+
+        /**
+         * Asserts that the reference value has the provided instanceof value.
+         * 
+         * @param type - the constructor function to be an instance of.
+         */
+        instanceof(type: Class): this;
+
+        /**
+         * Asserts that the reference value has the provided instanceof value.
+         *
+         * @param type - the constructor function to be an instance of.
+         */
+        instanceOf(type: Class): this;
+
+        /**
+         * Asserts that the reference value's toString() representation matches the provided regular expression.
+         * 
+         * @param regex - the pattern to match.
+         *
+         * @returns assertion chain object.
+         */
+        match(regex: RegExp): this;
+
+        /**
+         * Asserts that the reference value's toString() representation matches the provided regular expression.
+         *
+         * @param regex - the pattern to match.
+         *
+         * @returns assertion chain object.
+         */
+        matches(regex: RegExp): this;
+
+        /**
+         * Asserts that the reference value satisfies the provided validator function.
+         * 
+         * @param validator
+         *
+         * @returns assertion chain object.
+         */
+        satisfy(validator: (value: T) => boolean): this;
+
+        /**
+         * Asserts that the reference value satisfies the provided validator function.
+         *
+         * @param validator
+         *
+         * @returns assertion chain object.
+         */
+        satisfies(validator: (value: T) => boolean): this;
+
+        /**
+         * Asserts that the function reference value throws an exception when called.
+         * 
+         * @param type - constructor function the error must be an instance of.
+         * @param message - string or regular expression the error message must match.
+         *
+         * @returns assertion chain object.
+         */
+        throw(type: Class, message?: string | RegExp): this;
+        throw(message?: string | RegExp): this;
+
+        /**
+         * Asserts that the function reference value throws an exception when called.
+         *
+         * @param type - constructor function the error must be an instance of.
+         * @param message - string or regular expression the error message must match.
+         *
+         * @returns assertion chain object.
+         */
+        throws(type: Class, message?: string | RegExp): this;
+        throws(message?: string | RegExp): this;
+    }
+
+    interface StringAssertion<T> extends Assertion<T> {
+        /**
+         * Asserts that the reference value (a string) starts with the provided value.
+         * 
+         * @param value - the value to start with.
+         *
+         * @returns assertion chain object.
+         */
+        startWith(value: string): this;
+
+        /**
+         * Asserts that the reference value (a string) starts with the provided value.
+         *
+         * @param value - the value to start with.
+         *
+         * @returns assertion chain object.
+         */
+        startsWith(value: string): this;
+
+        /**
+         * Asserts that the reference value (a string) ends with the provided value.
+         *
+         * @param value - the value to end with.
+         *
+         * @returns assertion chain object.
+         */
+        endWith(value: string): this;
+
+        /**
+         * Asserts that the reference value (a string) ends with the provided value.
+         *
+         * @param value - the value to end with.
+         *
+         * @returns assertion chain object.
+         */
+        endsWith(value: string): this;
+    }
+
+    interface NumberAssertion<T> extends Assertion<T> {
 
         /**
          * Asserts that the reference value is greater than (>) the provided value.
@@ -369,7 +475,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        above(value: T): Assertion<T>;
+        above(value: T): this;
 
         /**
          * Asserts that the reference value is greater than (>) the provided value.
@@ -378,7 +484,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        greaterThan(value: T): Assertion<T>;
+        greaterThan(value: T): this;
 
         /**
          * Asserts that the reference value is at least (>=) the provided value.
@@ -387,7 +493,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        least(value: T): Assertion<T>;
+        least(value: T): this;
 
         /**
          * Asserts that the reference value is at least (>=) the provided value.
@@ -396,7 +502,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        min(value: T): Assertion<T>;
+        min(value: T): this;
 
         /**
          * Asserts that the reference value is less than (<) the provided value.
@@ -405,7 +511,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        below(value: T): Assertion<T>;
+        below(value: T): this;
 
         /**
          * Asserts that the reference value is less than (<) the provided value.
@@ -414,7 +520,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        lessThan(value: T): Assertion<T>;
+        lessThan(value: T): this;
 
         /**
          * Asserts that the reference value is at most (<=) the provided value.
@@ -423,7 +529,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        most(value: T): Assertion<T>;
+        most(value: T): this;
 
         /**
          * Asserts that the reference value is at most (<=) the provided value.
@@ -432,7 +538,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        max(value: T): Assertion<T>;
+        max(value: T): this;
 
         /**
          * Asserts that the reference value is within (from <= value <= to) the provided values.
@@ -442,7 +548,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        within(from: T, to: T): Assertion<T>;
+        within(from: T, to: T): this;
 
         /**
          * Asserts that the reference value is within (from <= value <= to) the provided values.
@@ -452,7 +558,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        range(from: T, to: T): Assertion<T>;
+        range(from: T, to: T): this;
 
         /**
          * Asserts that the reference value is between but not equal (from < value < to) the provided values.
@@ -462,7 +568,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        between(from: T, to: T): Assertion<T>;
+        between(from: T, to: T): this;
 
         /**
          * Asserts that the reference value is about the provided value within a delta margin of difference.
@@ -472,39 +578,10 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        about(value: number, delta: number): Assertion<T>;
+        about(value: T extends number ? T : never, delta: T extends number ? T : never): this;
+    }
 
-        /**
-         * Asserts that the reference value has the provided instanceof value.
-         * 
-         * @param type - the constructor function to be an instance of.
-         */
-        instanceof(type: Function): Assertion<T>;
-
-        /**
-         * Asserts that the reference value has the provided instanceof value.
-         *
-         * @param type - the constructor function to be an instance of.
-         */
-        instanceOf(type: Function): Assertion<T>;
-
-        /**
-         * Asserts that the reference value's toString() representation matches the provided regular expression.
-         * 
-         * @param regex - the pattern to match.
-         *
-         * @returns assertion chain object.
-         */
-        match(regex: RegExp): Assertion<T>;
-
-        /**
-         * Asserts that the reference value's toString() representation matches the provided regular expression.
-         *
-         * @param regex - the pattern to match.
-         *
-         * @returns assertion chain object.
-         */
-        matches(regex: RegExp): Assertion<T>;
+    interface PromiseAssertion<T> extends Assertion<T> {
 
         /**
          * Asserts that the Promise reference value rejects with an exception when called.
@@ -514,7 +591,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        reject<E extends {}>(type: Function & { new(): E }, message?: string | RegExp): Promise<E>;
+        reject<E extends {}>(type: Class<E>, message?: string | RegExp): Promise<E>;
         reject<E = unknown>(message: string | RegExp): Promise<E>;
         reject(): Promise<null>;
 
@@ -526,48 +603,8 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        rejects<E extends {}>(type: Function & { new(): E }, message?: string | RegExp): Promise<E>;
+        rejects<E extends {}>(type: Class<E>, message?: string | RegExp): Promise<E>;
         rejects<E = unknown>(message: string | RegExp): Promise<E>;
         rejects(): Promise<null>;
-
-        /**
-         * Asserts that the reference value satisfies the provided validator function.
-         * 
-         * @param validator
-         *
-         * @returns assertion chain object.
-         */
-        satisfy(validator: (value: T) => boolean): Assertion<T>;
-
-        /**
-         * Asserts that the reference value satisfies the provided validator function.
-         *
-         * @param validator
-         *
-         * @returns assertion chain object.
-         */
-        satisfies(validator: (value: T) => boolean): Assertion<T>;
-
-        /**
-         * Asserts that the function reference value throws an exception when called.
-         * 
-         * @param type - constructor function the error must be an instance of.
-         * @param message - string or regular expression the error message must match.
-         *
-         * @returns assertion chain object.
-         */
-        throw(type: Function, message?: string | RegExp): Assertion<T>;
-        throw(message?: string | RegExp): Assertion<T>;
-
-        /**
-         * Asserts that the function reference value throws an exception when called.
-         *
-         * @param type - constructor function the error must be an instance of.
-         * @param message - string or regular expression the error message must match.
-         *
-         * @returns assertion chain object.
-         */
-        throws(type: Function, message?: string | RegExp): Assertion<T>;
-        throws(message?: string | RegExp): Assertion<T>;
     }
 }
