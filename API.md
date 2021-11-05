@@ -616,7 +616,7 @@ expect(throws).to.throw(CustomError, 'Oh no!');
 
 #### `await reject([type], [message])`
 
-Aliases: `throws`
+Aliases: `rejects`
 
 Asserts that the `Promise` reference value rejects with an exception when called. The provided reference
 promise is resolved using an `await` statement within a `try`-`catch` block and any error throws is caught
