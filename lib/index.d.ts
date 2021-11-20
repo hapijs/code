@@ -92,10 +92,10 @@ export namespace thrownAt {
  * 
  * @returns Assertion object.
  */
-export function expect<T>(value: T, prefix?: string):
-    T extends string ? expect.StringAssertion<T> :
-    T extends number | bigint ? expect.NumberAssertion<T> :
-    T extends Promise<any> ? expect.PromiseAssertion<T> :
+export function expect<T, TTest extends T = T>(value: T, prefix?: string):
+    TTest extends string ? expect.StringAssertion<T> :
+    TTest extends number | bigint ? expect.NumberAssertion<T> :
+    TTest extends Promise<any> ? expect.PromiseAssertion<T> :
     expect.Assertion<T>;
 
 declare namespace expect {

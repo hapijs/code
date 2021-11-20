@@ -200,3 +200,9 @@ await expect.type<Promise<CustomError>>(Code.expect(typedRejection).to.reject(Cu
 await expect.type<Promise<CustomError>>(Code.expect(typedRejection).rejects(CustomError, 'Oh no!'));
 
 await expect.type<Promise<null>>(Code.expect(Promise.resolve(true)).to.not.reject());
+
+function foo(): number | undefined {
+    return 123;
+}
+
+Code.expect(foo()).to.equal(123);
