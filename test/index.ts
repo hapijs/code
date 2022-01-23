@@ -196,10 +196,10 @@ const throws = () => {
 Code.expect(throws).to.throw(CustomError, 'Oh no!');
 
 const typedRejection = Promise.reject(new CustomError('Oh no!'));
-await expect.type<Promise<CustomError>>(Code.expect(typedRejection).to.reject(CustomError, 'Oh no!'));
-await expect.type<Promise<CustomError>>(Code.expect(typedRejection).rejects(CustomError, 'Oh no!'));
+await expect.type<CustomError>(Code.expect(typedRejection).to.reject(CustomError, 'Oh no!'));
+await expect.type<CustomError>(Code.expect(typedRejection).rejects(CustomError, 'Oh no!'));
 
-await expect.type<Promise<null>>(Code.expect(Promise.resolve(true)).to.not.reject());
+await expect.type<null>(Code.expect(Promise.resolve(true)).to.not.reject());
 
 function foo(): number | undefined {
     return 123;

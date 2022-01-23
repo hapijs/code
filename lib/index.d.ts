@@ -93,6 +93,7 @@ export namespace thrownAt {
  * @returns Assertion object.
  */
 export function expect<T, TTest extends T = T>(value: T, prefix?: string):
+    TTest extends Function ? expect.FunctionAssertion<T> :
     TTest extends string ? expect.StringAssertion<T> :
     TTest extends number | bigint ? expect.NumberAssertion<T> :
     TTest extends Promise<any> ? expect.PromiseAssertion<T> :
@@ -119,7 +120,9 @@ declare namespace expect {
         /**
          * Inverses the expected result of the assertion chain.
          */
-        not: this;
+        not: T extends Function ? expect.Not_FunctionAssertion<T> :
+             T extends Promise<any> ? expect.Not_PromiseAssertion<T> :
+             this;
 
         /**
          * Requires that inclusion matches appear only once in the provided value.
@@ -404,6 +407,9 @@ declare namespace expect {
          * @returns assertion chain object.
          */
         satisfies(validator: (value: T) => boolean): this;
+    }
+
+    interface FunctionAssertion<T> extends Assertion<T> {
 
         /**
          * Asserts that the function reference value throws an exception when called.
@@ -411,10 +417,10 @@ declare namespace expect {
          * @param type - constructor function the error must be an instance of.
          * @param message - string or regular expression the error message must match.
          *
-         * @returns assertion chain object.
+         * @returns thrown value.
          */
-        throw(type: Class, message?: string | RegExp): this;
-        throw(message?: string | RegExp): this;
+        throw<E extends {}>(type: Class<E>, message?: string | RegExp): E;
+        throw<E = unknown>(message?: string | RegExp): E;
 
         /**
          * Asserts that the function reference value throws an exception when called.
@@ -422,13 +428,33 @@ declare namespace expect {
          * @param type - constructor function the error must be an instance of.
          * @param message - string or regular expression the error message must match.
          *
+         * @returns thrown value.
+         */
+        throws<E extends {}>(type: Class<E>, message?: string | RegExp): E;
+        throws<E = unknown>(message?: string | RegExp): E;
+    }
+
+    interface Not_FunctionAssertion<T> extends Assertion<T> {
+
+        /**
+         * Asserts that the function reference value throws an exception when called.
+         *
          * @returns assertion chain object.
          */
-        throws(type: Class, message?: string | RegExp): this;
-        throws(message?: string | RegExp): this;
+        throw(): this;
+        throw(): this;
+
+        /**
+         * Asserts that the function reference value throws an exception when called.
+         *
+         * @returns assertion chain object.
+         */
+        throws(): this;
+        throws(): this;
     }
 
     interface StringAssertion<T> extends Assertion<T> {
+
         /**
          * Asserts that the reference value (a string) starts with the provided value.
          * 
@@ -589,11 +615,10 @@ declare namespace expect {
          * @param type - constructor function the error must be an instance of.
          * @param message - string or regular expression the error message must match.
          *
-         * @returns assertion chain object.
+         * @returns rejected value.
          */
-        reject<E extends {}>(type: Class<E>, message?: string | RegExp): Promise<E>;
-        reject<E = unknown>(message: string | RegExp): Promise<E>;
-        reject(): Promise<null>;
+        reject<E extends {}>(type: Class<E>, message?: string | RegExp): E;
+        reject<E = unknown>(message?: string | RegExp): E;
 
         /**
          * Asserts that the Promise reference value rejects with an exception when called.
@@ -601,10 +626,26 @@ declare namespace expect {
          * @param type - constructor function the error must be an instance of.
          * @param message - string or regular expression the error message must match.
          *
-         * @returns assertion chain object.
+         * @returns rejected value.
          */
-        rejects<E extends {}>(type: Class<E>, message?: string | RegExp): Promise<E>;
-        rejects<E = unknown>(message: string | RegExp): Promise<E>;
-        rejects(): Promise<null>;
+        rejects<E extends {}>(type: Class<E>, message?: string | RegExp): E;
+        rejects<E = unknown>(message?: string | RegExp): E;
+    }
+
+    interface Not_PromiseAssertion<T> extends Assertion<T> {
+
+        /**
+         * Asserts that the Promise reference value rejects with an exception when called.
+         *
+         * @returns null.
+         */
+        reject(): null;
+
+        /**
+         * Asserts that the Promise reference value rejects with an exception when called.
+         *
+         * @returns null.
+         */
+        rejects(): null;
     }
 }
