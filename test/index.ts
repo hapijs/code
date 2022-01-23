@@ -194,6 +194,7 @@ const throws = () => {
 };
 
 Code.expect(throws).to.throw(CustomError, 'Oh no!');
+Code.expect(() => { }).to.not.throw().and.to.be.a.function();
 
 const typedRejection = Promise.reject(new CustomError('Oh no!'));
 await expect.type<CustomError>(Code.expect(typedRejection).to.reject(CustomError, 'Oh no!'));
