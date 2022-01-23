@@ -262,7 +262,6 @@ describe('expect()', () => {
             Code.expect('abc').to.not.contain('d').and.to.contain('a');
             Code.expect('abc').to.not.contain('d').and.to.not.contain('e');
             Code.expect('abc').to.contain('a').and.to.not.contain('d').and.to.contain('c').to.not.contain('f');
-            Code.expect(() => { }).to.not.throw().and.to.be.a.function();
             Code.expect(10).to.not.be.about(8, 1).and.to.be.about(9, 1);
             Code.expect(10).to.be.about(9, 1).and.to.not.be.about(8, 1);
         }

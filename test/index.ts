@@ -186,16 +186,33 @@ const rejection = Promise.reject(new Error('Oh no!'));
 await expect.type<Promise<any>>(Code.expect(rejection).to.reject('Oh no!'));
 await expect.type<Promise<any>>(Code.expect(rejection).rejects('Oh no!'));
 
-class CustomError extends Error { }
+class CustomError extends Error {
+    code: number;
+
+    constructor(message: string, code: number) {
+        super(message);
+        this.code = code;
+    }
+ }
 
 const throws = () => {
 
-    throw new CustomError('Oh no!');
+    throw new CustomError('Oh no!', 555);
 };
 
-Code.expect(throws).to.throw(CustomError, 'Oh no!');
+const thrownError1 = Code.expect(throws).to.throw(CustomError, 'Oh no!');
+expect.type<number>(thrownError1.code);
 
-const typedRejection = Promise.reject(new CustomError('Oh no!'));
+const thrownError2 = Code.expect(throws).to.throw<CustomError>('Oh no!');
+expect.type<number>(thrownError2.code);
+
+const thrownError3 = Code.expect(throws).throws(CustomError, 'Oh no!');
+expect.type<number>(thrownError3.code);
+
+const thrownError4 = Code.expect(throws).throws<CustomError>('Oh no!');
+expect.type<number>(thrownError4.code);
+
+const typedRejection = Promise.reject(new CustomError('Oh no!', 555));
 await expect.type<Promise<CustomError>>(Code.expect(typedRejection).to.reject(CustomError, 'Oh no!'));
 await expect.type<Promise<CustomError>>(Code.expect(typedRejection).rejects(CustomError, 'Oh no!'));
 

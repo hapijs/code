@@ -413,8 +413,8 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        throw(type: Class, message?: string | RegExp): this;
-        throw(message?: string | RegExp): this;
+        throw<E extends {}>(type: Class<E>, message?: string | RegExp): E;
+        throw<E = unknown>(message?: string | RegExp): E;
 
         /**
          * Asserts that the function reference value throws an exception when called.
@@ -424,8 +424,8 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        throws(type: Class, message?: string | RegExp): this;
-        throws(message?: string | RegExp): this;
+        throws<E extends {}>(type: Class<E>, message?: string | RegExp): E;
+        throws<E = unknown>(message?: string | RegExp): E;
     }
 
     interface StringAssertion<T> extends Assertion<T> {
