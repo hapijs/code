@@ -101,7 +101,7 @@ export function expect<T, TTest extends T = T>(value: T, prefix?: string):
 
 declare namespace expect {
 
-    interface Assertion<T> {
+    interface Assertion<T, TTest extends T = T> {
 
         // Grammar
 
@@ -120,8 +120,8 @@ declare namespace expect {
         /**
          * Inverses the expected result of the assertion chain.
          */
-        not: T extends Function ? expect.Not_FunctionAssertion<T> :
-             T extends Promise<any> ? expect.Not_PromiseAssertion<T> :
+        not: TTest extends Function ? expect.Not_FunctionAssertion<T> :
+             TTest extends Promise<any> ? expect.Not_PromiseAssertion<T> :
              this;
 
         /**
