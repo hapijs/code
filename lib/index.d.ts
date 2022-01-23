@@ -84,13 +84,6 @@ export namespace thrownAt {
 }
 
 
-type TNarrowedAssertion<T, TTest extends T = T> =
-    TTest extends Function ? expect.FunctionAssertion<T> :
-    TTest extends string ? expect.StringAssertion<T> :
-    TTest extends number | bigint ? expect.NumberAssertion<T> :
-    TTest extends Promise<any> ? expect.PromiseAssertion<T> :
-    expect.Assertion<T>;
-
 /**
  * Declares an assertion chain.
  * 
@@ -99,11 +92,18 @@ type TNarrowedAssertion<T, TTest extends T = T> =
  * 
  * @returns Assertion object.
  */
-export function expect<T>(value: T, prefix?: string): TNarrowedAssertion<T>;
+export function expect<T>(value: T, prefix?: string): expect.Assertion<T>;
 
 declare namespace expect {
 
-    interface Assertion<T, TTest extends T = T> {
+    type Assertion<T, TTest extends T = T> =
+        TTest extends Function ? expect.FunctionAssertion<T> :
+        TTest extends string ? expect.StringAssertion<T> :
+        TTest extends number | bigint ? expect.NumberAssertion<T> :
+        TTest extends Promise<any> ? expect.PromiseAssertion<T> :
+        expect.BaseAssertion<T>;
+
+    interface BaseAssertion<T, TTest extends T = T> {
 
         // Grammar
 
@@ -154,35 +154,35 @@ declare namespace expect {
          * 
          * @returns assertion chain object.
          */
-        arguments(): TNarrowedAssertion<T>;
+        arguments(): Assertion<T>;
 
         /**
          * Asserts that the reference value is an Array.
          *
          * @returns assertion chain object.
          */
-        array(): TNarrowedAssertion<T>;
+        array(): Assertion<T>;
 
         /**
          * Asserts that the reference value is a boolean.
          *
          * @returns assertion chain object.
          */
-        boolean(): TNarrowedAssertion<T>;
+        boolean(): Assertion<T>;
 
         /**
          * Asserts that the reference value is a Buffer.
          *
          * @returns assertion chain object.
          */
-        buffer(): TNarrowedAssertion<T>;
+        buffer(): Assertion<T>;
 
         /**
          * Asserts that the reference value is a Date
          *
          * @returns assertion chain object.
          */
-        date(): TNarrowedAssertion<T>;
+        date(): Assertion<T>;
 
         /**
          * Asserts that the reference value is an error.
@@ -192,43 +192,43 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        error(type: Class, message?: string | RegExp): TNarrowedAssertion<T>;
-        error(message?: string | RegExp): TNarrowedAssertion<T>;
+        error(type: Class, message?: string | RegExp): Assertion<T>;
+        error(message?: string | RegExp): Assertion<T>;
 
         /**
          * Asserts that the reference value is a function.
          *
          * @returns assertion chain object.
          */
-        function(): TNarrowedAssertion<T>;
+        function(): Assertion<T>;
 
         /**
          * Asserts that the reference value is a number.
          *
          * @returns assertion chain object.
          */
-        number(): TNarrowedAssertion<T>;
+        number(): Assertion<T>;
 
         /**
          * Asserts that the reference value is a RegExp.
          *
          * @returns assertion chain object.
          */
-        regexp(): TNarrowedAssertion<T>;
+        regexp(): Assertion<T>;
 
         /**
          * Asserts that the reference value is a string.
          *
          * @returns assertion chain object.
          */
-        string(): TNarrowedAssertion<T>;
+        string(): Assertion<T>;
 
         /**
          * Asserts that the reference value is an object (excluding array, buffer, or other native objects).
          *
          * @returns assertion chain object.
          */
-        object(): TNarrowedAssertion<T>;
+        object(): Assertion<T>;
 
 
         // Values
@@ -238,35 +238,35 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        true(): TNarrowedAssertion<T>;
+        true(): Assertion<T>;
 
         /**
          * Asserts that the reference value is false.
          *
          * @returns assertion chain object.
          */
-        false(): TNarrowedAssertion<T>;
+        false(): Assertion<T>;
 
         /**
          * Asserts that the reference value is null.
          *
          * @returns assertion chain object.
          */
-        null(): TNarrowedAssertion<T>;
+        null(): Assertion<T>;
 
         /**
          * Asserts that the reference value is undefined.
          *
          * @returns assertion chain object.
          */
-        undefined(): TNarrowedAssertion<T>;
+        undefined(): Assertion<T>;
 
         /**
          * Asserts that the reference value is `NaN`.
          *
          * @returns assertion chain object.
          */
-        NaN(): TNarrowedAssertion<T>;
+        NaN(): Assertion<T>;
 
         // Tests
 
@@ -277,8 +277,8 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        include(values: UnpackArray<Loosely<T> | Loosely<T>[]>): TNarrowedAssertion<T>;
-        include(values: string | string[]): TNarrowedAssertion<T>;
+        include(values: UnpackArray<Loosely<T> | Loosely<T>[]>): Assertion<T>;
+        include(values: string | string[]): Assertion<T>;
 
         /**
          * Asserts that the reference value (a string, array, or object) includes the provided values.
@@ -287,8 +287,8 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        includes(values: UnpackArray<Loosely<T> | Loosely<T>[]>): TNarrowedAssertion<T>;
-        includes(values: string | string[]): TNarrowedAssertion<T>;
+        includes(values: UnpackArray<Loosely<T> | Loosely<T>[]>): Assertion<T>;
+        includes(values: string | string[]): Assertion<T>;
 
         /**
          * Asserts that the reference value (a string, array, or object) includes the provided values.
@@ -297,8 +297,8 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        contain(values: UnpackArray<Loosely<T> | Loosely<T>[]>): TNarrowedAssertion<T>;
-        contain(values: string | string[]): TNarrowedAssertion<T>;
+        contain(values: UnpackArray<Loosely<T> | Loosely<T>[]>): Assertion<T>;
+        contain(values: string | string[]): Assertion<T>;
 
         /**
          * Asserts that the reference value (a string, array, or object) includes the provided values.
@@ -307,29 +307,29 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        contains(values: UnpackArray<Loosely<T> | Loosely<T>[]>): TNarrowedAssertion<T>;
-        contains(values: string | string[]): TNarrowedAssertion<T>;
+        contains(values: UnpackArray<Loosely<T> | Loosely<T>[]>): Assertion<T>;
+        contains(values: string | string[]): Assertion<T>;
 
         /**
          * Asserts that the reference value exists (not null or undefined).
          *
          * @returns assertion chain object.
          */
-        exist(): TNarrowedAssertion<T>;
+        exist(): Assertion<T>;
 
         /**
          * Asserts that the reference value exists (not null or undefined).
          *
          * @returns assertion chain object.
          */
-        exists(): TNarrowedAssertion<T>;
+        exists(): Assertion<T>;
 
         /**
          * Asserts that the reference value has a length property equal to zero or is an object with no keys.
          *
          * @returns assertion chain object.
          */
-        empty(): TNarrowedAssertion<T>;
+        empty(): Assertion<T>;
 
         /**
          * Asserts that the reference value has a length property matching the provided size or an object with the specified number of keys.
@@ -338,7 +338,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        length(size: T extends string | Buffer | object | any[] ? number : never): TNarrowedAssertion<T>;
+        length(size: T extends string | Buffer | object | any[] ? number : never): Assertion<T>;
 
         /**
          * Asserts that the reference value equals the provided value.
@@ -348,7 +348,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        equal(value: T, options?: Hoek.deepEqual.Options): TNarrowedAssertion<T>;
+        equal(value: T, options?: Hoek.deepEqual.Options): Assertion<T>;
 
         /**
          * Asserts that the reference value equals the provided value.
@@ -358,21 +358,21 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        equals(value: T, options?: Hoek.deepEqual.Options): TNarrowedAssertion<T>;
+        equals(value: T, options?: Hoek.deepEqual.Options): Assertion<T>;
 
         /**
          * Asserts that the reference value has the provided instanceof value.
          * 
          * @param type - the constructor function to be an instance of.
          */
-        instanceof(type: Class): TNarrowedAssertion<T>;
+        instanceof(type: Class): Assertion<T>;
 
         /**
          * Asserts that the reference value has the provided instanceof value.
          *
          * @param type - the constructor function to be an instance of.
          */
-        instanceOf(type: Class): TNarrowedAssertion<T>;
+        instanceOf(type: Class): Assertion<T>;
 
         /**
          * Asserts that the reference value's toString() representation matches the provided regular expression.
@@ -381,7 +381,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        match(regex: RegExp): TNarrowedAssertion<T>;
+        match(regex: RegExp): Assertion<T>;
 
         /**
          * Asserts that the reference value's toString() representation matches the provided regular expression.
@@ -390,7 +390,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        matches(regex: RegExp): TNarrowedAssertion<T>;
+        matches(regex: RegExp): Assertion<T>;
 
         /**
          * Asserts that the reference value satisfies the provided validator function.
@@ -399,7 +399,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        satisfy(validator: (value: T) => boolean): TNarrowedAssertion<T>;
+        satisfy(validator: (value: T) => boolean): Assertion<T>;
 
         /**
          * Asserts that the reference value satisfies the provided validator function.
@@ -408,10 +408,10 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        satisfies(validator: (value: T) => boolean): TNarrowedAssertion<T>;
+        satisfies(validator: (value: T) => boolean): Assertion<T>;
     }
 
-    interface FunctionAssertion<T> extends Assertion<T> {
+    interface FunctionAssertion<T> extends BaseAssertion<T> {
 
         /**
          * Asserts that the function reference value throws an exception when called.
@@ -436,26 +436,26 @@ declare namespace expect {
         throws<E = unknown>(message?: string | RegExp): E;
     }
 
-    interface Not_FunctionAssertion<T> extends Assertion<T> {
+    interface Not_FunctionAssertion<T> extends BaseAssertion<T> {
 
         /**
          * Asserts that the function reference value throws an exception when called.
          *
          * @returns assertion chain object.
          */
-        throw(): TNarrowedAssertion<T>;
-        throw(): TNarrowedAssertion<T>;
+        throw(): Assertion<T>;
+        throw(): Assertion<T>;
 
         /**
          * Asserts that the function reference value throws an exception when called.
          *
          * @returns assertion chain object.
          */
-        throws(): TNarrowedAssertion<T>;
-        throws(): TNarrowedAssertion<T>;
+        throws(): Assertion<T>;
+        throws(): Assertion<T>;
     }
 
-    interface StringAssertion<T> extends Assertion<T> {
+    interface StringAssertion<T> extends BaseAssertion<T> {
 
         /**
          * Asserts that the reference value (a string) starts with the provided value.
@@ -464,7 +464,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        startWith(value: string): TNarrowedAssertion<T>;
+        startWith(value: string): Assertion<T>;
 
         /**
          * Asserts that the reference value (a string) starts with the provided value.
@@ -473,7 +473,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        startsWith(value: string): TNarrowedAssertion<T>;
+        startsWith(value: string): Assertion<T>;
 
         /**
          * Asserts that the reference value (a string) ends with the provided value.
@@ -482,7 +482,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        endWith(value: string): TNarrowedAssertion<T>;
+        endWith(value: string): Assertion<T>;
 
         /**
          * Asserts that the reference value (a string) ends with the provided value.
@@ -491,10 +491,10 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        endsWith(value: string): TNarrowedAssertion<T>;
+        endsWith(value: string): Assertion<T>;
     }
 
-    interface NumberAssertion<T> extends Assertion<T> {
+    interface NumberAssertion<T> extends BaseAssertion<T> {
 
         /**
          * Asserts that the reference value is greater than (>) the provided value.
@@ -503,7 +503,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        above(value: T): TNarrowedAssertion<T>;
+        above(value: T): Assertion<T>;
 
         /**
          * Asserts that the reference value is greater than (>) the provided value.
@@ -512,7 +512,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        greaterThan(value: T): TNarrowedAssertion<T>;
+        greaterThan(value: T): Assertion<T>;
 
         /**
          * Asserts that the reference value is at least (>=) the provided value.
@@ -521,7 +521,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        least(value: T): TNarrowedAssertion<T>;
+        least(value: T): Assertion<T>;
 
         /**
          * Asserts that the reference value is at least (>=) the provided value.
@@ -530,7 +530,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        min(value: T): TNarrowedAssertion<T>;
+        min(value: T): Assertion<T>;
 
         /**
          * Asserts that the reference value is less than (<) the provided value.
@@ -539,7 +539,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        below(value: T): TNarrowedAssertion<T>;
+        below(value: T): Assertion<T>;
 
         /**
          * Asserts that the reference value is less than (<) the provided value.
@@ -548,7 +548,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        lessThan(value: T): TNarrowedAssertion<T>;
+        lessThan(value: T): Assertion<T>;
 
         /**
          * Asserts that the reference value is at most (<=) the provided value.
@@ -557,7 +557,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        most(value: T): TNarrowedAssertion<T>;
+        most(value: T): Assertion<T>;
 
         /**
          * Asserts that the reference value is at most (<=) the provided value.
@@ -566,7 +566,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        max(value: T): TNarrowedAssertion<T>;
+        max(value: T): Assertion<T>;
 
         /**
          * Asserts that the reference value is within (from <= value <= to) the provided values.
@@ -576,7 +576,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        within(from: T, to: T): TNarrowedAssertion<T>;
+        within(from: T, to: T): Assertion<T>;
 
         /**
          * Asserts that the reference value is within (from <= value <= to) the provided values.
@@ -586,7 +586,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        range(from: T, to: T): TNarrowedAssertion<T>;
+        range(from: T, to: T): Assertion<T>;
 
         /**
          * Asserts that the reference value is between but not equal (from < value < to) the provided values.
@@ -596,7 +596,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        between(from: T, to: T): TNarrowedAssertion<T>;
+        between(from: T, to: T): Assertion<T>;
 
         /**
          * Asserts that the reference value is about the provided value within a delta margin of difference.
@@ -606,10 +606,10 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        about(value: T extends number ? T : never, delta: T extends number ? T : never): TNarrowedAssertion<T>;
+        about(value: T extends number ? T : never, delta: T extends number ? T : never): Assertion<T>;
     }
 
-    interface PromiseAssertion<T> extends Assertion<T> {
+    interface PromiseAssertion<T> extends BaseAssertion<T> {
 
         /**
          * Asserts that the Promise reference value rejects with an exception when called.
@@ -634,7 +634,7 @@ declare namespace expect {
         rejects<E = unknown>(message?: string | RegExp): E;
     }
 
-    interface Not_PromiseAssertion<T> extends Assertion<T> {
+    interface Not_PromiseAssertion<T> extends BaseAssertion<T> {
 
         /**
          * Asserts that the Promise reference value rejects with an exception when called.
