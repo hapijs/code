@@ -348,7 +348,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        equal(value: T, options?: Hoek.deepEqual.Options): Assertion<T>;
+        equal(value: Loosely<T>, options?: Hoek.deepEqual.Options): Assertion<T>;
 
         /**
          * Asserts that the reference value equals the provided value.
@@ -358,7 +358,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        equals(value: T, options?: Hoek.deepEqual.Options): Assertion<T>;
+        equals(value: Loosely<T>, options?: Hoek.deepEqual.Options): Assertion<T>;
 
         /**
          * Asserts that the reference value has the provided instanceof value.
