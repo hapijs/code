@@ -181,6 +181,9 @@ Code.expect(['abc', 'def']).to.match(/^[\w\d,]*$/);
 Code.expect(1).to.match(/^\d$/);
 Code.expect('x').to.satisfy(value => value === 'x');
 
+const type2 = { a: [1], c: [2] };
+Code.expect(type2).to.equal({ a: [1] }, { skip: ['c'] });
+
 const rejection = Promise.reject(new Error('Oh no!'));
 
 await expect.type<Promise<any>>(Code.expect(rejection).to.reject('Oh no!'));
