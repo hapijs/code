@@ -9,12 +9,11 @@ type Class<T = any> = new (...args: any[]) => T;
 
 type UnpackArray<T> = T extends (infer U)[] ? U : T;
 
-type RecursivePartial<T> = {
+type RecursivePartial<T> = T extends object ? {
     [P in keyof T]?:
-    T[P] extends (infer U)[] ? RecursivePartial<U>[] :
-    T[P] extends object ? RecursivePartial<T[P]> :
-    T[P];
-};
+    T[P] extends Array<infer I> ? Array<RecursivePartial<I>> :
+    RecursivePartial<T[P]>;
+} : T;
 
 type Loosely<T> = T extends object ? RecursivePartial<T> & { [key: string]: any } : T;
 
@@ -348,7 +347,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        equal(value: Loosely<T>, options?: Hoek.deepEqual.Options): Assertion<T>;
+        equal(value: RecursivePartial<T>, options?: Hoek.deepEqual.Options): Assertion<T>;
 
         /**
          * Asserts that the reference value equals the provided value.
@@ -358,7 +357,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        equals(value: Loosely<T>, options?: Hoek.deepEqual.Options): Assertion<T>;
+        equals(value: RecursivePartial<T>, options?: Hoek.deepEqual.Options): Assertion<T>;
 
         /**
          * Asserts that the reference value has the provided instanceof value.
