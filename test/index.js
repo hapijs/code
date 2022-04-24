@@ -586,9 +586,9 @@ describe('expect()', () => {
 
             it('invalidates assertion (anonymous type)', () => {
 
-                const Custom = function () { };
-                Util.inherits(Custom, Error);
-                delete Custom.name; // Ensure that the type is anonymous
+                const Custom = class extends Error {
+                    static name = undefined; // Ensure that the type is anonymous
+                };
 
                 try {
                     Code.expect(error).to.be.an.error(Custom);
