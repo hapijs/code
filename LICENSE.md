@@ -1,6 +1,6 @@
-Copyright (c) 2014-2012, Sideway Inc, and project contributors  
-Copyright (c) 2014, Walmart  
-Copyright (c) 2011-2014 Jake Luer  
+Copyright (c) 2014-2022, Sideway Inc, and project contributors
+Copyright (c) 2014, Walmart
+Copyright (c) 2011-2014 Jake Luer
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
