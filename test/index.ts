@@ -186,8 +186,8 @@ Code.expect(type2).to.equal({ a: [1] }, { skip: ['c'] });
 
 const rejection = Promise.reject(new Error('Oh no!'));
 
-await expect.type<Promise<any>>(Code.expect(rejection).to.reject('Oh no!'));
-await expect.type<Promise<any>>(Code.expect(rejection).rejects('Oh no!'));
+expect.type<Promise<any>>(Code.expect(rejection).to.reject('Oh no!'));
+expect.type<Promise<any>>(Code.expect(rejection).rejects('Oh no!'));
 
 class CustomError extends Error { }
 
@@ -200,10 +200,10 @@ Code.expect(throws).to.throw(CustomError, 'Oh no!');
 Code.expect(() => { }).to.not.throw().and.to.be.a.function();
 
 const typedRejection = Promise.reject(new CustomError('Oh no!'));
-await expect.type<Promise<CustomError>>(Code.expect(typedRejection).to.reject(CustomError, 'Oh no!'));
-await expect.type<Promise<CustomError>>(Code.expect(typedRejection).rejects(CustomError, 'Oh no!'));
+expect.type<Promise<CustomError>>(Code.expect(typedRejection).to.reject(CustomError, 'Oh no!'));
+expect.type<Promise<CustomError>>(Code.expect(typedRejection).rejects(CustomError, 'Oh no!'));
 
-await expect.type<Promise<null>>(Code.expect(Promise.resolve(true)).to.not.reject());
+expect.type<Promise<null>>(Code.expect(Promise.resolve(true)).to.not.reject());
 
 function foo(): number | undefined {
     return 123;
