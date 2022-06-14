@@ -625,7 +625,7 @@ and compared to the provided optional requirements where:
 - `message` a string or regular expression matching the rejected error `message` property. Note that a string
   must provide a full match.
 
-Returns the rejected error object.
+Returns a promise resolving to the rejected error object.
 
 ```js
 const NodeUtil = require('util');

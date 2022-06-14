@@ -616,10 +616,10 @@ declare namespace expect {
          * @param type - constructor function the error must be an instance of.
          * @param message - string or regular expression the error message must match.
          *
-         * @returns rejected value.
+         * @returns a promise resolving to the rejected value.
          */
-        reject<E extends {}>(type: Class<E>, message?: string | RegExp): E;
-        reject<E = unknown>(message?: string | RegExp): E;
+        reject<E extends {}>(type: Class<E>, message?: string | RegExp): Promise<E>;
+        reject<E = unknown>(message?: string | RegExp): Promise<E>;
 
         /**
          * Asserts that the Promise reference value rejects with an exception when called.
@@ -627,10 +627,10 @@ declare namespace expect {
          * @param type - constructor function the error must be an instance of.
          * @param message - string or regular expression the error message must match.
          *
-         * @returns rejected value.
+         * @returns a promise resolving to the rejected value.
          */
-        rejects<E extends {}>(type: Class<E>, message?: string | RegExp): E;
-        rejects<E = unknown>(message?: string | RegExp): E;
+        rejects<E extends {}>(type: Class<E>, message?: string | RegExp): Promise<E>;
+        rejects<E = unknown>(message?: string | RegExp): Promise<E>;
     }
 
     interface Not_PromiseAssertion<T> extends BaseAssertion<T> {
@@ -638,15 +638,15 @@ declare namespace expect {
         /**
          * Asserts that the Promise reference value rejects with an exception when called.
          *
-         * @returns null.
+         * @returns a promise resolving to null.
          */
-        reject(): null;
+        reject(): Promise<null>;
 
         /**
          * Asserts that the Promise reference value rejects with an exception when called.
          *
-         * @returns null.
+         * @returns a promise resolving to null.
          */
-        rejects(): null;
+        rejects(): Promise<null>;
     }
 }
