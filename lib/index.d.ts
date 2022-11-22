@@ -505,6 +505,16 @@ declare namespace expect {
         above(value: T): Assertion<T>;
 
         /**
+         * Asserts that the reference value is within a delta difference from the provided value.
+         * 
+         * @param value - the value to compare to.
+         * @param delta - the delta +/- range value.
+         *
+         * @returns assertion chain object.
+         */
+        about(value: T, dela: number): Assertion<T>;
+
+        /**
          * Asserts that the reference value is greater than (>) the provided value.
          *
          * @param value - the value to compare to.
