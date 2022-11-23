@@ -512,7 +512,7 @@ declare namespace expect {
          *
          * @returns assertion chain object.
          */
-        about(value: T, dela: number): Assertion<T>;
+        about(value: T, delta: number): Assertion<T>;
 
         /**
          * Asserts that the reference value is greater than (>) the provided value.
