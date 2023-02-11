@@ -19,7 +19,7 @@
     ]
   },
   "dependencies": {
-    "@hapi/hoek": "10.x.x"
+    "@hapi/hoek": "^11.0.2"
   },
   "devDependencies": {
     "@hapi/eslint-plugin": "*",
